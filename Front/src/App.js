@@ -7,7 +7,7 @@ import SignUp from "./pages/signup/SignUp";
 import SignIn from "./pages/signin/SignIn";
 import AdminRoute from "./components/Route/AdminRoute";
 import UserRoute from "./components/Route/UserRoute";
-import Management from "./pages/admin/management/Management";
+import Management from "./pages/admin/Management";
 import Products from "./pages/products/Products";
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/SignIn" element={<SignIn />} />
-        <Route path="/Admin" element={<Management />} />
+        <Route path="/Admin/*" element={<Management />} />
         <Route path="/User/*" element={<UserRoute />} />
         <Route path="/Products" element={<Products />} />
       </Routes>

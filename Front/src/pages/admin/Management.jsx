@@ -12,7 +12,7 @@ import { TextField, Box } from "@mui/material";
 import Edit from "./edit/Edit";
 import axios from "axios";
 
-import ProductsCard from "../../../components/card/products/ProductsCard";
+import ProductsCard from "../../components/card/products/ProductsCard";
 const Management = () => {
   const [open, setOpen] = React.useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);

@@ -1,5 +1,6 @@
 const Cart = require("../modal/Cart");
 const express = require("express");
+const User = require("../modal/User");
 
 const router = express.Router();
 
@@ -15,6 +16,37 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.post("/user/:id/new_order", async (req, res) => {
+  const id = req.params.id;
+
+  if (id) {
+    try {
+      const cart = await User.findOne({ _id: id }); // Use _id instead of id
+
+      if (!cart) {
+        return res.status(400).send({ error: "Cart does not exist" });
+      }
+      const orderData = req.body;
+
+      const newOrder = new Cart({
+        userId: orderData.userId,
+        fullName: orderData.fullName, // Extract other relevant fields from orderData
+        fullAddress: orderData.fullAddress,
+        totalAmount: orderData.totalPrice,
+        city: orderData.city,
+        products: orderData.products, // Assuming products are in the correct format
+      });
+      await newOrder.save();
+      res
+        .status(200)
+        .send({ message: "Order creact successfully", cart: cart });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ error: "Something went wrong" });
+    }
+  }
+});
+
 router.get("/all", async (req, res) => {
   try {
     const carts = await Cart.find();
@@ -27,7 +59,6 @@ router.get("/all", async (req, res) => {
 
 router.get("/user/:email", async (req, res) => {
   const email = req.params.email;
-  console.log("get user", email);
 
   try {
     const cart = await Cart.findOne({ email: email }); // Use _id instead of id
@@ -41,12 +72,12 @@ router.get("/user/:email", async (req, res) => {
   }
 });
 
-router.get("/user/:id", async (req, res) => {
-  const id = req.params.id;
+router.get("/user/:id/getOrder", async (req, res) => {
+  const userId = req.params.id; // Use req.params.id to get the provided user ID
   console.log("get user", id);
-  if (id) {
-    try {
-      const cart = await Cart.findOne({ id: id }); // Use _id instead of id
+
+  try {
+      const cart = await Cart.findOne({ userId: userId }); // Compare userId with userId
       if (!cart) {
         return res.status(400).send({ error: "Cart does not exist" });
       }
@@ -55,5 +86,6 @@ router.get("/user/:id", async (req, res) => {
       console.error(err);
       res.status(500).send({ error: "Something went wrong" });
     }
-  }
 });
+
+module.exports = router;

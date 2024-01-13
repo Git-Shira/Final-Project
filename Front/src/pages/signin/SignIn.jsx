@@ -3,11 +3,15 @@ import { Container, Typography, TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { login } from "../../redux/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userDe, setUserDe] = useState({});
+
   const navigation = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
     debugger;
@@ -20,11 +24,16 @@ const SignIn = () => {
         "http://localhost:3000/auth/login",
         userData
       );
-      const user = response.data;
+      const user = response.data.user;
+      dispatch(login(user));
       localStorage.setItem("user", JSON.stringify(user));
-      console.log(user);
-      navigation("/");
-      alert("התחברת בהצלחה");
+      if (user.permission === "admin") {
+        navigation("/Admin/Management");
+        alert("התחברת בהצלחה");
+      } else {
+        navigation("/");
+        alert("התחברת בהצלחה");
+      }
     } catch (err) {
       console.error(err);
     }
