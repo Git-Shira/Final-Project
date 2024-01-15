@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -26,11 +26,16 @@ export default function Cart() {
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const [quantity, setQuantity] = React.useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const handleOpenDialog = () => {
+  const handleOpenDialog = (product) => {
+    debugger;
+    setSelectedProduct(product);
+
     setOpen(true);
   };
   const handleCloseDialog = () => {
+    setSelectedProduct(null);
     setOpen(false);
   };
 
@@ -78,7 +83,7 @@ export default function Cart() {
           <TableBody>
             {allProducts.map((row, index) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="right">{row.name}</TableCell>
@@ -94,7 +99,7 @@ export default function Cart() {
                 </TableCell>
                 <TableCell align="right">{row.price}</TableCell>
                 <TableCell align="right">
-                  <Button onClick={handleOpenDialog}>
+                  <Button onClick={() => handleOpenDialog(row)}>
                     {" "}
                     <DeleteIcon color="red" />
                   </Button>
@@ -126,33 +131,32 @@ export default function Cart() {
                     +
                   </Button>
                 </TableCell>
-                <Dialog
-                  open={open}
-                  onClose={handleCloseDialog}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">
-                    {"האם אתה בטוח שברצונך למחוק את המוצר?"}
-                  </DialogTitle>
-                  <DialogContent
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
+                {selectedProduct && (
+                  <Dialog
+                    open={open}
+                    onClose={handleCloseDialog}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
                   >
-                    <DialogContentText id="alert-dialog-description">
-                      האם אתה בטוח שברצונך למחוק את המוצר?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseDialog}>לא</Button>
-                    <Button onClick={() => deleteItem(index)} autoFocus>
-                      כן
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                    <DialogTitle id="alert-dialog-title">
+                      {`האם אתה בטוח שברצונך למחוק את המוצר ${selectedProduct.name}?`}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleCloseDialog}>לא</Button>
+                      <Button
+                        onClick={() => deleteItem(selectedProduct)}
+                        autoFocus
+                      >
+                        כן
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                )}
               </TableRow>
             ))}
           </TableBody>

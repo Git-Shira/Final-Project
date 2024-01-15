@@ -4,6 +4,7 @@ const initialState = {
   item: [],
   totalAmount: 0,
 };
+console.log(initialState);
 const CalculateTotelAmount = (item) => {
   let totalAmount = 0;
   for (const item of item) {
@@ -23,8 +24,12 @@ const cartSlice = createSlice({
         state.totalAmount += item.price;
         return;
       }
-      state.item.push(action.payload);
-      state.totalAmount += action.payload.price;
+      const newItem = { ...action.payload, quantity: 1 }; // Ensure quantity is set to 1 for new items
+      state.item.push(newItem);
+      state.totalAmount += newItem.price;
+
+      Cookies.set("cart", JSON.stringify(state.item), { expires: 7 }); // Set a 7-day expiration (adjust as needed)
+
     },
 
     editItem: (state, action) => {
@@ -37,22 +42,30 @@ const cartSlice = createSlice({
 
         //Update the total amount by subtracting the previous total price and adding the new total price
         state.totalAmount = state.totalAmount - prevTOtalPrice + newTotalPrice;
+        Cookies.set("cart", JSON.stringify(state.item), { expires: 7 }); // Set a 7-day expiration (adjust as needed)
       }
     },
 
     removeItem: (state, action) => {
-      const itenIdtoToRemove = action.payload;
-      const ItemToRemove = state.item.find(
-        (item) => item.id === itenIdtoToRemove
+      const itemIdToRemove = action.payload.id;
+      console.log(itemIdToRemove);
+      const indexToRemove = state.item.findIndex(
+        (item) => item.id === itemIdToRemove
       );
 
-      if (ItemToRemove) {
-        //Subtract the total price of the removed item
-        state.totalAmount -= ItemToRemove.price * ItemToRemove.quantity;
+      if (indexToRemove !== -1) {
+        const removedItem = state.item[indexToRemove];
+
+        // Subtract the total price of the removed item
+        state.totalAmount -= removedItem.price * removedItem.quantity;
 
         // Remove the item from array
-        state.item = state.item.filter((item) => item.id !== itenIdtoToRemove);
-        return;
+        state.item.splice(indexToRemove, 1);
+
+        // Update the cart cookie
+        Cookies.set("cart", JSON.stringify(state.item), { expires: 7 }); // Set a 7-day expiration (adjust as needed)
+      } else {
+        console.error("Item not found in cart:", itemIdToRemove);
       }
     },
   },
