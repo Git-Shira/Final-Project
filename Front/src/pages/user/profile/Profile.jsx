@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, Link } from "react-router-dom";
 import { Container } from "@mui/system";
-import TableOrder from "./TableOrder";
+import TableOrder from "./Tableorder";
 const Profile = () => {
     const [user, setUser] = useState("");
     useEffect(() => {
