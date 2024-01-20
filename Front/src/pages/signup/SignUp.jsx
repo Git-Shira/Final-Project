@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let navigate = useNavigate();
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -28,6 +29,7 @@ const SignUp = () => {
         config
       );
       console.log(data);
+      navigate("/singin");
       alert("הרשמתך בוצעה בהצלחה");
     } catch (error) {
       console.error(error);
