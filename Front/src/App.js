@@ -10,6 +10,7 @@ import UserRoute from "./components/Route/UserRoute";
 import Management from "./pages/admin/Management";
 import Products from "./pages/products/Products";
 import Cart from "./pages/cart/Cart";
+import Pay from "./pages/cart/Pay";
 function App() {
   return (
     <Router>
