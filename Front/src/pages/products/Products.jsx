@@ -8,10 +8,16 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/system";
 import Dialog from "@mui/material/Dialog";
 import axios from "axios";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { IconButton } from "@mui/material";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../redux/favoritesSlice";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { DialogContentText, MenuItem, Select } from "@mui/material";
-import { SignalWifiStatusbarNullSharp } from "@mui/icons-material";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import Box from "@mui/material/Box";
@@ -23,16 +29,33 @@ const Products = () => {
   const [selectCategory, setSelectCategory] = React.useState("");
   const [priceRange, setPriceRange] = React.useState([0, 150]);
   const [open, setOpen] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(false); // Add this state
+  const [favoriteStatus, setFavoriteStatus] = React.useState({});
 
-  const dispatch = useDispatch();
-
-  const handleClickOpen = (product) => {
-    setSelectedProduct(product);
-    setOpen(true);
-  };
+ 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+
+  const handleAddToFavorites = (product) => {
+    dispatch(addToFavorites(product));
+    setFavoriteStatus({
+      ...favoriteStatus,
+      [product._id]: true,
+    });
+  };
+
+  const handleRemoveFromFavorites = (product) => {
+    dispatch(removeFromFavorites(product._id));
+    setFavoriteStatus({
+      ...favoriteStatus,
+      [product._id]: false,
+    });
+  };
+
   const addToCart = () => {
     if (selectedProduct) {
       dispatch(
@@ -59,13 +82,15 @@ const Products = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
   const handleChange = (event) => {
     setSelectCategory(event.target.value);
   };
+
   const handleChangePrice = (event, newValue) => {
     setPriceRange(newValue);
   };
-  console.log("priceRange", selectedProduct);
+
   return (
     <div>
       <Container>
@@ -109,70 +134,84 @@ const Products = () => {
               product.price >= priceRange[0] &&
               product.price <= priceRange[1]
           )
-
           .map((product, index) => {
             return (
-              <>
-                <Card
-                  sx={{ maxWidth: 345 }}
-                  onClick={() => {
-                    handleClickOpen(product);
-                  }}
-                >
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image={product.image}
-                    title="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Price :{product.price}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Amount : {product.amount}
-                    </Typography>
-                    {/* <Typography variant="body2" color="text.secondary">
-                  Category : {product.category}
-                </Typography> */}
-                    <Typography variant="body2" color="text.secondary">
-                      Description : {product.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Add to cart</Button>
-                  </CardActions>
-                </Card>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      <h1> {product.name}</h1>
-                      <h2> {product.price}</h2>
-                      <h3> {product.amount}</h3>
-                      <h4> {product.category}</h4>
-                      <h5> {product.description}</h5>
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={addToCart} autoFocus>
-                      Add to cart
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </>
+              <Card key={product._id} sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image={product.image}
+                  title="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {product.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Price: {product.price}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Amount: {product.amount}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Description: {product.description}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <IconButton
+                    onClick={() => {
+                      if (favoriteStatus[product._id]) {
+                        handleRemoveFromFavorites(product);
+                      } else {
+                        handleAddToFavorites(product);
+                      }
+                    }}
+                  >
+                    <FavoriteIcon
+                      color={favoriteStatus[product._id] ? "error" : "disabled"}
+                      fontSize="small"
+                    />
+                  </IconButton>{" "}
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      setSelectedProduct(product);
+                      setOpen(true);
+                    }}
+                  >
+                    See Details
+                  </Button>
+                </CardActions>
+              </Card>
             );
           })}
+        {selectedProduct && (
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <h1> {selectedProduct.name}</h1>
+                <h2> {selectedProduct.price}</h2>
+                <h3> {selectedProduct.amount}</h3>
+                <h4> {selectedProduct.category}</h4>
+                <h5> {selectedProduct.description}</h5>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={addToCart} autoFocus>
+                Add to cart
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
       </Container>
     </div>
   );
 };
 
 export default Products;
+
