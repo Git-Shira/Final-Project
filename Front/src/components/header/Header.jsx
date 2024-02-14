@@ -19,41 +19,90 @@ import Cookies from "js-cookie";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { logout } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 const Header = () => {
   const [isLogin, setIsLogin] = React.useState(false);
   const [lengthCart, setLengthCart] = React.useState([]);
+  const [lengthFavorite, setLengthFavorite] = React.useState([]);
+  const [admin, setAdmin] = React.useState(false);
   const cart = useSelector((state) => state.cart.item);
   const [anchorEl, setAnchorEl] = useState(null); // State for the Popover
+  const [anchorElFavorite, setAnchorElFavorite] = useState(null); // State for the Popover
+  const [favoriteLeght, setFavoriteLeght] = useState(0);
+  const [dataFavorite, setDataFavorite] = useState([]);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [cartLength, setCartLength] = useState(0);
+
   const dispatch = useDispatch();
   const userConnected = useSelector((state) => state.user.isAuthenticating);
+  const favorites = useSelector((state) => state.favorites.favorites);
   const user = useSelector((state) => state.user.user);
   const userCookies = Cookies.get("user");
   const cartCookies = Cookies.get("cart");
+  const cartFromCookies = Cookies.get("favorites");
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (cartCookies) {
-      const cart = JSON.parse(cartCookies);
-      setLengthCart(cart);
+      setCartLength(JSON.parse(cartCookies));
+      if (cart) {
+        setLengthCart(cart);
+      }
       // setLengthCart(JSON.parse(cartCookies?.items));
     }
   }, [cartCookies]);
 
+  useEffect(() => {
+    if (cartFromCookies) {
+      setLengthFavorite(JSON.parse(cartFromCookies));
+    }
+  }, [cartFromCookies]);
+
+  useEffect(() => {
+    console.log(cartCookies);
+    setFavoriteLeght(favorites.length);
+    setDataFavorite(favorites);
+  }, [favorites]);
+
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action
-    Cookies.remove("user"); // Clear the user cookie
-    // Add any other cleanup logic if needed
-  };
+    Cookies.remove("user", { path: "/" }); // Clear the user cookie
+    navigate("/");
+    // Refresh the page
+    window.location.reload();
+    };
+
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget); // Open the Popover
   };
   const handleMenuClose = () => {
     setAnchorEl(null); // Close the Popover
   };
+
+  const handleMenuClickFavorite = (event) => {
+    if (isPopoverOpen) {
+      // Close the popover if it's open
+      setIsPopoverOpen(false);
+    } else {
+      // Open the popover
+      setAnchorElFavorite(event.currentTarget);
+      setIsPopoverOpen(true);
+    }
+  };
+
   useEffect(() => {
     if (userCookies) {
       setIsLogin(true);
     }
+    if (user?.permission === "admin") {
+      setAdmin(true);
+    }
   }, [userCookies]);
+
+  console.log(lengthFavorite.length);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -67,7 +116,7 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to={"/Cart"}>
               <ShoppingCartIcon />
-              {cart.length > 0 && (
+              {cartLength.length > 0 && (
                 <Box
                   sx={{
                     position: "absolute",
@@ -88,14 +137,53 @@ const Header = () => {
               )}
             </Link>
           </Typography>
-          <FavoriteIcon />
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
-          ></Typography>
+          
+          
           {isLogin ? (
             <>
+             <Link to={"/favorites"}>
+                <IconButton
+                  color="inherit"
+                  aria-haspopup="true"
+                  onClick={handleMenuClickFavorite}
+                >
+                  <FavoriteIcon />
+                  {lengthFavorite.length > 0 && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 3,
+                        bgcolor: "red",
+                        color: "white",
+                        fontSize: "10px",
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "50%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {lengthFavorite.length}
+                    </Box>
+                  )}
+                </IconButton>
+              </Link>
+
+               {/* <Popover
+                open={isPopoverOpen} // Use isPopoverOpen to control the open state
+                anchorEl={anchorElFavorite}
+                onClose={() => setIsPopoverOpen(false)} // Close the popover when the user clicks outside
+              >
+                {dataFavorite.map((item) => (
+                  <List>
+                    <ListItem>
+                      <ListItemText primary={item.name} />
+                    </ListItem>
+                  </List>
+                ))}
+              </Popover>   */}
+
               <IconButton
                 color="inherit"
                 aria-haspopup="true"
@@ -103,7 +191,8 @@ const Header = () => {
               >
                 <PersonIcon />
               </IconButton>
-              {userCookies?.permission === "admin" ? (
+
+              {admin ? (
                 <Popover
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
@@ -115,6 +204,9 @@ const Header = () => {
                     </ListItem>
                     <ListItem button component={Link} to="/Admin/TableAdmin">
                       <ListItemText primary="הזמנות" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/Admin/ViewUsers">
+                      <ListItemText primary="לקוחות" />
                     </ListItem>
                     <ListItem button onClick={handleLogout}>
                       <ListItemText primary="התנתקות" />
@@ -130,6 +222,9 @@ const Header = () => {
                   <List>
                     <ListItem button component={Link} to="/user">
                       <ListItemText primary="הפרופיל שלי" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/user/edit">
+                      <ListItemText primary="עריכת פרופיל" />
                     </ListItem>
                     <ListItem button onClick={handleLogout}>
                       <ListItemText primary="התנתקות" />

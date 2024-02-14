@@ -17,15 +17,18 @@ const TableAdmin = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); // State to store the ID of the selected user
+  
   const handleOpenModal = () => {
+    setSelectedUser(user);
     setOpenModal(true);
   };
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
   useEffect(() => {
     const fetchData = async () => {
-      debugger;
       try {
         const response = await axios.get(`http://localhost:3000/cart/all`);
         setUserData(response.data.carts);
@@ -38,7 +41,9 @@ const TableAdmin = () => {
 
     fetchData();
   }, []);
+
   console.log(userData);
+
   return (
     <div>
       <h2>הזמנה</h2>
@@ -58,6 +63,9 @@ const TableAdmin = () => {
                 <TableCell>שם המזמין</TableCell>
                 <TableCell>פרטי הזמנה</TableCell>
                 <TableCell>אישור הזמנה</TableCell>
+                <TableCell>אופן תשלום</TableCell>
+                <TableCell>סוג איסוף</TableCell>
+                <TableCell> תאריך</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -67,9 +75,12 @@ const TableAdmin = () => {
                   <TableCell>{user.totalPrice}</TableCell>
                   <TableCell>{user.fullName}</TableCell>
                   <TableCell>
-                    <Button onClick={handleOpenModal}>פרטי הזמנה</Button>
+                    <Button onClick={handleOpenModal(user)}>פרטי הזמנה</Button>
                   </TableCell>
                   <TableCell>מאושר</TableCell>
+                  <TableCell>{user.typePay}</TableCell>
+                  <TableCell>{user.typeCollect}</TableCell>
+                  <TableCell>{user.date}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -102,13 +113,13 @@ const TableAdmin = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {/* {userData?.products?.map((product) => (
-                  <TableRow>
+              {selectedUser?.products?.map((product, productIndex) => (
+                  <TableRow key={productIndex}>
                     <TableCell>{product.name}</TableCell>
                     <TableCell>{product.price}</TableCell>
                     <TableCell>{product.quantity}</TableCell>
                   </TableRow>
-                ))} */}
+                ))} 
               </TableBody>
             </Table>
           </Box>

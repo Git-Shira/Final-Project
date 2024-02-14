@@ -13,10 +13,11 @@ import Edit from "./edit/Edit";
 import axios from "axios";
 
 import ProductsCard from "../../components/card/products/ProductsCard";
+
 const Management = () => {
   const [open, setOpen] = React.useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
   const [allProducts, setAllProducts] = useState([]);
+  const [editProductId, setEditProductId] = useState(null); // State to store the ID of the product to be edited
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,13 +26,7 @@ const Management = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleEditDialogOpen = () => {
-    setIsEditDialogOpen(true);
-  };
 
-  const handleEditDialogClose = () => {
-    setIsEditDialogOpen(false);
-  };
   const fetchProducts = async () => {
     try {
       const response = await axios.get("http://localhost:3000/products/all");
@@ -40,7 +35,7 @@ const Management = () => {
       console.log(error);
     }
   };
-  console.log(allProducts);
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -56,40 +51,30 @@ const Management = () => {
         </Stack>
         <Container>
           {allProducts ? (
-            allProducts?.map((product, index) => (
-              <>
-                <ProductsCard
-                  key={product._id || index}
-                  handleEditDialogOpen={handleEditDialogOpen}
-                  product={product}
-                />
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogContent>
-                    <AddSingleProjact setOpen={setOpen} />
-                  </DialogContent>
-                  <DialogActions></DialogActions>
-                </Dialog>
-                <Dialog
-                  open={isEditDialogOpen}
-                  onClose={handleEditDialogClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogContent>
-                    <Edit product={product} />
-                  </DialogContent>
-                </Dialog>
-              </>
-            ))
+            allProducts?.map((product, index) => {
+              return (
+                <>
+                  <ProductsCard key={product._id} product={product} fetchProducts={fetchProducts} />
+                </>
+              );
+            })
           ) : (
             <p>No products available</p>
           )}
         </Container>
+
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <AddSingleProjact setOpen={setOpen} />
+          </DialogContent>
+          <DialogActions></DialogActions>
+        </Dialog>
+
       </Container>
     </div>
   );

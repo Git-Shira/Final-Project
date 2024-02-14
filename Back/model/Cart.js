@@ -5,8 +5,11 @@ const CartSchema = new mongoose.Schema({
   fullName: String,
   totaPrice: Number,
 
-  fullAddress: String,
+  typeCollect: String,
+  street: String,
   city: String,
+
+  typePay: String,
   products: [
     {
       name: String,
@@ -16,6 +19,8 @@ const CartSchema = new mongoose.Schema({
       totalPrice: Number,
     },
   ],
+  date: String,
+
 });
 
 module.exports = mongoose.model("Cart", CartSchema);
