@@ -9,7 +9,7 @@ import { Container } from "@mui/system";
 import Dialog from "@mui/material/Dialog";
 import axios from "axios";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { IconButton } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import {
   addToFavorites,
   removeFromFavorites,
@@ -23,46 +23,54 @@ import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { addItem, removeItem } from "../../redux/cartSlice";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [selectedProduct, setSelectedProduct] = React.useState();
   const [selectCategory, setSelectCategory] = React.useState("");
   const [priceRange, setPriceRange] = React.useState([0, 150]);
   const [open, setOpen] = React.useState(false);
+  const [selectedButton, setSelectedButton] = React.useState([]);
+  const [sreach, setSreach] = React.useState("");
   const [isFavorite, setIsFavorite] = React.useState(false); // Add this state
   const [favoriteStatus, setFavoriteStatus] = React.useState({});
+  const categorys = ["All", "Ten", "Twenty", "Thirty"];
 
- 
+
   const handleClose = () => {
     setOpen(false);
   };
 
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.favorites);
+  const favorites = useSelector((state) => state.favorites.favorites); // Updated selector
 
   const handleAddToFavorites = (product) => {
     dispatch(addToFavorites(product));
-    setFavoriteStatus({
-      ...favoriteStatus,
-      [product._id]: true,
-    });
+
   };
 
-  const handleRemoveFromFavorites = (product) => {
-    dispatch(removeFromFavorites(product._id));
-    setFavoriteStatus({
-      ...favoriteStatus,
-      [product._id]: false,
-    });
+  const addShoppingCart = (products) => {
+    debugger;
+    dispatch(
+      addItem({
+        id: products._id,
+        name: products.name,
+        price: products.price,
+        image: products.image,
+        quantity: 1,
+      })
+    );
   };
 
   const addToCart = () => {
+    debugger;
     if (selectedProduct) {
       dispatch(
         addItem({
           id: selectedProduct._id,
           name: selectedProduct.name,
           price: selectedProduct.price,
+          image: selectedProduct.image,
           quantity: 1,
           filter:selectedProduct.filter,
         })
@@ -80,17 +88,41 @@ const Products = () => {
     }
   };
 
+  const resetFilter = () => {
+    setSelectedButton([]);
+    setSelectCategory("");
+    setPriceRange([0, 150]);
+    setSreach("");
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
 
-  const handleChange = (event) => {
-    setSelectCategory(event.target.value);
+  const handleChange = (category) => {
+    if (selectedButton.includes(category)) {
+      setSelectedButton(selectedButton.filter((item) => item !== category));
+      setSelectCategory("");
+    } else {
+      setSelectedButton([...selectedButton, category]);
+      setSelectCategory(category);
+    }
+
+    // setSelectCategory(category);
+  };
+  const isButtonSelected = (category) => {
+    return selectedButton.includes(category);
   };
 
   const handleChangePrice = (event, newValue) => {
     setPriceRange(newValue);
   };
+
+  const isFavorite = (productId) => {
+    debugger;
+    return favorites.some((favorite) => favorite._id === productId);
+  };
+  console.log(isFavorite);
 
   return (
     <div>
@@ -112,19 +144,36 @@ const Products = () => {
             max={150}
           />
         </Box>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          onChange={handleChange}
-          value={selectCategory}
-          placeholder="Select category"
+        <TextField
+          id="outlined-basic"
+          label="Search"
+          type={"text"}
+          variant="outlined"
+          onChange={(e) => setSreach(e.target.value)}
+        />
+        <Button
+          onClick={() => {
+            resetFilter();
+          }}
         >
-          <MenuItem value={selectCategory}>Select category</MenuItem>
-          <MenuItem value={""}>All</MenuItem>
-          <MenuItem value={"10"}>Ten</MenuItem>
-          <MenuItem value={"20"}>Twenty</MenuItem>
-          <MenuItem value={"30"}>Thirty</MenuItem>
-        </Select>
+          Reset
+        </Button>
+        {categorys.map((category, index) => {
+          return (
+            <Button
+              key={index}
+              onClick={() => {
+                handleChange(category);
+              }}
+              sx={{
+                backgroundColor: isButtonSelected(category) ? "black" : "red", // Change to red when selected
+                color: isButtonSelected(category) ? "white" : "black",
+              }}
+            >
+              {category}
+            </Button>
+          );
+        })}
 
         {products
           .filter(
@@ -132,10 +181,11 @@ const Products = () => {
               (selectCategory === ""
                 ? true
                 : product.category === selectCategory) &&
-              product.price >= priceRange[0] &&
-              product.price <= priceRange[1]
+              product.price <= priceRange[1] &&
+              product.name.toLowerCase().startsWith(sreach.toLowerCase())
           )
           .map((product, index) => {
+            console.log(product._id);
             return (
               <Card key={product._id} sx={{ maxWidth: 345 }}>
                 <CardMedia
@@ -158,20 +208,11 @@ const Products = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <IconButton
-                    onClick={() => {
-                      if (favoriteStatus[product._id]) {
-                        handleRemoveFromFavorites(product);
-                      } else {
-                        handleAddToFavorites(product);
-                      }
-                    }}
-                  >
+                  <IconButton onClick={() => handleAddToFavorites(product)}>
                     <FavoriteIcon
-                      color={favoriteStatus[product._id] ? "error" : "disabled"}
-                      fontSize="small"
+                      color={isFavorite(product._id) ? "error" : "disabled"}
                     />
-                  </IconButton>{" "}
+                  </IconButton>
                   <Button
                     size="small"
                     onClick={() => {
@@ -180,6 +221,14 @@ const Products = () => {
                     }}
                   >
                     See Details
+                  </Button>
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      addShoppingCart(product);
+                    }}
+                  >
+                    <ShoppingCartIcon />
                   </Button>
                 </CardActions>
               </Card>
