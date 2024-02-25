@@ -64,6 +64,7 @@ const Products = () => {
           name: selectedProduct.name,
           price: selectedProduct.price,
           quantity: 1,
+          filter:selectedProduct.filter,
         })
       );
     }

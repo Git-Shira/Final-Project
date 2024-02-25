@@ -10,6 +10,7 @@ const AddSingleProjact = ({ setOpen }) => {
     image: "",
     category: "",
     amount: "",
+    filter:""
   });
   const [age, setAge] = React.useState("");
 
@@ -69,6 +70,14 @@ const AddSingleProjact = ({ setOpen }) => {
           variant="outlined"
           value={product.image}
           onChange={(e) => setProduct({ ...product, image: e.target.value })}
+        />
+         <TextField
+          id="outlined-basic"
+          label="פילטר"
+          type="number"
+          variant="outlined"
+          value={product.filter}
+          onChange={(e) => setProduct({ ...product, filter: e.target.value })}
         />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Age</InputLabel>

@@ -12,6 +12,7 @@ const Edit = ({ product }) => {
     image: product.image || "",
     category: product.category || "",
     amount: product.amount || "",
+    filter: product.filer || ""
   });
 
   const handleSubmit = async (e) => {
@@ -35,6 +36,7 @@ const Edit = ({ product }) => {
         image: "",
         category: "",
         amount: "",
+        filter: ""
       });
     } catch (error) {
       console.log(error);
@@ -88,7 +90,18 @@ const Edit = ({ product }) => {
             setEditProduct({ ...editproduct, image: e.target.value })
           }
         />
-
+        <TextField
+          id="filter"
+          label="פילטר"
+          type="number"
+          variant="outlined"
+          fullWidth
+          required
+          value={editproduct.filter}
+          onChange={(e) =>
+            setEditProduct({ ...editproduct, filter: e.target.value })
+          }
+        />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">קטגוריה</InputLabel>
           <Select
