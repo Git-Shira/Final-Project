@@ -13,14 +13,18 @@ const userSlice = createSlice({
     login: (state, action) => {
       state.user = action.payload;
       state.isAuthenticating = true;
-      Cookies.set("user", JSON.stringify(action.payload), { expires: 7 }); // Set a 7-day expiration (adjust as needed)
+      Cookies.set("user", JSON.stringify(action.payload), {
+        expires: 7,
+        path: "/",
+      }); // Set a 7-day expiration (adjust as needed)
     },
     logout: (state) => {
       state.user = null;
       state.isAuthenticating = false;
+      Cookies.remove("user"); // Remove the user cookie
     },
   },
 });
 
-export const { login , logout } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 export default userSlice.reducer;

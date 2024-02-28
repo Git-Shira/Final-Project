@@ -16,20 +16,33 @@ const TableOrder = ({ id }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [openModal, setOpenModal] = useState(false);
-    const handleOpenModal = () => {
+    const [idPerson, setIdPreson] = useState("");
+    const [selectedUser, setSelectedUser] = useState([]); // State to store the ID of the selected user
+
+    const handleOpenModal = (data) => {
         setOpenModal(true);
+        setSelectedUser(data);
     };
     const handleCloseModal = () => {
         setOpenModal(false);
     };
     useEffect(() => {
+
+        setIdPreson(id._id);
+    }, [id._id]);
+
+    useEffect(() => {
         const fetchData = async () => {
+            if (!idPerson) return;
+
+            console.log("id", idPerson);
+
             try {
-                if (id) {
+                if (idPerson) {
                     const response = await axios.get(
-                        `http://localhost:3000/cart/user/${id}/getOrder`
+                        `http://localhost:3000/cart/user/${idPerson}/getOrders`
                     );
-                    setUserData(response.data.cart);
+                    setUserData(response.data.orders);
                     setLoading(false);
                 }
             } catch (error) {
@@ -39,7 +52,7 @@ const TableOrder = ({ id }) => {
         };
 
         fetchData();
-    }, [id]);
+    }, [idPerson]);
     console.log(userData);
     return (
         <div>
@@ -57,22 +70,26 @@ const TableOrder = ({ id }) => {
                             {/* Replace with relevant user data */}
                             <TableCell>מחיר כולל</TableCell>
                             <TableCell>פרטי הזמנה</TableCell>
+                            <TableCell>תאריך</TableCell>
                             <TableCell>אישור הזמנה</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {userData && (
+                        {userData.map((user) => (
                             <TableRow>
-                                <TableCell>{userData._id}</TableCell> {/* Display userId */}
+                                <TableCell>{user._id}</TableCell> {/* Display userId */}
                                 {/* Display fullAddress */}
-                                <TableCell>{userData.totalPrice}</TableCell>{" "}
+                                <TableCell>{user.totalPrice}</TableCell>{" "}
                                 {/* Display totalPrice */}
                                 <TableCell>
-                                    <Button onClick={handleOpenModal}>פרטי הזמנה</Button>
+                                    <Button onClick={() => handleOpenModal(user)}>
+                                        פרטי הזמנה
+                                    </Button>
                                 </TableCell>
+                                <TableCell>{user.date}</TableCell>
                                 <TableCell>מאושר</TableCell>
                             </TableRow>
-                        )}
+                        ))}
                     </TableBody>
                 </Table>
             )}
@@ -102,13 +119,15 @@ const TableOrder = ({ id }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {userData?.products.map((product) => (
-                                    <TableRow>
-                                        <TableCell>{product.name}</TableCell>
-                                        <TableCell>{product.price}</TableCell>
-                                        <TableCell>{product.quantity}</TableCell>
-                                    </TableRow>
-                                ))}
+                                {selectedUser?.products?.map((product) => {
+                                    return (
+                                        <TableRow key={product._id}>
+                                            <TableCell>{product.name}</TableCell>
+                                            <TableCell>{product.price}</TableCell>
+                                            <TableCell>{product.quantity}</TableCell>
+                                        </TableRow>
+                                    );
+                                })}
                             </TableBody>
                         </Table>
                     </Box>

@@ -1,43 +1,49 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { TextField, Button, Box, Grid } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Container,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const Edit = () => {
-  const [id, setId] = useState("");
+const Edit = ({ id }) => {
   const [user, setUser] = useState({});
-  const [userDetails, setUserDetails] = useState({});
+  const [userId, setUserId] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const [editUser, setEditUser] = useState({
-    fullName: user.fullName || "",
-    email: user.email || "",
-    password: user.password || "",
+    fullName: id.fullName || "",
+    email: id.email || "",
+    password: "",
   });
-
-  useEffect(() => {
-    const userJson = JSON.parse(localStorage.getItem("user"));
-    if (userJson) {
-      console.log(userJson);
-      setUserDetails(userJson);
-      setId(userJson.user._id);
-    }
-  }, []);
-
-  const getUser = async () => {
-    console.log(id);
-    try {
-      const response = await axios.get(`http://localhost:3000/auth/user/${id}`);
-      console.log("ddd", response);
-      setUser(response.data.user);
-    } catch (error) {
-      console.log(error);
-    }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
+  console.log("id", id._id);
   useEffect(() => {
-    getUser();
-  }, [id]);
-  console.log(user.email);
+    const getUser = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/auth/user/${id._id}`
+        );
+        setUser(response.data.user);
+        setUserId(id._id);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    if (id._id) {
+      getUser();
+    }
+  }, [id._id]);
+
   const handleSubmit = async (e) => {
-    debugger;
     e.preventDefault();
     const userData = {
       fullName: editUser.fullName,
@@ -47,85 +53,81 @@ const Edit = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/products/update/${user._id}`,
+        `http://localhost:3000/auth/update/${userId}/`,
         userData
       );
-      console.log(response.data);
+      console.log("User updated:", response.data);
+      alert("User updated");
+      // Optionally display a success message to the user
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error updating user:", error);
       if (error.response) {
         console.error("Server Error Response:", error.response.data);
+        // Optionally display an error message to the user
       }
     }
   };
 
   return (
-    <div>
-      <h1>Edit</h1>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
+    <Container>
+      <Typography variant="h4">Edit User</Typography>
+      <form onSubmit={handleSubmit}>
+        <Box
+          component="div"
+          sx={{
+            width: "100%",
+            maxWidth: "400px",
+            margin: "0 auto",
+            "& > :not(style)": { m: 1 },
           }}
         >
-          <form onSubmit={handleSubmit}>
-            <Box
-              component="form"
-              style={{
-                width: "500px",
-                margin: "20px",
-                display: "flex",
-                flexDirection: "column",
-              }}
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="שם מלא"
-                variant="outlined"
-                onChange={(e) =>
-                  setEditUser({ ...editUser, fullName: e.target.value })
-                }
-              />
-              <TextField
-                id="outlined-basic"
-                label="אימייל"
-                type={"email"}
-                variant="outlined"
-                onChange={(e) =>
-                  setEditUser({ ...editUser, email: e.target.value })
-                }
-              />
-              <TextField
-                id="outlined-basic"
-                label="סיסמא"
-                type={"password"}
-                variant="outlined"
-                onChange={(e) =>
-                  setEditUser({ ...editUser, password: e.target.value })
-                }
-              />
-              <Button variant="contained" type="submit">
-                עידכון
-              </Button>
-            </Box>
-          </form>
-        </div>
-      </div>
-    </div>
+          <TextField
+            id="fullName"
+            label="Full Name"
+            variant="outlined"
+            fullWidth
+            value={editUser.fullName}
+            onChange={(e) =>
+              setEditUser({ ...editUser, fullName: e.target.value })
+            }
+          />
+          <TextField
+            id="email"
+            label="Email"
+            type="email"
+            variant="outlined"
+            fullWidth
+            value={editUser.email}
+            onChange={(e) =>
+              setEditUser({ ...editUser, email: e.target.value })
+            }
+          />
+          <TextField
+            id="password"
+            label="Password"
+            type={showPassword ? "text" : "password"} // Toggle password visibility
+            variant="outlined"
+            fullWidth
+            value={editUser.password}
+            onChange={(e) =>
+              setEditUser({ ...editUser, password: e.target.value })
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Button variant="contained" type="submit" fullWidth>
+            Update
+          </Button>
+        </Box>
+      </form>
+    </Container>
   );
 };
 
