@@ -17,25 +17,40 @@ import {
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { DialogContentText, MenuItem, Select } from "@mui/material";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { addItem, removeItem } from "../../redux/cartSlice";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
+import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+
 const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [selectedProduct, setSelectedProduct] = React.useState();
   const [selectCategory, setSelectCategory] = React.useState("");
   const [priceRange, setPriceRange] = React.useState([0, 150]);
   const [open, setOpen] = React.useState(false);
-  const [selectedButton, setSelectedButton] = React.useState([]);
-  const [sreach, setSreach] = React.useState("");
-  const [isFavorite, setIsFavorite] = React.useState(false); // Add this state
   const [favoriteStatus, setFavoriteStatus] = React.useState({});
+
+  const userCookies = Cookies.get("user");
+  const user = userCookies ? JSON.parse(userCookies) : null;
+
   const categorys = ["All", "Ten", "Twenty", "Thirty"];
 
+  // const [selectedButton, setSelectedButton] = React.useState([]);
+  const [selectedButton, setSelectedButton] = React.useState("");
+  const [search, setSearch] = React.useState("");
+
+  const [closeIt, setCloseIt] = React.useState(false);
+
+  const handleOpenIt = () => {
+    setCloseIt(true);
+  }
+  const handleCloseIt = () => {
+    setCloseIt(false);
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -58,6 +73,7 @@ const Products = () => {
         price: products.price,
         image: products.image,
         quantity: 1,
+        filter: products.filter
       })
     );
   };
@@ -72,7 +88,7 @@ const Products = () => {
           price: selectedProduct.price,
           image: selectedProduct.image,
           quantity: 1,
-          filter:selectedProduct.filter,
+          filter: selectedProduct.filter,
         })
       );
     }
@@ -89,10 +105,11 @@ const Products = () => {
   };
 
   const resetFilter = () => {
-    setSelectedButton([]);
+    // setSelectedButton([]);
+    setSelectedButton("");
     setSelectCategory("");
-    setPriceRange([0, 150]);
-    setSreach("");
+    setPriceRange([0, 449]);
+    setSearch("");
   };
 
   useEffect(() => {
@@ -101,14 +118,14 @@ const Products = () => {
 
   const handleChange = (category) => {
     if (selectedButton.includes(category)) {
-      setSelectedButton(selectedButton.filter((item) => item !== category));
+      // setSelectedButton(selectedButton.filter((item) => item !== category));
+      setSelectedButton("");
       setSelectCategory("");
     } else {
-      setSelectedButton([...selectedButton, category]);
+      // setSelectedButton([...selectedButton, category]);
+      setSelectedButton(category);
       setSelectCategory(category);
     }
-
-    // setSelectCategory(category);
   };
   const isButtonSelected = (category) => {
     return selectedButton.includes(category);
@@ -122,6 +139,7 @@ const Products = () => {
     debugger;
     return favorites.some((favorite) => favorite._id === productId);
   };
+
   console.log(isFavorite);
 
   return (
@@ -141,23 +159,18 @@ const Products = () => {
             step={10}
             marks
             min={0}
-            max={150}
+            max={449}
           />
         </Box>
+
         <TextField
           id="outlined-basic"
           label="Search"
           type={"text"}
           variant="outlined"
-          onChange={(e) => setSreach(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
-        <Button
-          onClick={() => {
-            resetFilter();
-          }}
-        >
-          Reset
-        </Button>
+
         {categorys.map((category, index) => {
           return (
             <Button
@@ -174,6 +187,16 @@ const Products = () => {
             </Button>
           );
         })}
+         
+        {(selectCategory || search || priceRange[0] != 0 || priceRange[1] != 449) &&
+          <Button
+            onClick={() => {
+              resetFilter();
+            }}
+          >
+            Reset
+          </Button>
+        }
 
         {products
           .filter(
@@ -181,8 +204,9 @@ const Products = () => {
               (selectCategory === ""
                 ? true
                 : product.category === selectCategory) &&
+                product.price >= priceRange[0] &&
               product.price <= priceRange[1] &&
-              product.name.toLowerCase().startsWith(sreach.toLowerCase())
+              product.name.toLowerCase().startsWith(search.toLowerCase())
           )
           .map((product, index) => {
             console.log(product._id);
@@ -191,21 +215,21 @@ const Products = () => {
                 <CardMedia
                   sx={{ height: 140 }}
                   image={product.image}
-                  title="green iguana"
+                  title={product.name}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {product.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Price: {product.price}
+                  ₪ {product.price}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Amount: {product.amount}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  {/* <Typography variant="body2" color="text.secondary">
                     Description: {product.description}
-                  </Typography>
+                  </Typography> */}
                 </CardContent>
                 <CardActions>
                   <IconButton onClick={() => handleAddToFavorites(product)}>
@@ -243,9 +267,10 @@ const Products = () => {
           >
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
+                <img src={selectedProduct.image} alt="" width={200} />
                 <h1> {selectedProduct.name}</h1>
-                <h2> {selectedProduct.price}</h2>
-                <h3> {selectedProduct.amount}</h3>
+                <h2>₪ {selectedProduct.price}</h2>
+                {/* <h3> {selectedProduct.amount}</h3> */}
                 <h4> {selectedProduct.category}</h4>
                 <h5> {selectedProduct.description}</h5>
               </DialogContentText>

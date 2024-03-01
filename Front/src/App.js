@@ -11,7 +11,20 @@ import Management from "./pages/admin/Management";
 import Products from "./pages/products/Products";
 import Cart from "./pages/cart/Cart";
 import Pay from "./pages/cart/Pay";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { cartPersistenceMiddleware } from "./redux/cartSlice";
+
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cartPersistenceMiddleware());
+  }, [dispatch]);
+  
   return (
     <Router>
       <Header />
