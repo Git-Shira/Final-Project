@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ProductSchema = require("../modal/Product");
+const ProductSchema = require("../model/Product");
 
 router.post("/add", async (req, res) => {
   try {

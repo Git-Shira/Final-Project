@@ -27,30 +27,27 @@ const Header = () => {
   const [lengthCart, setLengthCart] = React.useState([]);
   const [lengthFavorite, setLengthFavorite] = React.useState([]);
   const [admin, setAdmin] = React.useState(false);
-  const cart = useSelector((state) => state.cart.item);
+
   const [anchorEl, setAnchorEl] = useState(null); // State for the Popover
   const [anchorElFavorite, setAnchorElFavorite] = useState(null); // State for the Popover
   const [favoriteLeght, setFavoriteLeght] = useState(0);
   const [dataFavorite, setDataFavorite] = useState([]);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [cartLength, setCartLength] = useState(0);
-
   const dispatch = useDispatch();
   const userConnected = useSelector((state) => state.user.isAuthenticating);
   const favorites = useSelector((state) => state.favorites.favorites);
+  const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.user);
   const userCookies = Cookies.get("user");
   const cartCookies = Cookies.get("cart");
   const cartFromCookies = Cookies.get("favorites");
   const navigate = useNavigate();
+  console.log(JSON.parse(cartCookies));
 
   useEffect(() => {
     if (cartCookies) {
       setCartLength(JSON.parse(cartCookies));
-      if (cart) {
-        setLengthCart(cart);
-      }
-      // setLengthCart(JSON.parse(cartCookies?.items));
     }
   }, [cartCookies]);
 
@@ -96,12 +93,11 @@ const Header = () => {
     if (userCookies) {
       setIsLogin(true);
     }
+
     if (user?.permission === "admin") {
       setAdmin(true);
     }
   }, [userCookies]);
-
-  console.log(lengthFavorite.length);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -132,7 +128,7 @@ const Header = () => {
                     alignItems: "center",
                   }}
                 >
-                  {cart.length}
+                  {cartLength.length}
                 </Box>
               )}
             </Link>
@@ -170,7 +166,7 @@ const Header = () => {
                 </IconButton>
               </Link>
 
-               {/* <Popover
+               {/*  <Popover
                 open={isPopoverOpen} // Use isPopoverOpen to control the open state
                 anchorEl={anchorElFavorite}
                 onClose={() => setIsPopoverOpen(false)} // Close the popover when the user clicks outside

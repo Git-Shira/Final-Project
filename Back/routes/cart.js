@@ -1,6 +1,6 @@
-const Cart = require("../modal/Cart");
+const Cart = require("../model/Cart");
 const express = require("express");
-const User = require("../modal/User");
+const User = require("../model/User");
 
 const router = express.Router();
 

@@ -44,11 +44,20 @@ export default function Cart() {
   };
 
   const deleteItem = (id) => {
+    const cookieCart = Cookies.get("cart");
+    const parsedCookieCart = cookieCart ? JSON.parse(cookieCart) : [];
+
+    const updateCookieCart = parsedCookieCart.filter((item) => item.id !== id);
+    console.log("Updating cookies with:", updateCookieCart);
+
+    // Cookies.set("cart", JSON.stringify(updateCookieCart));
+
     dispatch(removeItem(id));
-    handleCloseDialog();
+
     const updatedCart = cartData.filter((item) => item.id !== id);
     setCartData(updatedCart);
     updateTotalPrice(updatedCart);
+    handleCloseDialog();
   };
 
   const handleOpenDialog = () => {

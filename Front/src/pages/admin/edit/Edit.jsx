@@ -12,7 +12,7 @@ const Edit = ({ product }) => {
     image: product.image || "",
     category: product.category || "",
     amount: product.amount || "",
-    filter: product.filer || ""
+    filter: product.filter || ""
   });
 
   const handleSubmit = async (e) => {

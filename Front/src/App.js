@@ -11,7 +11,25 @@ import Management from "./pages/admin/Management";
 import Products from "./pages/products/Products";
 import Cart from "./pages/cart/Cart";
 import Pay from "./pages/cart/Pay";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
+import Favorites from "./pages/favorite/Favorites";
+import { useDispatch, useSelector } from "react-redux";
+import { loadFavoritesFromCookies } from "./redux/favoritesSlice";
+import { cartPersistenceMiddleware } from "./redux/cartSlice";
+
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadFavoritesFromCookies());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(cartPersistenceMiddleware());
+  }, [dispatch]);
+  
   return (
     <Router>
       <Header />
@@ -24,6 +42,7 @@ function App() {
         <Route path="/Products" element={<Products />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Pay" element={<Pay />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </Router>
   );
