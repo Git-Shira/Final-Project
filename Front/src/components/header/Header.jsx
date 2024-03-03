@@ -229,7 +229,7 @@ const Header = () => {
                   onClose={handleMenuClose}
                 >
                   <List>
-                    <ListItem button component={Link} to="/user">
+                    <ListItem button component={Link} to="/user/profile">
                       <ListItemText primary="הפרופיל שלי" />
                     </ListItem>
                     <ListItem button component={Link} to="/user/edit">
