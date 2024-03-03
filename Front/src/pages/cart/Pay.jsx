@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -14,32 +14,65 @@ import {
   CardMedia,
   Container,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 const Pay = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolder, setCardHolder] = useState("");
+  const [id, setId] = useState("");
   const [cardMonth, setCardMonth] = useState("");
   const [cardYear, setCardYear] = useState("");
   const [cardCvv, setCardCvv] = useState("");
   const [cardType, setCardType] = useState("");
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
-  const [houseNumber, setHouseNumber] = useState("");
-  const [apartmentNumber, setApartmentNumber] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
+ 
   const [fullName, setFullName] = useState("");
-  const [id, setId] = useState("");
-  const [date, setDate] = useState("");
+  const navigation = useNavigate();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setId(user?.user?._id);
+  }, []);
+
+  console.log("id", id);
 
   const handlePatment = () => {
     console.log("cardNumber", cardNumber);
     console.log("cardHolder", cardHolder);
   };
   const cart = useSelector((state) => state.cart);
-  console.log("cart", cart);
+  console.log("cart", id);
+  const handleSubmit = async (e) => {
+    const userData = {
+      userId: id,
+      cardNumber: cardNumber,
+      cardHolder: cardHolder,
+      cardMonth: cardMonth,
+      cardYear: cardYear,
+      cardCvv: cardCvv,
+      cardType: cardType,
+      fullAddress: street,
+      city: city,
+      fullName: fullName,
+      totalPrice: cart.totalAmount,
+      products: [...cart.item],
+    };
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/cart/user/${id}/new_order`,
+        userData
+      );
+      const user = response.data;
+      if (user) {
+        alert("הזמנתך התקבלה בהצלחה");
+        navigation("/");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -127,12 +160,7 @@ const Pay = () => {
           variant="outlined"
           onChange={(e) => setCardType(e.target.value)}
         />
-        <Button
-          variant="contained"
-          onClick={handlePatment}
-          to="/Pay"
-          component={Link}
-        >
+        <Button variant="contained" onClick={handleSubmit} to="/Pay">
           תשלום{" "}
         </Button>
       </Box>

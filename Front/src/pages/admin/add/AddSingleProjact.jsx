@@ -10,11 +10,11 @@ const AddSingleProjact = ({ setOpen }) => {
     image: "",
     category: "",
     amount: "",
+    filter:""
   });
   const [age, setAge] = React.useState("");
 
   const AddProjact = async () => {
-    debugger;
     const updateProduct = {
       ...product,
       category: age,
@@ -71,6 +71,14 @@ const AddSingleProjact = ({ setOpen }) => {
           value={product.image}
           onChange={(e) => setProduct({ ...product, image: e.target.value })}
         />
+         <TextField
+          id="outlined-basic"
+          label="פילטר"
+          type="number"
+          variant="outlined"
+          value={product.filter}
+          onChange={(e) => setProduct({ ...product, filter: e.target.value })}
+        />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Age</InputLabel>
           <Select
@@ -79,18 +87,30 @@ const AddSingleProjact = ({ setOpen }) => {
             value={age}
             onChange={handleChange}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+             <MenuItem value={"first"}>מנות ראשונות</MenuItem>
+          <MenuItem value={"soup"}>מרקים</MenuItem>
+          <MenuItem value={"sushi"}>סושי ספיישל</MenuItem>
+          <MenuItem value={"nigiri"}>ניגירי</MenuItem>
+          <MenuItem value={"sashimi"}>סשימי</MenuItem>
+          <MenuItem value={"combinations"}>קומבינציות</MenuItem>
+          <MenuItem value={"party"}>מגשי מסיבה</MenuItem>
+          <MenuItem value={"buns"}>באנים</MenuItem>
+          <MenuItem value={"sauteed"}>מוקפצים</MenuItem>
+          <MenuItem value={"main"}>עיקריות</MenuItem>
+          <MenuItem value={"salads"}>סלטים</MenuItem>
+          <MenuItem value={"vegan"}>תפריט טבעוני</MenuItem>
+          <MenuItem value={"children"}>ילדים</MenuItem>
+          <MenuItem value={"desserts"}>קינוחים</MenuItem>
+          <MenuItem value={"drinks"}>משקאות</MenuItem>
           </Select>
         </FormControl>
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="כמות"
           variant="outlined"
           value={product.amount}
           onChange={(e) => setProduct({ ...product, amount: e.target.value })}
-        />
+        /> */}
       </Box>
       <Button type="submit" autoFocus>
         Add
