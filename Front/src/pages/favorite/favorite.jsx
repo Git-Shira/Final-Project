@@ -65,8 +65,11 @@ const Favorites = () => {
     setProducts(JSON.parse(cartFromCookies));
   };
   useEffect(() => {
-    if (cartFromCookies) getProducts();
-  }, [cartFromCookies]);
+    if (cartFromCookies) {
+      getProducts();
+    }
+    console.log(products);
+    }, [cartFromCookies]);
 
   useEffect(() => {
     // getProducts();
