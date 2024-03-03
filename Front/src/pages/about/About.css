@@ -1,0 +1,49 @@
+ .title-design {
+margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ .title-design .t1 {
+    height: 150px;
+}
+
+ .title-design .t2 {
+    height: 120px;
+    margin-bottom: 65px;
+}
+
+.about {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+p {
+    max-width: 700px;
+
+    margin: 0 auto;
+    text-align: center;
+}
+
+.gallery img {
+    height: 150px;
+    border-radius: 15px;
+    margin-top: 50px;
+}
+
+.caption1 {
+    margin-left: 15px;
+}
+
+.caption2 {
+    margin-left: 15px;
+}
+
+.caption3 {
+    margin-left: 15px;
+}
+
+.caption4 {
+    margin-left: 15px;
+}

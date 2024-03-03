@@ -141,7 +141,12 @@ const Header = () => {
               )}
             </Link>
           </Typography>
-          
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to={"/Branches"}>סניפים</Link>
+          </Typography>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to={"/About"}>אודות</Link>
+          </Typography>
           
           {isLogin ? (
             <>

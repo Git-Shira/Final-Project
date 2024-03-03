@@ -1,0 +1,43 @@
+.message-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000;
+    padding: 20px;
+    margin: 10px;
+    height: 135px;
+  }
+  
+  .message-heart{
+    margin-top: -31px;
+    margin-right: -159px;
+  }
+
+  .message-eye{
+    margin-top: -31px;
+    margin-right: -195px;
+
+  }
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: -140px;
+    height: 125px;
+
+  }
+ 
+  .btn-prev{
+    margin-right: 15px;
+    border: none;
+  }
+  .btn-next {
+    margin-left: 15px;
+    border: none;
+  }
+  .btn-prev:hover,
+  .btn-next:hover{
+    background-color: aliceblue;
+  }

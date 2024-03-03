@@ -1,0 +1,162 @@
+* {
+    direction: rtl;
+    box-sizing: border-box;
+
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.main {
+    background-color: black;
+}
+
+.carousel {
+    position: relative;
+    z-index: 0;
+}
+
+.carousel-item {
+    height: 700px;
+    background-size: cover;
+    background-position: center;
+}
+
+.container-fluid {
+    width: 100%;
+    color: aliceblue;
+    background-color: black;
+
+    font-size: x-large;
+}
+
+.selector {
+    animation: my-scrolimg 3s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* יצירת מסגרת עגולה */
+    border: 2px solid white;
+    /* הוספת מסגרת לבנה */
+    margin: 0 auto;
+    margin-top: -87px;
+
+    position: relative;
+    z-index: 1;
+}
+
+.selector .fa {
+    font-size: 24px;
+}
+
+.div-selector a {
+    text-decoration: none;
+}
+
+
+@keyframes my-scrolimg {
+    0% {
+        transform: translate(0);
+    }
+
+    50% {
+        transform: translate(0, 40px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+hr {
+    width: 100%;
+    color: white;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+.my-container {
+    max-width: 500px;
+
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-heading {
+    font-size: xx-large;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.title {
+    position: relative;
+    display: inline-block;
+}
+
+.title:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 70%;
+    height: 3px;
+    background-color: red;
+    transform: translateX(-50%);
+}
+
+section.big-deal {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+
+    min-height: 500px;
+}
+
+
+.first-pic {
+    background:
+        url(../../IMAGES/first-pic.avif);
+}
+
+.sec-pic {
+    background:
+        url(../../IMAGES/sec-pic.jpg);
+}
+
+.third-pic {
+    margin-right: 235px;
+    height: 450px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.button-link {
+    text-decoration: none;
+    color: white;
+}
+
+.button-link:hover {
+    color: black;
+}
+
+.button {
+    background-color: black;
+    border: 2px solid white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 2s, color 0.5s;
+}
+
+.button:hover {
+    background-color: white;
+    color: black;
+}

@@ -26,6 +26,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
+import "./Products.css";
+import { Visibility } from "@mui/icons-material";
+
+import t1 from "../../IMAGES/t1.png";
+import t2 from "../../IMAGES/t2.png";
+
 const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [selectedProduct, setSelectedProduct] = React.useState();
@@ -37,11 +43,11 @@ const Products = () => {
   const userCookies = Cookies.get("user");
   const user = userCookies ? JSON.parse(userCookies) : null;
 
-  const categorys = ["All", "Ten", "Twenty", "Thirty"];
-
   // const [selectedButton, setSelectedButton] = React.useState([]);
   const [selectedButton, setSelectedButton] = React.useState("");
   const [search, setSearch] = React.useState("");
+
+  const categorys = ["ראשונות", "מרקים", "סושי ספיישל", "ניגירי", "סשימי", "קומבינציות", "מגשי מסיבה", "באנים", "מוקפצים", "עיקריות", "סלטים", "תפריט טבעוני", "קינוחים", "משקאות"];
 
   const [closeIt, setCloseIt] = React.useState(false);
 
@@ -140,12 +146,70 @@ const Products = () => {
     return favorites.some((favorite) => favorite._id === productId);
   };
 
+  const handleFavoriteToggle = (product) => {
+    const isAlreadyFavorite = favorites.some(
+      (favorite) => favorite._id === product._id
+    );
+    if (isAlreadyFavorite) {
+      dispatch(removeFromFavorites(product._id));
+    } else {
+      dispatch(addToFavorites(product));
+    }
+  };
+
   console.log(isFavorite);
+
+  const messages = [
+    '.במידה ויש שינוי שאותו אתם רוצים לבצע בהזמנה יש להתקשר לסניף ולבצע שינוי זה. ',
+    'בעקבות מזג האוויר ייתכנו זמני המתנה ארוכים מהרגיל, אנו פועלים על מנת לספק את ההזמנות מהר ככל האפשר',
+    `לחצו על ה- &nbsp;&nbsp;&nbsp; כדי להוסיף למוצרים האהובים`,
+    `לחצו על ה- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; כדי לראות פרטים נוספים על המנה`,
+];
+
+const [currentIndex, setCurrentIndex] = useState(0);
+
+const nextMessage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % messages.length);
+};
+
+const prevMessage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + messages.length) % messages.length);
+};
+
+useEffect(() => {
+    const intervalId = setInterval(nextMessage, 10000); // 5000 milliseconds = 5 seconds
+
+    return () => clearInterval(intervalId);
+}, []); // Run once on mount to start the automatic rotation
 
   return (
     <div>
       <Container>
-        <h1>Products</h1>
+
+      <div className="title-design">
+                <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000"/>
+                <h1 data-aos="flip-down" data-aos-duration="1000">התפריט שלנו</h1>
+            <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000"/>
+            </div>
+
+            <div className="message-container">
+                 <h5>שימו לב ! </h5>
+                 <br />
+                <h5 key={currentIndex} dangerouslySetInnerHTML={{ __html: messages[currentIndex] }} ></h5>
+            
+            {currentIndex===2 &&
+             <FavoriteIcon className="message-heart"/>
+              }
+            {currentIndex===3 && <Visibility className="message-eye"/>}
+
+            </div>
+            <div className="buttons-container">
+                <button onClick={prevMessage} className="btn-prev"><i class="fa fa-caret-right" aria-hidden="true"></i>
+                </button>
+                <button onClick={nextMessage} className="btn-next"><i class="fa fa-caret-left" aria-hidden="true"></i>
+                </button>
+            </div>
+
         <Box sx={{ width: 300 }}>
           <Typography id="input-slider" gutterBottom>
             Price range
