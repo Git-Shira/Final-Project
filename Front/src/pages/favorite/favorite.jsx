@@ -64,12 +64,11 @@ const Favorites = () => {
   const getProducts = () => {
     setProducts(JSON.parse(cartFromCookies));
   };
+
   useEffect(() => {
-    if (cartFromCookies) {
+    if (cartFromCookies)
       getProducts();
-    }
-    console.log(products);
-    }, [cartFromCookies]);
+  }, [cartFromCookies]);
 
   useEffect(() => {
     // getProducts();
@@ -80,14 +79,14 @@ const Favorites = () => {
       <Container>
         <h1>Favorites </h1>
 
-        {products?.map((product, index) => {
+        {favorites?.map((product, index) => {
           console.log(product._id);
           return (
             <Card key={product._id} sx={{ maxWidth: 345 }}>
               <CardMedia
                 sx={{ height: 140 }}
                 image={product.image}
-                title="green iguana"
+                title={product.name}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -104,6 +103,22 @@ const Favorites = () => {
                 </Typography>
               </CardContent>
               <CardActions>
+
+                 {/* <IconButton
+                  onClick={() => {
+                    if (isFavorite(product._id)) {
+                      handleRemoveFromFavorites(product._id);
+                    } else {
+                      handleAddToFavorites(product);
+                    }
+                  }}
+                >
+                  <FavoriteIcon
+                    color={isFavorite(product._id) ? "error" : "disabled"}
+                  />
+                </IconButton> */}
+
+
                 <Button
                   size="small"
                   onClick={() => {
