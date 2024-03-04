@@ -52,6 +52,7 @@ const Favorites = () => {
     dispatch(removeFromFavorites(productId));
   };
 
+
   const addShoppingCart = (products) => {
     dispatch(
       addItem({

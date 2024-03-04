@@ -2,6 +2,9 @@ import React from "react";
 import axios from "axios";
 import { TextField, Button, Box } from "@mui/material";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+
+import "./AddSingleProduct.css";
+
 const AddSingleProjact = ({ setOpen }) => {
   const [product, setProduct] = React.useState({
     name: "",
@@ -10,7 +13,7 @@ const AddSingleProjact = ({ setOpen }) => {
     image: "",
     category: "",
     amount: "",
-    filter:""
+    filter: ""
   });
   const [age, setAge] = React.useState("");
 
@@ -39,82 +42,112 @@ const AddSingleProjact = ({ setOpen }) => {
   };
 
   return (
-    <form onSubmit={AddProjact}>
+    <form onSubmit={AddProjact} className="add">
       <Box component="form">
         <TextField
-          id="outlined-basic"
+          id="name"
           label="שם מלא"
           variant="outlined"
+          fullWidth
+          required
+          value={product.name}
           onChange={(e) => setProduct({ ...product, name: e.target.value })}
         />
+
         <TextField
-          id="outlined-basic"
+          id="outlined-multiline-static"
           label="תיאור"
-          variant="outlined"
+          multiline
+          fullWidth
+          rows={3}
           value={product.description}
+          required
           onChange={(e) =>
             setProduct({ ...product, description: e.target.value })
           }
+          sx={{ marginTop: 2, marginBottom: 2 }}
         />
+
         <TextField
-          id="outlined-basic"
+          id="image"
+          label="קישור לתמונה"
+          variant="outlined"
+          fullWidth
+          required
+          value={product.image}
+          onChange={(e) => setProduct({ ...product, image: e.target.value })}
+          sx={{ marginBottom: 2 }}
+        />
+
+        <TextField
+          id="price"
           label="מחיר"
           type="number"
           variant="outlined"
+          required
           value={product.price}
           onChange={(e) => setProduct({ ...product, price: e.target.value })}
+          sx={{ width: 100 }}
         />
-        <TextField
-          id="outlined-basic"
-          label="תמונה"
-          variant="outlined"
-          value={product.image}
-          onChange={(e) => setProduct({ ...product, image: e.target.value })}
-        />
-         <TextField
-          id="outlined-basic"
-          label="פילטר"
-          type="number"
-          variant="outlined"
-          value={product.filter}
-          onChange={(e) => setProduct({ ...product, filter: e.target.value })}
-        />
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+
+        <FormControl required>
+          <InputLabel id="filter-label">פילטר</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
+            labelId="filter-label"
+            id="filter"
+            label="פילטר"
+            fullWidth
+            required
+            value={product.filter}
+            defaultValue={"0"}
+            onChange={(e) => setProduct({ ...product, filter: e.target.value })}
+            sx={{ marginRight: 5, width: 220 }}
           >
-             <MenuItem value={"first"}>מנות ראשונות</MenuItem>
-          <MenuItem value={"soup"}>מרקים</MenuItem>
-          <MenuItem value={"sushi"}>סושי ספיישל</MenuItem>
-          <MenuItem value={"nigiri"}>ניגירי</MenuItem>
-          <MenuItem value={"sashimi"}>סשימי</MenuItem>
-          <MenuItem value={"combinations"}>קומבינציות</MenuItem>
-          <MenuItem value={"party"}>מגשי מסיבה</MenuItem>
-          <MenuItem value={"buns"}>באנים</MenuItem>
-          <MenuItem value={"sauteed"}>מוקפצים</MenuItem>
-          <MenuItem value={"main"}>עיקריות</MenuItem>
-          <MenuItem value={"salads"}>סלטים</MenuItem>
-          <MenuItem value={"vegan"}>תפריט טבעוני</MenuItem>
-          <MenuItem value={"children"}>ילדים</MenuItem>
-          <MenuItem value={"desserts"}>קינוחים</MenuItem>
-          <MenuItem value={"drinks"}>משקאות</MenuItem>
+            <MenuItem value={"0"}>ללא פילטר</MenuItem>
+            <MenuItem value={"1"}>פופולארית</MenuItem>
+            <MenuItem value={"12"}>פופולארית,חריפה</MenuItem>
+            <MenuItem value={"13"}>פופולארית,טבעונית</MenuItem>
+            <MenuItem value={"2"}>חריפה</MenuItem>
+            <MenuItem value={"3"}>טבעונית</MenuItem>
+            <MenuItem value={"23"}>חריפה,טבעונית</MenuItem>
+            <MenuItem value={"123"}>פופולארית,חריפה,טבעונית</MenuItem>
           </Select>
         </FormControl>
-        {/* <TextField
-          id="outlined-basic"
-          label="כמות"
-          variant="outlined"
-          value={product.amount}
-          onChange={(e) => setProduct({ ...product, amount: e.target.value })}
-        /> */}
+
+        <FormControl required >
+          <InputLabel id="category-label">קטגוריה</InputLabel>
+          <Select
+            labelId="category-label"
+            id="category"
+            label="קטגוריה"
+            fullWidth
+            required
+            value={age}
+            onChange={handleChange}
+
+            sx={{ width: 150, marginRight: 5, marginBottom: 2 }}>
+            <MenuItem value={"ראשונות"}>ראשונות</MenuItem>
+            <MenuItem value={"מרקים"}>מרקים</MenuItem>
+            <MenuItem value={"סושי ספיישל"}>סושי ספיישל</MenuItem>
+            <MenuItem value={"ניגירי"}>ניגירי</MenuItem>
+            <MenuItem value={"סשימי"}>סשימי</MenuItem>
+            <MenuItem value={"קומבינציות"}>קומבינציות</MenuItem>
+            <MenuItem value={"מגשי מסיבה"}>מגשי מסיבה</MenuItem>
+            <MenuItem value={"באנים"}>באנים</MenuItem>
+            <MenuItem value={"מוקפצים"}>מוקפצים</MenuItem>
+            <MenuItem value={"עיקריות"}>עיקריות</MenuItem>
+            <MenuItem value={"סלטים"}>סלטים</MenuItem>
+            <MenuItem value={"תפריט טבעוני"}>תפריט טבעוני</MenuItem>
+            <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
+            <MenuItem value={"משקאות"}>משקאות</MenuItem>
+          </Select>
+        </FormControl>
+
       </Box>
-      <Button type="submit" autoFocus>
-        Add
-      </Button>
+
+      <button variant="contained" type="submit" className="btn"
+        style={{ marginRight: 450 }}>
+        הוספה      </button>
     </form>
   );
 };

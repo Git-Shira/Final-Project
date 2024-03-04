@@ -1,4 +1,4 @@
-.management .btn {
+.edit .btn {
     display: inline-block;
     color: #eee;
     background: black;
@@ -7,14 +7,8 @@
     padding: .6rem 1rem;
 }
 
-.management .btn:hover {
+.edit .btn:hover {
     background: green;
     color: white;
     letter-spacing: .1rem;
-}
-
-.dishes .box-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
 }
