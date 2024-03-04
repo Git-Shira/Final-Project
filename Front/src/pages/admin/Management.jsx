@@ -11,7 +11,7 @@ import AddSingleProjact from "./add/AddSingleProjact";
 import { TextField, Box } from "@mui/material";
 import Edit from "./edit/Edit";
 import axios from "axios";
-import ProductsCard from "../../components/card/products/ProductsCard";
+import ProductsCard from "../../../components/card/products/ProductsCard";
 
 import "./Management.css";
 import t1 from "../../../IMAGES/t1.png";
@@ -19,8 +19,11 @@ import t2 from "../../../IMAGES/t2.png";
 
 const Management = () => {
   const [open, setOpen] = React.useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = React.useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [editProductId, setEditProductId] = useState(null); // State to store the ID of the product to be edited
+
+  const [search, setSearch] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,14 +41,12 @@ const Management = () => {
       console.log(error);
     }
   };
-
   useEffect(() => {
     fetchProducts();
   }, []);
 
   return (
     <div className="management">
-
       <Container>
 
         <div className="title-design">
@@ -54,25 +55,55 @@ const Management = () => {
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 
-        <Stack direction="row" spacing={2}>
-          <Button variant="contained" onClick={handleClickOpen}>
-            Add
-          </Button>
-        </Stack>
-        <Container>
-          {allProducts ? (
-            allProducts?.map((product, index) => {
-              return (
-                <>
-                  <ProductsCard key={product._id} product={product} fetchProducts={fetchProducts} />
-                </>
-              );
-            })
-          ) : (
-            <p>No products available</p>
-          )}
-        </Container>
+        <button className="btn"
+          style={{ marginBottom: 15 }}
+          onClick={handleClickOpen}>הוספת מוצר חדש</button>
+        <br />
 
+        <strong
+          style={{
+            marginLeft: 5
+          }}
+        >חיפוש מנה: &nbsp;</strong>
+        <TextField
+          style={{ marginBottom: 15 }}
+          id="outlined-basic"
+          className="search"
+          label="Search"
+          type={"text"}
+          variant="outlined"
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+          defaultValue={search}
+          autoComplete="off"
+        />
+
+        {search && (<button className="btn"
+          style={{ marginRight: 100 }}
+          onClick={() => {
+            setSearch("");
+          }}>נקה סינון</button>)}
+
+        <div className="dishes">
+          <div className="box-container">
+            {allProducts ? (
+              allProducts?.filter(
+                (product) =>
+                  product.name.toLowerCase().startsWith(search.toLowerCase())
+              )
+
+                .map((product, index) => {
+                  return (
+                    <>
+                      <ProductsCard key={product._id} product={product} fetchProducts={fetchProducts} />
+                    </>
+                  );
+                })
+            ) : (
+              <p>No products available</p>
+            )}
+          </div>
+        </div>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -84,8 +115,8 @@ const Management = () => {
           </DialogContent>
           <DialogActions></DialogActions>
         </Dialog>
-
       </Container>
+
     </div>
   );
 };
