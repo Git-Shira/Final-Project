@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { TextField, Button, Box } from "@mui/material";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-const Edit = ({ product }) => {
+import "./Edit.css";
+
+const Edit = ({ product, handleEditSuccess }) => {
   console.log(product);
-  const [editproduct, setEditProduct] = React.useState({
+  const [editproduct, setEditProduct] = useState({
     name: product.name || "",
     description: product.description || "",
     price: product.price || "",
@@ -17,10 +19,10 @@ const Edit = ({ product }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    debugger;
+
     try {
       const response = await axios.put(
-        `http://localhost:3000/products/update/${product._id}`,
+        `http://localhost:3000/products/update/${product?._id}`,
         editproduct
       );
 
@@ -40,14 +42,15 @@ const Edit = ({ product }) => {
       });
     } catch (error) {
       console.log(error);
+      // Handle error and display an error message to the user
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="edit">
       <Box key={product._id} component="form">
         <TextField
-          id="outlined-basic"
+          id="name"
           label="שם מלא"
           variant="outlined"
           fullWidth
@@ -58,55 +61,74 @@ const Edit = ({ product }) => {
           }
         />
         <TextField
-          id="outlined-basic"
+          id="outlined-multiline-static"
           label="תיאור"
-          variant="outlined"
+          multiline
           fullWidth
+          rows={3}
+          // defaultValue="Default Value"
           required
           value={editproduct.description}
           onChange={(e) =>
             setEditProduct({ ...editproduct, description: e.target.value })
           }
+          sx={{ marginTop: 2, marginBottom: 2 }}
         />
         <TextField
-          id="outlined-basic"
+          id="image"
+          label="קישור לתמונה"
+          variant="outlined"
+          fullWidth
+          required
+          value={editproduct.image}
+          onChange={(e) =>
+            setEditProduct({ ...editproduct, image: e.target.value })
+          }
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          id="price"
           label="מחיר"
           type="number"
           variant="outlined"
-          fullWidth
           required
           value={editproduct.price}
           onChange={(e) =>
             setEditProduct({ ...editproduct, price: e.target.value })
           }
+          sx={{ width: 100 }}
         />
-        <TextField
-          id="outlined-basic"
-          label="תמונה"
-          variant="outlined"
-          fullWidth
-          value={editproduct.image}
-          onChange={(e) =>
-            setEditProduct({ ...editproduct, image: e.target.value })
-          }
-        />
-        <TextField
-          id="filter"
-          label="פילטר"
-          type="number"
-          variant="outlined"
-          fullWidth
-          required
-          value={editproduct.filter}
-          onChange={(e) =>
-            setEditProduct({ ...editproduct, filter: e.target.value })
-          }
-        />
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">קטגוריה</InputLabel>
+        <FormControl  >
+          <InputLabel id="filter-label">פילטר</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="filter-label"
+            id="filter"
+            label="פילטר"
+            fullWidth
+            required
+            value={editproduct.filter}
+            defaultValue={"0"}
+            onChange={(e) =>
+              setEditProduct({ ...editproduct, filter: e.target.value })
+            }
+            sx={{ marginRight: 5, width: 220 }}
+          >
+            <MenuItem value={"0"}>ללא פילטר</MenuItem>
+            <MenuItem value={"1"}>פופולארית</MenuItem>
+            <MenuItem value={"12"}>פופולארית,חריפה</MenuItem>
+            <MenuItem value={"13"}>פופולארית,טבעונית</MenuItem>
+            <MenuItem value={"2"}>חריפה</MenuItem>
+            <MenuItem value={"3"}>טבעונית</MenuItem>
+            <MenuItem value={"23"}>חריפה,טבעונית</MenuItem>
+            <MenuItem value={"123"}>פופולארית,חריפה,טבעונית</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl required >
+          <InputLabel id="category-label">קטגוריה</InputLabel>
+          <Select
+            labelId="category-label"
+            id="category"
             label="קטגוריה"
             fullWidth
             required
@@ -114,39 +136,28 @@ const Edit = ({ product }) => {
             onChange={(e) =>
               setEditProduct({ ...editproduct, category: e.target.value })
             }
-          >
-            <MenuItem value={"first"}>מנות ראשונות</MenuItem>
-            <MenuItem value={"soup"}>מרקים</MenuItem>
-            <MenuItem value={"sushi"}>סושי ספיישל</MenuItem>
-            <MenuItem value={"nigiri"}>ניגירי</MenuItem>
-            <MenuItem value={"sashimi"}>סשימי</MenuItem>
-            <MenuItem value={"combinations"}>קומבינציות</MenuItem>
-            <MenuItem value={"party"}>מגשי מסיבה</MenuItem>
-            <MenuItem value={"buns"}>באנים</MenuItem>
-            <MenuItem value={"sauteed"}>מוקפצים</MenuItem>
-            <MenuItem value={"main"}>עיקריות</MenuItem>
-            <MenuItem value={"salads"}>סלטים</MenuItem>
-            <MenuItem value={"vegan"}>תפריט טבעוני</MenuItem>
-            <MenuItem value={"children"}>ילדים</MenuItem>
-            <MenuItem value={"desserts"}>קינוחים</MenuItem>
-            <MenuItem value={"drinks"}>משקאות</MenuItem>
+            sx={{ width: 150, marginRight: 5, marginBottom: 2 }}>
+            <MenuItem value={"ראשונות"}>ראשונות</MenuItem>
+            <MenuItem value={"מרקים"}>מרקים</MenuItem>
+            <MenuItem value={"סושי ספיישל"}>סושי ספיישל</MenuItem>
+            <MenuItem value={"ניגירי"}>ניגירי</MenuItem>
+            <MenuItem value={"סשימי"}>סשימי</MenuItem>
+            <MenuItem value={"קומבינציות"}>קומבינציות</MenuItem>
+            <MenuItem value={"מגשי מסיבה"}>מגשי מסיבה</MenuItem>
+            <MenuItem value={"באנים"}>באנים</MenuItem>
+            <MenuItem value={"מוקפצים"}>מוקפצים</MenuItem>
+            <MenuItem value={"עיקריות"}>עיקריות</MenuItem>
+            <MenuItem value={"סלטים"}>סלטים</MenuItem>
+            <MenuItem value={"תפריט טבעוני"}>תפריט טבעוני</MenuItem>
+            <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
+            <MenuItem value={"משקאות"}>משקאות</MenuItem>
           </Select>
         </FormControl>
-        {/* <TextField
-          id="outlined-basic"
-          label="כמות"
-          variant="outlined"
-          fullWidth
-          required
-          value={editproduct.amount}
-          onChange={(e) =>
-            setEditProduct({ ...editproduct, amount: e.target.value })
-          }
-        /> */}
       </Box>
-      <Button variant="contained" type="submit">
-        עדכן
-      </Button>
+      <button variant="contained" type="submit" className="btn"
+        style={{ marginRight: 380 }}>
+        שמירת שינויים
+      </button>
     </form>
   );
 };
