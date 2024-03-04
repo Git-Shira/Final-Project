@@ -37,32 +37,27 @@ const ViewUsers = () => {
                     <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
                 </div>
 
-                <Table>
+                <Table class="table table-bordered" style={{ width: 500 }} >
                     <TableHead>
                         <TableRow>
-                            <TableCell> שם משתמש</TableCell>{" "}
-                            {/* Replace with relevant user data */}
-                            {/* Replace with relevant user data */}
-                            <TableCell>כתובת אימייל</TableCell>
+                            <TableCell style={{ textAlign: "center" }}> שם משתמש</TableCell>
+                            <TableCell style={{ textAlign: "center" }}> תאריך לידה</TableCell>
+                            <TableCell style={{ textAlign: "center" }}>כתובת אימייל</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {allUsers ? (
                             allUsers.map((user) => (
-                                <TableRow>
-                                    <TableCell>{user.fullName}</TableCell> {/* Display userId */}
-                                    {/* Display fullAddress */}
-                                    <TableCell>{user.email}</TableCell>{" "}
-                                    {/* Display totalPrice */}
+                                <TableRow style={{ textAlign: "center" }}>
+                                    <TableCell style={{ width: 200, textAlign: "center" }}>{user.fullName}</TableCell> {/* Display userId */}
+                                    <TableCell style={{ width: 300, textAlign: "center" }}>{user.date}</TableCell> {/* Display User email */}
+                                    <TableCell style={{ width: 300, textAlign: "center" }}>{user.email}</TableCell> {/* Display User email */}
                                 </TableRow>
                             )))
                             :
                             (<h2>not found</h2>)}
                     </TableBody>
-
                 </Table>
-
-
             </Container>
         </div>
     );

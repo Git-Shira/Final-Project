@@ -43,21 +43,18 @@ const Products = () => {
   const userCookies = Cookies.get("user");
   const user = userCookies ? JSON.parse(userCookies) : null;
 
-  // const [selectedButton, setSelectedButton] = React.useState([]);
   const [selectedButton, setSelectedButton] = React.useState("");
   const [search, setSearch] = React.useState("");
 
   const categorys = ["ראשונות", "מרקים", "סושי ספיישל", "ניגירי", "סשימי", "קומבינציות", "מגשי מסיבה", "באנים", "מוקפצים", "עיקריות", "סלטים", "תפריט טבעוני", "קינוחים", "משקאות"];
 
   const [closeIt, setCloseIt] = React.useState(false);
-
   const handleOpenIt = () => {
     setCloseIt(true);
   }
   const handleCloseIt = () => {
     setCloseIt(false);
   }
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -67,11 +64,9 @@ const Products = () => {
 
   const handleAddToFavorites = (product) => {
     dispatch(addToFavorites(product));
-
   };
 
   const addShoppingCart = (products) => {
-    debugger;
     dispatch(
       addItem({
         id: products._id,
@@ -85,7 +80,6 @@ const Products = () => {
   };
 
   const addToCart = () => {
-    debugger;
     if (selectedProduct) {
       dispatch(
         addItem({
@@ -93,8 +87,8 @@ const Products = () => {
           name: selectedProduct.name,
           price: selectedProduct.price,
           image: selectedProduct.image,
-          quantity: 1,
           filter: selectedProduct.filter,
+          quantity: 1,
         })
       );
     }
@@ -111,7 +105,6 @@ const Products = () => {
   };
 
   const resetFilter = () => {
-    // setSelectedButton([]);
     setSelectedButton("");
     setSelectCategory("");
     setPriceRange([0, 449]);
@@ -124,15 +117,14 @@ const Products = () => {
 
   const handleChange = (category) => {
     if (selectedButton.includes(category)) {
-      // setSelectedButton(selectedButton.filter((item) => item !== category));
       setSelectedButton("");
       setSelectCategory("");
     } else {
-      // setSelectedButton([...selectedButton, category]);
       setSelectedButton(category);
       setSelectCategory(category);
     }
   };
+
   const isButtonSelected = (category) => {
     return selectedButton.includes(category);
   };
@@ -140,12 +132,9 @@ const Products = () => {
   const handleChangePrice = (event, newValue) => {
     setPriceRange(newValue);
   };
-
   const isFavorite = (productId) => {
-    debugger;
     return favorites.some((favorite) => favorite._id === productId);
   };
-
   const handleFavoriteToggle = (product) => {
     const isAlreadyFavorite = favorites.some(
       (favorite) => favorite._id === product._id
@@ -156,7 +145,6 @@ const Products = () => {
       dispatch(addToFavorites(product));
     }
   };
-
   console.log(isFavorite);
 
   const messages = [
@@ -164,202 +152,249 @@ const Products = () => {
     'בעקבות מזג האוויר ייתכנו זמני המתנה ארוכים מהרגיל, אנו פועלים על מנת לספק את ההזמנות מהר ככל האפשר',
     `לחצו על ה- &nbsp;&nbsp;&nbsp; כדי להוסיף למוצרים האהובים`,
     `לחצו על ה- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; כדי לראות פרטים נוספים על המנה`,
-];
+  ];
 
-const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-const nextMessage = () => {
+  const nextMessage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % messages.length);
-};
+  };
 
-const prevMessage = () => {
+  const prevMessage = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + messages.length) % messages.length);
-};
+  };
 
-useEffect(() => {
+  useEffect(() => {
     const intervalId = setInterval(nextMessage, 10000); // 5000 milliseconds = 5 seconds
 
     return () => clearInterval(intervalId);
-}, []); // Run once on mount to start the automatic rotation
+  }, []); // Run once on mount to start the automatic rotation
 
   return (
     <div>
       <Container>
 
-      <div className="title-design">
-                <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000"/>
-                <h1 data-aos="flip-down" data-aos-duration="1000">התפריט שלנו</h1>
-            <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000"/>
-            </div>
+        <div className="title-design">
+          <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+          <h1 data-aos="flip-down" data-aos-duration="1000">התפריט שלנו</h1>
+          <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+        </div>
 
-            <div className="message-container">
-                 <h5>שימו לב ! </h5>
-                 <br />
-                <h5 key={currentIndex} dangerouslySetInnerHTML={{ __html: messages[currentIndex] }} ></h5>
-            
-            {currentIndex===2 &&
-             <FavoriteIcon className="message-heart"/>
-              }
-            {currentIndex===3 && <Visibility className="message-eye"/>}
+        <div className="message-container">
+          <h5>שימו לב ! </h5>
+          <br />
+          <h5 key={currentIndex} dangerouslySetInnerHTML={{ __html: messages[currentIndex] }} ></h5>
 
-            </div>
-            <div className="buttons-container">
-                <button onClick={prevMessage} className="btn-prev"><i class="fa fa-caret-right" aria-hidden="true"></i>
-                </button>
-                <button onClick={nextMessage} className="btn-next"><i class="fa fa-caret-left" aria-hidden="true"></i>
-                </button>
-            </div>
+          {currentIndex === 2 &&
+            <FavoriteIcon className="message-heart" />
+          }
+          {currentIndex === 3 && <Visibility className="message-eye" />}
 
-        <Box sx={{ width: 300 }}>
-          <Typography id="input-slider" gutterBottom>
-            Price range
-          </Typography>
-          <Slider
-            value={priceRange}
-            onChange={handleChangePrice}
-            aria-label="Price range"
-            defaultValue={20}
-            valueLabelDisplay="auto"
-            step={10}
-            marks
-            min={0}
-            max={449}
-          />
-        </Box>
+        </div>
+        <div className="buttons-container">
+          <button onClick={prevMessage} className="btn-prev"><i class="fa fa-caret-right" aria-hidden="true"></i>
+          </button>
+          <button onClick={nextMessage} className="btn-next"><i class="fa fa-caret-left" aria-hidden="true"></i>
+          </button>
+        </div>
 
-        <TextField
-          id="outlined-basic"
-          label="Search"
-          type={"text"}
-          variant="outlined"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        {categorys.map((category, index) => {
-          return (
-            <Button
-              key={index}
-              onClick={() => {
-                handleChange(category);
-              }}
-              sx={{
-                backgroundColor: isButtonSelected(category) ? "black" : "red", // Change to red when selected
-                color: isButtonSelected(category) ? "white" : "black",
-              }}
-            >
-              {category}
-            </Button>
-          );
-        })}
-         
-        {(selectCategory || search || priceRange[0] != 0 || priceRange[1] != 449) &&
-          <Button
-            onClick={() => {
-              resetFilter();
-            }}
-          >
-            Reset
-          </Button>
-        }
-
-        {products
-          .filter(
-            (product) =>
-              (selectCategory === ""
-                ? true
-                : product.category === selectCategory) &&
-                product.price >= priceRange[0] &&
-              product.price <= priceRange[1] &&
-              product.name.toLowerCase().startsWith(search.toLowerCase())
-          )
-          .map((product, index) => {
-            console.log(product._id);
+        <div className="categories">
+          {categorys.map((category, index) => {
             return (
-              <Card key={product._id} sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  sx={{ height: 140 }}
-                  image={product.image}
-                  title={product.name}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {product.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                  ₪ {product.price}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Amount: {product.amount}
-                  </Typography>
-                  {/* <Typography variant="body2" color="text.secondary">
-                    Description: {product.description}
-                  </Typography> */}
-                </CardContent>
-                <CardActions>
-                  <IconButton
-                    onClick={() => {
-                      if (!user) {
-                        //  alert("אינך מחובר לחשבון");
-                        handleOpenIt();
-                      }
-                      else
-                        handleFavoriteToggle(product);
-                    }}
-                  >
-                    <FavoriteIcon
-                      color={isFavorite(product._id) ? "error" : "disabled"}
-                    />
-                  </IconButton>
-                  <Button
-                    size="small"
-                    onClick={() => {
-                      setSelectedProduct(product);
-                      setOpen(true);
-                    }}
-                  >
-                    See Details
-                  </Button>
-                  <Button
-                    size="small"
-                    onClick={() => {
-                      addShoppingCart(product);
-                    }}
-                  >
-                    <ShoppingCartIcon />
-                  </Button>
-                </CardActions>
-              </Card>
+              <button
+                className="button-category"
+                key={index}
+                onClick={() => {
+                  handleChange(category);
+                }}
+                style={{
+                  backgroundColor: isButtonSelected(category) ? "black" : "white", // Change to black when selected
+                  color: isButtonSelected(category) ? "white" : "black",
+                }}
+              >
+                {category}
+              </button>
             );
           })}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 50 }}>
+          <strong style={{ marginLeft: 5 }}> סינון לפי מחיר: &nbsp;  </strong>
+
+          {priceRange[1]} ₪
+
+          <Box
+            sx={{
+              width: 300
+              , marginRight: 2, marginLeft: 2
+            }}
+          >
+            <Slider
+              className="price-range"
+              value={priceRange}
+              onChange={handleChangePrice}
+              aria-label="Price range"
+              defaultValue={20}
+              valueLabelDisplay="auto"
+              step={10}
+              marks
+              min={0}
+              max={449}
+              sx={{ color: "black", height: 10, }} />
+          </Box>
+          {priceRange[0]} ₪
+
+          <strong
+            style={{
+              marginRight: 50,
+              marginLeft: 5
+            }}
+          >חיפוש מנה: &nbsp;</strong>
+          <TextField
+            id="outlined-basic"
+            className="search"
+            label="Search"
+            type={"text"}
+            variant="outlined"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            defaultValue={search}
+            autoComplete="off"
+          />
+          <div className="reset">
+            {(selectCategory || search || priceRange[0] != 0 || priceRange[1] != 449) &&
+              <button className="btn"
+                onClick={() => {
+                  resetFilter();
+                }}
+                style={{ marginRight: 140 }}>נקה סינון</button>
+            }
+          </div>
+        </div>
+
+        <div className="dishes">
+          <div className="box-container">
+
+
+            {products
+              .filter(
+                (product) =>
+                  (selectCategory === ""
+                    ? true
+                    : product.category === selectCategory)
+                  &&
+                  product.price >= priceRange[0] &&
+                  product.price <= priceRange[1] &&
+                  product.name.toLowerCase().startsWith(search.toLowerCase())
+              )
+              .map((product, index) => {
+                console.log(product._id);
+                return (
+                  <div data-aos="zoom-in">
+                    <div className="box">
+                      <IconButton className="eye"
+                        onClick={() => {
+                          setSelectedProduct(product);
+                          setOpen(true);
+                        }}>
+                        <Visibility />
+                      </IconButton>
+
+                      <IconButton
+                        className="heart"
+                        onClick={() => {
+                          if (!user) {
+                            handleOpenIt();
+                          }
+                          else
+                            handleFavoriteToggle(product);
+
+                        }}
+                      >
+                        <FavoriteIcon
+                          color={isFavorite(product._id) ? "error" : "disabled"}
+                        />
+                      </IconButton>
+                      <img src={product.image} alt={product.name} />
+                      <h5>{product.name}</h5>
+
+                      <span> {product.price} ₪</span>
+
+                      <button className="btn"
+                        onClick={() => {
+                          addShoppingCart(product);
+                        }}>
+                        הוספה לסל</button>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+
         {selectedProduct && (
           <Dialog
+            className="product-dialog"
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-          >
+            sx={{
+              width: '100%', // רוחב מלא
+              height: '100%', // גובה מלא
+              display: 'flex',
+              justifyContent: 'center', // מרכז אופקי
+              alignItems: 'center', // מרכז אנכי
+            }}>
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                <img src={selectedProduct.image} alt="" width={200} />
+              <DialogContentText id="alert-dialog-description"
+                sx={{
+                  width: 550,
+                  height: 480,
+                }}
+              >
                 <h1> {selectedProduct.name}</h1>
-                <h2>₪ {selectedProduct.price}</h2>
-                {/* <h3> {selectedProduct.amount}</h3> */}
-                <h4> {selectedProduct.category}</h4>
-                <h5> {selectedProduct.description}</h5>
+                <p className="description"> {selectedProduct.description}</p>
+                <img src={selectedProduct.image} alt="" />
+                <button className="btn" onClick={addToCart} autoFocus sx={{ display: 'flex', }}>
+                  הוספה לסל
+                </button>
+                <h2 className="price"> {selectedProduct.price} ₪</h2>
+                {(selectedProduct.filter === "1" || selectedProduct.filter === "12" || selectedProduct.filter === "123" || selectedProduct.filter === "13") && <i className="fas fa-crown">&nbsp; מנה פופולארית </i>}
+                {(selectedProduct.filter === "2" || selectedProduct.filter === "12" || selectedProduct.filter === "123" || selectedProduct.filter === "23") && <i className="fas fa-pepper-hot">&nbsp; מנה חריפה </i>}
+                {(selectedProduct.filter === "3" || selectedProduct.filter === "13" || selectedProduct.filter === "123" || selectedProduct.filter === "23") && <i className="fas fa-leaf">&nbsp; מנה טבעונית </i>}
               </DialogContentText>
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={addToCart} autoFocus>
-                Add to cart
-              </Button>
-            </DialogActions>
           </Dialog>
         )}
+
+        <Dialog
+          className="not-connected-dialog"
+          open={closeIt}
+          onClose={handleCloseIt}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          sx={{
+            width: '100%', // רוחב מלא
+            height: '100%', // גובה מלא
+            display: 'flex',
+            justifyContent: 'center', // מרכז אופקי
+            alignItems: 'center', // מרכז אנכי
+          }}>
+          <DialogContent
+            sx={{ height: 200, width: 400, paddingTop: 7, paddingLeft: 3, paddingRight: 3 }}>
+            כדי לסמן מוצרים אהובים עליכם להתחבר לחשבון
+            <br />
+            <button className="btn" sx={{ marginBottom: 15 }}>
+              <Link to={"/SingIn"} className="button-link"> לחצו להתחברות</Link>
+            </button>
+          </DialogContent>
+          <DialogActions>
+
+          </DialogActions>
+        </Dialog>
       </Container>
-    </div>
+    </div >
   );
 };
 
 export default Products;
-

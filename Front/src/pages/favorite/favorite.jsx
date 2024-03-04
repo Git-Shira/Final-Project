@@ -24,6 +24,10 @@ import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { addItem, removeItem } from "../../redux/cartSlice";
+import { Visibility } from "@mui/icons-material";
+
+import t1 from "../../IMAGES/t1.png";
+import t2 from "../../IMAGES/t2.png";
 
 const Favorites = () => {
   const [products, setProducts] = React.useState([]);
@@ -48,6 +52,19 @@ const Favorites = () => {
     dispatch(removeFromFavorites(productId));
   };
 
+  const addShoppingCart = (products) => {
+    dispatch(
+      addItem({
+        id: products._id,
+        name: products.name,
+        price: products.price,
+        image: products.image,
+        quantity: 1,
+        filter: products.filter
+      })
+    );
+  };
+
   const addToCart = () => {
     if (selectedProduct) {
       dispatch(
@@ -55,6 +72,8 @@ const Favorites = () => {
           id: selectedProduct._id,
           name: selectedProduct.name,
           price: selectedProduct.price,
+          image: selectedProduct.image,
+          filter: selectedProduct.filter,
           quantity: 1,
         })
       );
@@ -62,102 +81,121 @@ const Favorites = () => {
   };
 
   const getProducts = () => {
+    debugger;
     setProducts(JSON.parse(cartFromCookies));
   };
-
   useEffect(() => {
-    if (cartFromCookies)
+    if (cartFromCookies) {
       getProducts();
+    }
+    console.log(products);
   }, [cartFromCookies]);
 
   useEffect(() => {
-    // getProducts();
+    getProducts();
   }, []);
+
+  const isFavorite = (productId) => {
+    return favorites.some((favorite) => favorite._id === productId);
+  };
+  const handleFavoriteToggle = (product) => {
+    const isAlreadyFavorite = favorites.some(
+      (favorite) => favorite._id === product._id
+    );
+    if (isAlreadyFavorite) {
+      dispatch(removeFromFavorites(product._id));
+    } else {
+      dispatch(addToFavorites(product));
+    }
+  };
 
   return (
     <div>
       <Container>
-        <h1>Favorites </h1>
+        <div className="title-design">
+          <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+          <h1 data-aos="flip-down" data-aos-duration="1000">מוצרים מועדפים</h1>
+          <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+        </div>
 
-        {favorites?.map((product, index) => {
-          console.log(product._id);
-          return (
-            <Card key={product._id} sx={{ maxWidth: 345 }}>
-              <CardMedia
-                sx={{ height: 140 }}
-                image={product.image}
-                title={product.name}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {product.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Price: {product.price}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Amount: {product.amount}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Description: {product.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
+        <div className="dishes">
+          <div className="box-container">
+            {products?.map((product, index) => {
+              console.log(product._id);
+              return (
+                <div data-aos="zoom-in">
+                  <div className="box">
+                    <IconButton className="eye"
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        setOpen(true);
+                      }}>
+                      <Visibility />
+                    </IconButton>
 
-                 {/* <IconButton
-                  onClick={() => {
-                    if (isFavorite(product._id)) {
-                      handleRemoveFromFavorites(product._id);
-                    } else {
-                      handleAddToFavorites(product);
-                    }
-                  }}
-                >
-                  <FavoriteIcon
-                    color={isFavorite(product._id) ? "error" : "disabled"}
-                  />
-                </IconButton> */}
+                    <IconButton
+                      className="heart"
+                      onClick={() => {
+                        handleFavoriteToggle(product);
 
+                      }}
+                    >
+                      <FavoriteIcon
+                        color={isFavorite(product._id) ? "error" : "disabled"}
+                      />
+                    </IconButton>
+                    <img src={product.image} alt={product.name} />
+                    <h5>{product.name}</h5>
+                    <span> {product.price} ₪</span>
+                    <button className="btn"
+                      onClick={() => {
+                        addShoppingCart(product);
+                      }}>
+                      הוספה לסל</button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
-                <Button
-                  size="small"
-                  onClick={() => {
-                    setSelectedProduct(product);
-                    setOpen(true);
-                  }}
-                >
-                  See Details
-                </Button>
-              </CardActions>
-            </Card>
-          );
-        })}
         {selectedProduct && (
           <Dialog
+            className="product-dialog"
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-          >
+            sx={{
+              width: '100%', // רוחב מלא
+              height: '100%', // גובה מלא
+              display: 'flex',
+              justifyContent: 'center', // מרכז אופקי
+              alignItems: 'center', // מרכז אנכי
+            }}>
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
+              <DialogContentText id="alert-dialog-description"
+                sx={{
+                  width: 550,
+                  height: 480,
+                }}
+              >
                 <h1> {selectedProduct.name}</h1>
-                <h2> {selectedProduct.price}</h2>
-                <h3> {selectedProduct.amount}</h3>
-                <h4> {selectedProduct.category}</h4>
-                <h5> {selectedProduct.description}</h5>
+                <p className="description"> {selectedProduct.description}</p>
+                <img src={selectedProduct.image} alt="" />
+                <button className="btn" onClick={addToCart} autoFocus sx={{ display: 'flex', }}>
+                  הוספה לסל
+                </button>
+                <h2 className="price"> {selectedProduct.price} ₪</h2>
+                {(selectedProduct.filter === "1" || selectedProduct.filter === "12" || selectedProduct.filter === "123" || selectedProduct.filter === "13") && <i className="fas fa-crown">&nbsp; מנה פופולארית </i>}
+                {(selectedProduct.filter === "2" || selectedProduct.filter === "12" || selectedProduct.filter === "123" || selectedProduct.filter === "23") && <i className="fas fa-pepper-hot">&nbsp; מנה חריפה </i>}
+                {(selectedProduct.filter === "3" || selectedProduct.filter === "13" || selectedProduct.filter === "123" || selectedProduct.filter === "23") && <i className="fas fa-leaf">&nbsp; מנה טבעונית </i>}
               </DialogContentText>
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={addToCart} autoFocus>
-                Add to cart
-              </Button>
-            </DialogActions>
           </Dialog>
         )}
-      </Container>
-    </div>
+      </Container >
+    </div >
   );
 };
 
