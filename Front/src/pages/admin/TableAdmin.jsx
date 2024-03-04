@@ -12,6 +12,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+import t1 from "../../../IMAGES/t1.png";
+import t2 from "../../../IMAGES/t2.png";
+
 const TableAdmin = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,6 +49,13 @@ const TableAdmin = () => {
 
   return (
     <div>
+      
+      <div className="title-design">
+          <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+          <h1 data-aos="flip-down" data-aos-duration="1000">ארכיון הזמנות</h1>
+          <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+        </div>
+
       <h2>הזמנה</h2>
       {loading ? (
         <p>Loading...</p>

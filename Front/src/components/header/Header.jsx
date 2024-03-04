@@ -31,6 +31,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null); // State for the Popover
   const [anchorElFavorite, setAnchorElFavorite] = useState(null); // State for the Popover
   const [favoriteLeght, setFavoriteLeght] = useState(0);
+  const [permissions, setPermissions] = useState([]); // State for the Popover
   const [dataFavorite, setDataFavorite] = useState([]);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [cartLength, setCartLength] = useState(0);
@@ -43,7 +44,6 @@ const Header = () => {
   const cartCookies = Cookies.get("cart");
   const cartFromCookies = Cookies.get("favorites");
   const navigate = useNavigate();
-  console.log(JSON.parse(cartCookies));
 
   useEffect(() => {
     if (cartCookies) {
@@ -66,6 +66,9 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action
     Cookies.remove("user", { path: "/" }); // Clear the user cookie
+    Cookies.remove("cart", { path: "/" });
+    Cookies.remove("favorites", { path: "/" });
+
     navigate("/");
     // Refresh the page
     window.location.reload();
@@ -91,11 +94,16 @@ const Header = () => {
 
   useEffect(() => {
     if (userCookies) {
+      debugger;
+      const parsedCookies = JSON.parse(userCookies); // Ensure this parsing is correct
       setIsLogin(true);
-    }
+    
+      setPermissions(parsedCookies.permission); // Set permissions correctly after parsing
 
-    if (user?.permission === "admin") {
-      setAdmin(true);
+      if (parsedCookies.permission === "admin") {
+        // Direct comparison without JSON.stringify
+        setAdmin(true);
+      }
     }
   }, [userCookies]);
 
@@ -133,7 +141,12 @@ const Header = () => {
               )}
             </Link>
           </Typography>
-          
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to={"/Branches"}>סניפים</Link>
+          </Typography>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Link to={"/About"}>אודות</Link>
+          </Typography>
           
           {isLogin ? (
             <>
@@ -216,7 +229,7 @@ const Header = () => {
                   onClose={handleMenuClose}
                 >
                   <List>
-                    <ListItem button component={Link} to="/user">
+                    <ListItem button component={Link} to="/user/profile">
                       <ListItemText primary="הפרופיל שלי" />
                     </ListItem>
                     <ListItem button component={Link} to="/user/edit">

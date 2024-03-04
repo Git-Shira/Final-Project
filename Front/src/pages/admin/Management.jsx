@@ -11,8 +11,11 @@ import AddSingleProjact from "./add/AddSingleProjact";
 import { TextField, Box } from "@mui/material";
 import Edit from "./edit/Edit";
 import axios from "axios";
-
 import ProductsCard from "../../components/card/products/ProductsCard";
+
+import "./Management.css";
+import t1 from "../../../IMAGES/t1.png";
+import t2 from "../../../IMAGES/t2.png";
 
 const Management = () => {
   const [open, setOpen] = React.useState(false);
@@ -41,9 +44,16 @@ const Management = () => {
   }, []);
 
   return (
-    <div>
+    <div className="management">
+
       <Container>
-        <h1>Products</h1>
+
+        <div className="title-design">
+          <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+          <h1 data-aos="flip-down" data-aos-duration="1000">ניהול מוצרים</h1>
+          <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+        </div>
+
         <Stack direction="row" spacing={2}>
           <Button variant="contained" onClick={handleClickOpen}>
             Add

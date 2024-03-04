@@ -5,9 +5,11 @@ import Button from "@mui/material/Button";
 import { IconButton, InputAdornment, } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Alert from "@mui/material/Alert";
+import { format } from 'date-fns';
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -57,15 +59,18 @@ const SignUp = () => {
     e.preventDefault();
     if (Validate()) {
       const dataObj = new Date(date);
-      const year = dataObj.getFullYear();
-      const month = dataObj.getMonth() + 1;
-      const day = dataObj.getDate();
-      const newDate = `${year}-${month}-${day}`;
+      // const year = dataObj.getFullYear();
+      // const month = dataObj.getMonth() + 1;
+      // const day = dataObj.getDate();
+      // const newDate = `${year}-${month}-${day}`;
+      const dateFormat = 'dd/MM/yyyy';
+      const formattedDate = format(dataObj, dateFormat);
       const userData = {
         fullName: fullName,
         email: email,
         password: password,
-        date: newDate,
+        // date: newDate,
+        date: formattedDate
       };
 
       try {

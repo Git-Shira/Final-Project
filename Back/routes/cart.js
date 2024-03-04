@@ -31,10 +31,13 @@ router.post("/user/:id/new_order", async (req, res) => {
       const newOrder = new Cart({
         userId: orderData.userId,
         fullName: orderData.fullName, // Extract other relevant fields from orderData
-        fullAddress: orderData.fullAddress,
-        totalAmount: orderData.totalPrice,
+        totalPrice: orderData.totalPrice,
+        typeCollect:orderData.typeCollect,
+        street: orderData.street,
         city: orderData.city,
+        typePay:orderData.typePay,
         products: orderData.products, // Assuming products are in the correct format
+        date: orderData.date,
       });
       await newOrder.save();
       res
@@ -72,7 +75,7 @@ router.get("/user/:email", async (req, res) => {
   }
 });
 
-router.get("/user/:id/getOrder", async (req, res) => {
+router.get("/user/:id/getOrders", async (req, res) => {
   const userId = req.params.id; // Use req.params.id to get the provided user ID
   console.log("get user", id);
 
