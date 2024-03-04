@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { login } from "../../redux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -33,7 +34,7 @@ const ForgotPassword = () => {
 
             if (response.status === 200) {
                 alert("הסיסמא שונתה בהצלחה");
-                navigation("/singin");
+                navigation("/signin");
             }
         } catch (err) {
             console.error(err);

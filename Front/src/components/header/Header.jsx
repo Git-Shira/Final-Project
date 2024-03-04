@@ -277,7 +277,7 @@ const Header = () => {
                 <Link to={"/SignUp"} className="nav-link2">הרשמה</Link>
               </Button>
               <Button color="inherit">
-                <Link to={"/SingIn"} className="nav-link2">התחברות</Link>
+                <Link to={"/SignIn"} className="nav-link2">התחברות</Link>
               </Button>
 
             </>

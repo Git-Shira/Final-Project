@@ -5,7 +5,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 import "./AddSingleProduct.css";
 
-const AddSingleProjact = ({ setOpen }) => {
+const AddSingleProduct = ({ setOpen }) => {
   const [product, setProduct] = React.useState({
     name: "",
     description: "",
@@ -152,4 +152,4 @@ const AddSingleProjact = ({ setOpen }) => {
   );
 };
 
-export default AddSingleProjact;
+export default AddSingleProduct;

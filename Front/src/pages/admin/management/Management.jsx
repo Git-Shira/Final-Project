@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import AddSingleProjact from "./add/AddSingleProjact";
+import AddSingleProduct from "./add/AddSingleProduct";
 import { TextField, Box } from "@mui/material";
 import Edit from "./edit/Edit";
 import axios from "axios";
@@ -111,7 +111,7 @@ const Management = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogContent>
-            <AddSingleProjact setOpen={setOpen} />
+            <AddSingleProduct setOpen={setOpen} />
           </DialogContent>
           <DialogActions></DialogActions>
         </Dialog>

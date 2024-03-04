@@ -385,7 +385,7 @@ const Products = () => {
             כדי לסמן מוצרים אהובים עליכם להתחבר לחשבון
             <br />
             <button className="btn" sx={{ marginBottom: 15 }}>
-              <Link to={"/SingIn"} className="button-link"> לחצו להתחברות</Link>
+              <Link to={"/SignIn"} className="button-link"> לחצו להתחברות</Link>
             </button>
           </DialogContent>
           <DialogActions>

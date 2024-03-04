@@ -84,7 +84,7 @@ const SignUp = () => {
         if (response.status === 200) {
           setError("ההרשמה בוצעה בהצלחה");
           setTimeout(() => {
-            navigate("/singin");
+            navigate("/signIn");
           }, 2000);
         }
       } catch (error) {
