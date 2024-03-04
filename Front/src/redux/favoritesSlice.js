@@ -19,8 +19,13 @@ const favoritesSlice = createSlice({
       // If the item isn't already in the favorites, add it
       if (!exists) {
         state.favorites.push(action.payload);
-        Cookies.set("favorites", JSON.stringify(state.favorites), {
-          expires: 7,
+        const simplelifedFavorites = state.favorites.map((item) => ({
+          _id: item._id,
+          name: item.name,
+        }));
+
+        Cookies.set("favorites", JSON.stringify(simplelifedFavorites), {
+        expires: 7,
         });
       }
 

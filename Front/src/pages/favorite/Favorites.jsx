@@ -38,6 +38,8 @@ const Favorites = () => {
   const [favoriteStatus, setFavoriteStatus] = React.useState({});
   const cartFromCookies = Cookies.get("favorites");
 
+  const [getAllFavorites, setGetAllFavorites] = React.useState([]);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -83,7 +85,8 @@ const Favorites = () => {
 
   const getProducts = () => {
     debugger;
-    setProducts(JSON.parse(cartFromCookies));
+    if (cartFromCookies)
+      setProducts(JSON.parse(cartFromCookies));
   };
   useEffect(() => {
     if (cartFromCookies) {
@@ -105,10 +108,36 @@ const Favorites = () => {
     );
     if (isAlreadyFavorite) {
       dispatch(removeFromFavorites(product._id));
+      getAllFavorites.forEach(p => {
+        if (p._id === product._id) {
+          getAllFavorites.pop(p);
+          setGetAllFavorites([]);
+        }
+      })
     } else {
       dispatch(addToFavorites(product));
     }
   };
+
+  const showFavorites = async (product) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/products/get/${product._id}`
+      );
+      setGetAllFavorites((prev) => [...prev, response.data.product]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (products.length > 0) {
+      // setGetAllFavorites([]);
+      products.forEach((product) => {
+        showFavorites(product);
+      });
+    }
+  }, [products]);
 
   return (
     <div>
@@ -121,7 +150,8 @@ const Favorites = () => {
 
         <div className="dishes">
           <div className="box-container">
-            {products?.map((product, index) => {
+            {/* {products?.map((product, index) => { */}
+            {getAllFavorites?.map((product, index) => {
               console.log(product._id);
               return (
                 <div data-aos="zoom-in">

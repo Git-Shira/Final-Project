@@ -1,0 +1,43 @@
+.header {
+    color: white;
+    text-decoration: none;
+}
+
+
+.header .nav-link {
+    border: 2px solid black;
+    text-decoration: none;
+    color: white;
+}
+
+.header .nav-link:hover {
+    border: 2px solid red;
+    color: white;
+}
+
+.header .nav-link.active{
+    border: 2px solid red;
+    color: white;
+}
+
+.header .nav-link2 {
+    border: 2px solid black;
+    text-decoration: none;
+    color: white;
+    position: relative;
+    font-size: larger;
+}
+
+header .nav-link2::after {
+    content: "";
+    width: 0%;
+    height: 3px;
+    display: block;
+    margin: 0 auto;
+    transition: 1000ms;
+}
+
+header .nav-link2:hover::after {
+    background: red;
+    width: 100%;
+}
