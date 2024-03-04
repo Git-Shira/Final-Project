@@ -11,6 +11,7 @@ const favoritesSlice = createSlice({
   reducers: {
     // Add an item to favorites
     addToFavorites: (state, action) => {
+      debugger;
       const exists = state.favorites.some(
         (item) => item._id === action.payload._id
       );
@@ -23,7 +24,6 @@ const favoritesSlice = createSlice({
         });
       }
 
-      // Update cookies after modifying the favorites array
     },
 
     // Remove an item from favorites
