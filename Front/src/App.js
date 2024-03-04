@@ -15,13 +15,16 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
 import Favorites from "./pages/favorite/Favorites";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { loadFavoritesFromCookies } from "./redux/favoritesSlice";
 import { cartPersistenceMiddleware } from "./redux/cartSlice";
 
-
 function App() {
   const dispatch = useDispatch();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
+  const token = Cookies.get("user");
 
   useEffect(() => {
     dispatch(loadFavoritesFromCookies());
@@ -29,20 +32,31 @@ function App() {
   useEffect(() => {
     dispatch(cartPersistenceMiddleware());
   }, [dispatch]);
-  
+
+  useEffect(() => {
+    if (token) {
+
+      const details = JSON.parse(token);
+      setUserDetails(details?.permission);
+    }
+  }, [token]);
   return (
     <Router>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/SignIn" element={<SignIn />} />
-        <Route path="/Admin/*" element={<Management />} />
+        <Route path="/SingIn" element={<SingIn />} />
+        <Route
+          path="/Admin/*"
+          element={userDetails ? <AdminRoute /> : <Navigate to="/login" />}
+        />{" "}
         <Route path="/User/*" element={<UserRoute />} />
         <Route path="/Products" element={<Products />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Pay" element={<Pay />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );
