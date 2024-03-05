@@ -296,7 +296,16 @@ useEffect(() => {
                   </Typography> */}
                 </CardContent>
                 <CardActions>
-                  <IconButton onClick={() => handleAddToFavorites(product)}>
+                  <IconButton
+                    onClick={() => {
+                      if (!user) {
+                        //  alert("אינך מחובר לחשבון");
+                        handleOpenIt();
+                      }
+                      else
+                        handleFavoriteToggle(product);
+                    }}
+                  >
                     <FavoriteIcon
                       color={isFavorite(product._id) ? "error" : "disabled"}
                     />
