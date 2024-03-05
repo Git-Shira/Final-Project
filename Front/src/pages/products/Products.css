@@ -29,6 +29,7 @@
 .product-dialog .btn,
 .reset .btn,
 .not-connected-dialog .btn,
+.forgot .btn,
 .btn {
   display: inline-block;
   color: #eee;
@@ -42,8 +43,9 @@
 .product-dialog .btn:hover,
 .reset .btn:hover,
 .not-connected-dialog .btn:hover,
+.forgot .btn:hover, 
 .btn:hover {
-  background: green;
+  background:#c1121F;
   color: white;
   letter-spacing: .1rem;
 }

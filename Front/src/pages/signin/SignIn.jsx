@@ -4,8 +4,12 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./SignIn.css";
 import { login } from "../../redux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import t1 from "../../IMAGES/t1.png";
+import t2 from "../../IMAGES/t2.png";
+
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,25 +48,37 @@ const SignIn = () => {
       console.error(err);
     }
   };
+
+
+
   return (
     <Container maxWidth="sm">
-      <div>
-        <Typography variant="h4" component="h2" align="center">
+      <div className="hithabrut" >
+        {/* <Typography className="hithabrut" variant="h4" component="h2" align="center">
           התחברות
-        </Typography>
+        </Typography> */}
+
+        <div className="title-design">
+          <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+          <h1 data-aos="flip-down" data-aos-duration="1000">התחברות</h1>
+          <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+        </div>
         <form onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            margin="normal"
-          />
+          <div className="spacer">
+            <TextField
+              className="rGap"
+              label="מייל"
+              variant="outlined"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              margin="normal"
+            />
+          </div>
           <TextField
             id="password"
-            label="Password"
+            label="סיסמא"
             type={showPassword ? "text" : "password"} // Toggle password visibility
             variant="outlined"
             fullWidth
@@ -81,17 +97,19 @@ const SignIn = () => {
             }}
           />
           <Button
+            className="knisa"
             type="submit"
             variant="contained"
             color="primary"
             fullWidth
             size="large"
           >
-            Sign In
+            כניסה
           </Button>
         </form>
-        <Typography variant="body1" align="center">
-          Don't have an account? <Link to={"/SignUp"}>Sign up </Link>
+
+        <Typography className="typo" variant="body1" align="center">
+          עדיין לא רשומים? <Link to={"/SignUp"}>הרשמה </Link>
         </Typography>
         <Typography variant="body1" align="center">
           <Link to={"/ForgotPassword"}>שכחתי סיסמא </Link>
