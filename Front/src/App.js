@@ -19,6 +19,8 @@ import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { useDispatch, useSelector } from "react-redux";
 import { loadFavoritesFromCookies } from "./redux/favoritesSlice";
 import { cartPersistenceMiddleware } from "./redux/cartSlice";
+import About from "./pages/about/About";
+import Branches from "./pages/branches/Branches";
 
 function App() {
     const dispatch = useDispatch();
@@ -57,6 +59,8 @@ function App() {
                 <Route path="/Pay" element={<Pay />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/forgotPassword" element={<ForgotPassword />} />
+                <Route path="/About" element={<About />} />
+                <Route path="/Branches" element={<Branches />} />
             </Routes>
         </Router>
     );

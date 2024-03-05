@@ -71,10 +71,13 @@ export default function Cart() {
   const handleQuantityChange = (id, newQuantity) => {
     debugger;
     newQuantity = parseInt(newQuantity, 10);
-    if (newQuantity >= 0) {
+    if (newQuantity > 0) {
       const updatedCart = cartData.map((item) => {
         if (item.id === id) {
           return { ...item, quantity: newQuantity };
+        }
+        else{
+          dispatch(removeItem(item.id));
         }
         return item;
       });

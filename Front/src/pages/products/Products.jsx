@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -36,7 +36,7 @@ const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [selectedProduct, setSelectedProduct] = React.useState();
   const [selectCategory, setSelectCategory] = React.useState("");
-  const [priceRange, setPriceRange] = React.useState([0, 150]);
+  const [priceRange, setPriceRange] = React.useState([0, 449]);
   const [open, setOpen] = React.useState(false);
   const [favoriteStatus, setFavoriteStatus] = React.useState({});
 

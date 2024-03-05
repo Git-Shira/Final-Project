@@ -22,7 +22,7 @@ const TableAdmin = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null); // State to store the ID of the selected user
   
-  const handleOpenModal = () => {
+  const handleOpenModal = (user) => {
     setSelectedUser(user);
     setOpenModal(true);
   };

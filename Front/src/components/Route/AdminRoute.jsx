@@ -1,6 +1,8 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import Edit from "../../pages/admin/edit/Edit";
+// import { Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import Edit from "../../pages/admin/management/edit/Edit";
 import Header from "../header/Header";
 import Profile from "../../pages/user/profile/Profile";
 import Drawer from "@mui/material/Drawer";
