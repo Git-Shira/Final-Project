@@ -1,0 +1,52 @@
+.hithabrut {
+    text-align: center !important;
+    align-items: center !important;
+    font-size: "50px" !important;
+    color:black  !important;
+    font-weight: 500 !important;
+    line-height: 3 !important;
+    border-color: #bbc2a7 !important;
+    margin-top: 150px !important;
+    font-style: normal !important;
+    font-family: "M PLUS Rounded 1c", sans-serif !important;
+    
+    
+    
+}
+
+
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
+    width: 428px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root{
+    width: 428px !important;
+    margin: 0 !important;
+    padding: 0 !important; 
+}
+
+.css-189e9pj-MuiButtonBase-root-MuiButton-root{
+    color: #fff !important;
+    background-color: #215732 !important;
+    padding: 1px !important;
+    width: 250px !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    border-color: transparent !important;
+    margin-top: 30px !important;
+}
+
+.rGap {
+    margin-right: 0px !important;
+}
+
+.spacer {
+    margin-bottom: 20px !important;
+}
+
+.knisa{
+    margin-bottom: 20px !important;
+}

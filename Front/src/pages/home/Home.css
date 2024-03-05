@@ -107,7 +107,7 @@ hr {
     left: 50%;
     width: 70%;
     height: 3px;
-    background-color: red;
+    background-color: #C1121F;
     transform: translateX(-50%);
 }
 

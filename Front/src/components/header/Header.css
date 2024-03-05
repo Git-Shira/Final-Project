@@ -11,12 +11,12 @@
 }
 
 .header .nav-link:hover {
-    border: 2px solid red;
+    border: 2px solid #C1121F;
     color: white;
 }
 
 .header .nav-link.active{
-    border: 2px solid red;
+    border: 2px solid #C1121F;
     color: white;
 }
 
@@ -38,6 +38,6 @@ header .nav-link2::after {
 }
 
 header .nav-link2:hover::after {
-    background: red;
+    background: #C1121F;
     width: 100%;
 }

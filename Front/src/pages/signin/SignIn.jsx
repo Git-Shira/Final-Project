@@ -96,8 +96,8 @@ const SignIn = () => {
               ),
             }}
           />
-          <Button
-            className="knisa"
+          <button
+            className="btn"
             type="submit"
             variant="contained"
             color="primary"
@@ -105,7 +105,7 @@ const SignIn = () => {
             size="large"
           >
             כניסה
-          </Button>
+          </button>
         </form>
 
         <Typography className="typo" variant="body1" align="center">

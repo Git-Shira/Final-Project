@@ -24,16 +24,16 @@ const Branches = () => {
 
 
             <div className="title-design">
-                <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000"/>
+                <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
                 <h1 data-aos="flip-down" data-aos-duration="1000">הסניפים שלנו</h1>
-            <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000"/>
+                <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
             </div>
 
             <br />
             <div className="branches">
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel1bh-content"
                         id="panel1bh-header"
                     >
@@ -74,7 +74,7 @@ const Branches = () => {
                 </Accordion>
                 <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel2bh-content"
                         id="panel2bh-header"
                     >
@@ -120,7 +120,7 @@ const Branches = () => {
             <div className="branches" style={{ marginTop: 15, marginBottom: 15 }}>
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel3bh-content"
                         id="panel3bh-header"
                     >
@@ -164,7 +164,7 @@ const Branches = () => {
                 </Accordion>
                 <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel4bh-content"
                         id="panel4bh-header"
                     >
@@ -205,7 +205,7 @@ const Branches = () => {
                 </Accordion>
                 <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel5bh-content"
                         id="panel5bh-header"
                     >
@@ -245,7 +245,7 @@ const Branches = () => {
                 </Accordion>
                 <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel6bh-content"
                         id="panel6bh-header"
                     >
@@ -294,7 +294,7 @@ const Branches = () => {
             <div className="branches">
                 <Accordion expanded={expanded === 'panel7'} onChange={handleChange('panel7')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel7bh-content"
                         id="panel7bh-header"
                     >
@@ -341,7 +341,7 @@ const Branches = () => {
                 </Accordion>
                 <Accordion expanded={expanded === 'panel8'} onChange={handleChange('panel8')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel8bh-content"
                         id="panel8bh-header"
                     >
@@ -386,7 +386,7 @@ const Branches = () => {
             <div className="branches" style={{ marginTop: 15, marginBottom: 50 }}>
                 <Accordion expanded={expanded === 'panel9'} onChange={handleChange('panel9')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel9bh-content"
                         id="panel9bh-header"
                     >
@@ -429,7 +429,7 @@ const Branches = () => {
                 </Accordion>
                 <Accordion expanded={expanded === 'panel10'} onChange={handleChange('panel10')}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{color:"red"}} />}
+                        expandIcon={<ExpandMoreIcon sx={{ color: "#C1121F" }} />}
                         aria-controls="panel10bh-content"
                         id="panel10bh-header"
                     >

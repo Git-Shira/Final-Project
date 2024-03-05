@@ -18,14 +18,14 @@
 .branches .grid .kosher {
     margin-top: 15px;
     margin-bottom: -15px;
-    color: red;
+    color: #C1121F;
 }
 
 .branches .grid .opening-hours {
     font-weight: bold;
     /* border-bottom: 3px solid red; */
     margin: 0 auto;
-    text-decoration: underline double red;
+    text-decoration: underline double #C1121F;
     text-decoration-thickness: 1px;
     /* עובי הקו התחתון */
 }
@@ -44,7 +44,7 @@
     margin-bottom: -30px;
     margin-right: -30px;
     margin-top: 15px;
-    color: red;
+    color: #C1121F;
 }
 
 /* .b > div {
@@ -52,5 +52,5 @@
 } */
 
 .branches .accordion-icon{
-    color:"red";
+    color:#C1121F;
 }

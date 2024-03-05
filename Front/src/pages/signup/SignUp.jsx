@@ -177,9 +177,11 @@ const SignUp = () => {
           />
         </div>
 
-        <Button variant="contained" onClick={submitHandler}>
+        <button
+          className="btn"
+          variant="contained" onClick={submitHandler}>
           הרשמה
-        </Button>
+        </button>
         {error && (
           <Alert severity="error"
           // style={{ marginBottom: "10px" }}

@@ -29,7 +29,7 @@
 .product-dialog .btn,
 .reset .btn,
 .not-connected-dialog .btn,
-.forgot .btn,
+.forgot .btn, .harshama .btn,.hithabrut .btn,
 .btn {
   display: inline-block;
   color: #eee;
@@ -43,7 +43,7 @@
 .product-dialog .btn:hover,
 .reset .btn:hover,
 .not-connected-dialog .btn:hover,
-.forgot .btn:hover, 
+.forgot .btn:hover, .harshama .btn:hover,.hithabrut .btn:hover,
 .btn:hover {
   background:#c1121F;
   color: white;
@@ -136,7 +136,7 @@
 }
 
 .product-dialog .fa-pepper-hot {
-  color: red;
+  color: #C1121F;
   margin-right: 420px;
   display: flex;
   top: 390px;
