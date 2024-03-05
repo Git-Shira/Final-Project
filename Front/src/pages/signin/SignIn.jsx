@@ -76,26 +76,29 @@ const SignIn = () => {
               margin="normal"
             />
           </div>
-          <TextField
-            id="password"
-            label="סיסמא"
-            type={showPassword ? "text" : "password"} // Toggle password visibility
-            variant="outlined"
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            margin="normal"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <div className="spacer">
+            <TextField
+              className="right"
+              id="password"
+              label="סיסמא"
+              type={showPassword ? "text" : "password"} // Toggle password visibility
+              variant="outlined"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              margin="normal"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={togglePasswordVisibility} edge="end">
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </div>
           <button
             className="btn"
             type="submit"
@@ -103,15 +106,20 @@ const SignIn = () => {
             color="primary"
             fullWidth
             size="large"
+            style={{ marginTop: "10px" }}
           >
             כניסה
           </button>
         </form>
 
-        <Typography className="typo" variant="body1" align="center">
+        <Typography
+          className="typo"
+          variant="body1"
+          align="center">
           עדיין לא רשומים? <Link to={"/SignUp"}>הרשמה </Link>
         </Typography>
-        <Typography variant="body1" align="center">
+        <Typography
+          variant="body1" align="center">
           <Link to={"/ForgotPassword"}>שכחתי סיסמא </Link>
         </Typography>
       </div>

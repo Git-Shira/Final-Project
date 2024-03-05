@@ -127,7 +127,7 @@ const SignUp = () => {
           <span></span>
           <TextField
             id="outlined-basic"
-            // type="date"
+            type="date"
             label="תאריך לידה"
             variant="outlined"
             required
