@@ -157,7 +157,7 @@ const SignIn = () => {
             color="primary"
             fullWidth
             size="large"
-            style={{ marginTop: "10px" }}
+            style={{ marginBottom: "10px" }}
           >
             כניסה
           </button>

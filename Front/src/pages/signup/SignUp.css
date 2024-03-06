@@ -3,12 +3,12 @@
 .harshama .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     width: 400px !important;
     margin: 0 !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 5px !important;
 }
 
 
 .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root {
-    width: 428px !important;
+    width: 400px !important;
     margin: 0 !important;
     padding: 0 !important;
 }
@@ -20,37 +20,14 @@
 }
 
 .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-    margin-bottom: 20px !important;
+    margin-bottom: 5px !important;
 }
 
 .harshama {
     text-align: center !important;
     align-items: center !important;
-    font-size: "50px" !important;
-    color:black  !important;
-    font-family: inherit !important;
-    font-weight: 500 !important;
-    border-color: #bbc2a7 !important;
-    line-height: 3 !important;
-    /* margin-top: 150px !important; */
+    line-height: 5 !important;
     
 }
-.css-sghohy-MuiButtonBase-root-MuiButton-root {
-    color: #fff !important;
-    background-color: #215732 !important;
-    padding: 1px !important;
-    width: 250px !important;
-    font-family: inherit !important;
-    font-size: inherit !important;
-    line-height: inherit !important;
-    border-color: transparent !important;
-    margin-top: 20px !important;
 
-}
 
-.spacer {
-    margin-bottom: 20px !important;
-}
-.rGap {
-    margin-right: 20px !important;
-}
