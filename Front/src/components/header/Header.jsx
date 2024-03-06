@@ -12,7 +12,7 @@ import { ListItem } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import { Divider } from "@mui/material";
 import { Popover } from "@mui/material";
-import { Link , useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -23,7 +23,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import "./Header.css";
-import logo from "./logo1.png";
+import logo from "./logo.png";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Header = () => {
@@ -77,7 +77,7 @@ const Header = () => {
     navigate("/");
     // Refresh the page
     window.location.reload();
-    };
+  };
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget); // Open the Popover
@@ -102,7 +102,7 @@ const Header = () => {
       debugger;
       const parsedCookies = JSON.parse(userCookies); // Ensure this parsing is correct
       setIsLogin(true);
-    
+
       setPermissions(parsedCookies.permission); // Set permissions correctly after parsing
 
       if (parsedCookies.permission === "admin") {
@@ -119,11 +119,13 @@ const Header = () => {
     // sx={{ flexGrow: 0}}
     >
       <AppBar
-        sx={{ background: "black", color: "white" }}
+        sx={{ background: "black", color: "white", width: "100%" }}
       >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 0 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 0, padding: 1, marginRight: -3 }}>
+          <Link to={"/"}>
             <img src={logo} alt="" sx={{ marginRight: -20, marginTop: 5 }} />
+          </Link>
           </Typography>
           <Typography variant="h6" component="div" className="nav" sx={{ flexGrow: 0, marginRight: 3 }}>
             <Link to={"/"} className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>בית</Link>
@@ -140,8 +142,8 @@ const Header = () => {
                 <Box
                   sx={{
                     position: "absolute",
-                    top: 22,
-                    bgcolor: "red",
+                    top: 26,
+                    bgcolor: "#C1121F",
                     color: "white",
                     fontSize: "10px",
                     width: "20px",
@@ -150,7 +152,7 @@ const Header = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginRight: 8
+                    marginRight: 9
                   }}
                 >
                   {cartLength.length}
@@ -169,25 +171,15 @@ const Header = () => {
 
           {isLogin ? (
             <>
-              <IconButton
-                color="inherit"
-                aria-haspopup="true"
-                onClick={handleMenuClick}
-                sx={{ marginRight: -16, marginLeft: 2, '& .MuiSvgIcon-root': { fontSize: 32 } }}
-              >
-                {/* <PersonIcon /> */}
-                <AccountCircleOutlinedIcon />
-              </IconButton>
+              
 
               <Link to={"/favorites"}>
-
                 <IconButton
                   color="inherit"
                   aria-haspopup="true"
                   onClick={handleMenuClickFavorite}
-                  sx={{ flex: 10, '& .MuiSvgIcon-root': { fontSize: 32, color:"white" } }}
+                  sx={{marginRight: -10 , flex: 10, '& .MuiSvgIcon-root': { fontSize: 32, color: "white" } }}
                 >
-
                   {/* <FavoriteIcon /> */}
                   <FavoriteBorderOutlinedIcon />
 
@@ -195,8 +187,8 @@ const Header = () => {
                     <Box
                       sx={{
                         position: "absolute",
-                        top: 3,
-                        bgcolor: "red",
+                        top: -1,
+                        bgcolor: "#C1121F",
                         color: "white",
                         fontSize: "10px",
                         width: "20px",
@@ -205,6 +197,7 @@ const Header = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
+                        marginRight:4
                       }}
                     >
                       {/* {lengthFavorite.length} */}
@@ -214,6 +207,15 @@ const Header = () => {
                 </IconButton>
               </Link>
 
+              <IconButton
+                color="inherit"
+                aria-haspopup="true"
+                onClick={handleMenuClick}
+                sx={{  '& .MuiSvgIcon-root': { fontSize: 32 } }}
+              >
+                {/* <PersonIcon /> */}
+                <AccountCircleOutlinedIcon />
+              </IconButton>
 
               {/* <Popover
                 open={isPopoverOpen} // Use isPopoverOpen to control the open state
@@ -234,7 +236,7 @@ const Header = () => {
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleMenuClose}
-                  sx={{ marginTop: 3, marginLeft: 2.5 }}
+                  sx={{marginTop: 2.5, marginLeft: 2.5}}
                 >
                   <List>
                     <ListItem button component={Link} to="/Admin/Management">
@@ -256,6 +258,7 @@ const Header = () => {
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleMenuClose}
+                  sx={{marginTop: 2.5, marginLeft: 2.5}}
                 >
                   <List>
                     <ListItem button component={Link} to="/user/profile">

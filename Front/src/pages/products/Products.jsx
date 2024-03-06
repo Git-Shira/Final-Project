@@ -28,6 +28,7 @@ import Cookies from "js-cookie";
 
 import "./Products.css";
 import { Visibility } from "@mui/icons-material";
+import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
@@ -112,6 +113,8 @@ const Products = () => {
   };
 
   useEffect(() => {
+    AOS.init();
+
     getProducts();
   }, []);
 
@@ -286,6 +289,7 @@ const Products = () => {
                   product.price <= priceRange[1] &&
                   product.name.toLowerCase().startsWith(search.toLowerCase())
               )
+              
               .map((product, index) => {
                 console.log(product._id);
                 return (

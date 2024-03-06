@@ -155,7 +155,7 @@ const Edit = ({ product, handleEditSuccess }) => {
         </FormControl>
       </Box>
       <button variant="contained" type="submit" className="btn"
-        style={{ marginRight: 380 }}>
+        style={{ marginRight: 400 }}>
         שמירת שינויים
       </button>
     </form>

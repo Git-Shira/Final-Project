@@ -19,9 +19,9 @@
 }
 
 .carousel-item {
-    height: 700px;
+    height: 750px;
     background-size: cover;
-    background-position: center;
+    background-position: top;
 }
 
 .container-fluid {
@@ -44,7 +44,7 @@
     border: 2px solid white;
     /* הוספת מסגרת לבנה */
     margin: 0 auto;
-    margin-top: -87px;
+    margin-top: -120px;
 
     position: relative;
     z-index: 1;
@@ -57,7 +57,6 @@
 .div-selector a {
     text-decoration: none;
 }
-
 
 @keyframes my-scrolimg {
     0% {
@@ -79,7 +78,6 @@ hr {
     margin-top: 50px;
     margin-bottom: 50px;
 }
-
 
 .my-container {
     max-width: 500px;
@@ -117,7 +115,7 @@ section.big-deal {
     background-position: center;
     background-attachment: fixed;
 
-    min-height: 500px;
+    height: 500px;
 }
 
 

@@ -13,6 +13,8 @@ import Edit from "./edit/Edit";
 import axios from "axios";
 import ProductsCard from "../../../components/card/products/ProductsCard";
 
+import AOS from 'aos';
+
 import "./Management.css";
 import t1 from "../../../IMAGES/t1.png";
 import t2 from "../../../IMAGES/t2.png";
@@ -42,6 +44,8 @@ const Management = () => {
     }
   };
   useEffect(() => {
+    AOS.init();
+
     fetchProducts();
   }, []);
 

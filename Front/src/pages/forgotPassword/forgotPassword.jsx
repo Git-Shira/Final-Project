@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect , useState } from "react";
 import { Container, Typography, TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,8 @@ import axios from "axios";
 import "./ForgotPassword.css";
 import { login } from "../../redux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import AOS from 'aos';
+
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
 
@@ -43,6 +45,10 @@ const ForgotPassword = () => {
             console.error(err);
         }
     };
+
+    useEffect(() => {
+        AOS.init();
+      }, []);
 
     return (
         <Container maxWidth="sm">

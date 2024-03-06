@@ -1,26 +1,27 @@
-.box {
+.box-admin {
     padding: 1.5rem;
     padding-top: 1rem;
     background: #fff;
     border-radius: .5rem;
-    border: .1rem solid rgba(0, 0, 0, .2);
+    /* border: .1rem solid rgba(0, 0, 0, .2); */
+    border: .1rem solid #C1121F;
     position: relative;
     overflow: hidden;
     text-align: center;
     margin: 0 auto;
 
     width: 290px;
-    height: 320px;
+    height: 300px;
 }
 
-.box img {
+.box-admin img {
     height: 10rem;
     width: 15rem;
     border-radius: .5rem;
 }
 
-.box .span {
-    color: green;
+.box-admin .span {
+    color: #C1121F;
     font-weight: bolder;
     margin-left: 1rem;
     font-size: 2rem;
@@ -28,7 +29,7 @@
     display: flex;
 }
 
-.box .btn,
+.box-admin .btn,
 .dialog-delete .btn {
     display: inline-block;
     color: #eee;
@@ -38,13 +39,13 @@
     padding: .6rem 1rem;
 }
 
-.box .btn:hover,
+.box-admin .btn:hover,
 .dialog-delete .btn:hover {
-    background: green;
+    background: #C1121F;
     color: white;
     letter-spacing: .1rem;
 }
 
-.dialog-delete .dialog-delete-border {
+/* .dialog-delete .dialog-delete-border {
     border: 2px solid black;
-}
+} */

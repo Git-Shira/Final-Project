@@ -9,6 +9,8 @@ import {
     TableCell,
 } from "@mui/material";
 
+import AOS from 'aos';
+
 import "./ViewUsers.css";
 import t1 from "../../../IMAGES/t1.png";
 import t2 from "../../../IMAGES/t2.png";
@@ -25,6 +27,8 @@ const ViewUsers = () => {
         }
     };
     useEffect(() => {
+        AOS.init();
+
         fetchUsers();
     }, []);
 

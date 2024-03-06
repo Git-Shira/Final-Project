@@ -13,8 +13,6 @@ import thirdpic from "../../IMAGES/third-pic.png";
 
 import AOS from 'aos';
 
-// הפעל את AOS
-
 
 const Home = () => {
     const [imageIndex, setImageIndex] = useState(0);
@@ -84,7 +82,7 @@ const Home = () => {
                 <section className="my-container">
 
 
-                    <p >
+                    <p style={{marginTop:50}}>
                         <div data-aos="fade-down"
                             data-aos-easing="linear"
                             data-aos-duration="500"

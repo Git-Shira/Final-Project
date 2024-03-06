@@ -25,6 +25,7 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { addItem, removeItem } from "../../redux/cartSlice";
 import { Visibility } from "@mui/icons-material";
+import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
@@ -137,6 +138,8 @@ const Favorites = () => {
         showFavorites(product);
       });
     }
+
+    AOS.init();
   }, [products]);
 
   return (
@@ -148,7 +151,7 @@ const Favorites = () => {
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 
-        <div className="dishes">
+        <div className="dishes" style={{marginTop:50}} >
           <div className="box-container">
             {/* {products?.map((product, index) => { */}
             {getAllFavorites?.map((product, index) => {

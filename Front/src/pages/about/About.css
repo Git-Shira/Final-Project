@@ -1,5 +1,5 @@
  .title-design {
-    margin-top: 150px;
+    margin-top: 85px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,19 +20,28 @@
 }
 
 p {
-    max-width: 700px;
+    max-width: 850px;
 
     margin: 0 auto;
+    margin-top: -5px;
     text-align: center;
+}
+
+.gallery{
+    max-width: 920px;
+    margin:0 auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .gallery img {
     height: 150px;
     border-radius: 15px;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
-.caption1 {
+
+ .caption1 {
     margin-left: 15px;
 }
 
@@ -46,4 +55,4 @@ p {
 
 .caption4 {
     margin-left: 15px;
-}
+}  

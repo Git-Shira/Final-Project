@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+import AOS from 'aos';
+
 import t1 from "../../../IMAGES/t1.png";
 import t2 from "../../../IMAGES/t2.png";
 
@@ -42,8 +44,11 @@ const TableAdmin = () => {
       }
     };
 
+    AOS.init();
+
     fetchData();
   }, []);
+
 
   console.log(userData);
 

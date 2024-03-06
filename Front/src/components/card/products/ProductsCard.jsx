@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -12,6 +13,8 @@ import Edit from "../../../pages/admin/management/edit/Edit";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { DialogContentText } from "@mui/material";
+
+import AOS from 'aos';
 
 import "./ProductsCard.css";
 
@@ -58,6 +61,10 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
     fetchProducts();
   };
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <div>
       {/* <Card sx={{ maxWidth: 345 }}>
@@ -91,8 +98,8 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
           </Button>
         </CardActions>
       </Card> */}
-                  <div data-aos="zoom-in">
-      <div className="box">
+                  <div >
+      <div className="box-admin" data-aos="zoom-in">
         {/* <IconButton className="eye"
                       onClick={() => {
                         setSelectedProduct(product);

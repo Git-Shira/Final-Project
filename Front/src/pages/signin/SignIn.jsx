@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect , useState } from "react";
 import { Container, Typography, TextField, Button, IconButton, InputAdornment, } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -7,6 +7,8 @@ import axios from "axios";
 import "./SignIn.css";
 import { login } from "../../redux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import AOS from 'aos';
+
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
 
@@ -49,7 +51,9 @@ const SignIn = () => {
     }
   };
 
-
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
     <Container maxWidth="sm">

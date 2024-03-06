@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from "react";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -7,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import "./Branches.css";
 import { Grid } from "@mui/material";
+import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
@@ -18,11 +20,12 @@ const Branches = () => {
         setExpanded(isExpanded ? panel : false);
     };
 
+    useEffect(() => {
+        AOS.init();
+          }, []);
 
     return (
-        <div>
-
-
+        <div class="main-branches">
             <div className="title-design">
                 <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
                 <h1 data-aos="flip-down" data-aos-duration="1000">הסניפים שלנו</h1>
@@ -30,6 +33,7 @@ const Branches = () => {
             </div>
 
             <br />
+            
             <div className="branches">
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary
@@ -95,7 +99,7 @@ const Branches = () => {
                                 <span className="opening-hours" >   שעות פתיחה
                                 </span>
                                 <br style={{ marginBottom: 3 }} />
-                                ראשון-חמישי: 11:00-23:30
+                                ראשון - חמישי: 11:00-23:30
                                 <br />
                                 יום שישי: סגור
                                 <br />
@@ -142,7 +146,7 @@ const Branches = () => {
                                 <span className="opening-hours" >   שעות פתיחה
                                 </span>
                                 <br style={{ marginBottom: 3 }} />
-                                ראשון-חמישי: 11:00-23:30
+                                ראשון - חמישי: 11:00-23:30
                                 <br />
                                 יום שישי: סגור
                                 <br />
@@ -227,7 +231,7 @@ const Branches = () => {
                                 <span className="opening-hours" >   שעות פתיחה
                                 </span>
                                 <br style={{ marginBottom: 3 }} />
-                                ראשון-חמישי: 11:30-23:30                                <br />
+                                ראשון - חמישי: 11:30-23:30                                <br />
                                 יום שישי: סגור
                                 <br />
                                 מוצ"ש:  חצי שעה מצאת שבת ועד השעה 00:00<br />
@@ -315,7 +319,7 @@ const Branches = () => {
                                 <span className="opening-hours" >   שעות פתיחה
                                 </span>
                                 <br style={{ marginBottom: 3 }} />
-                                ראשון-רביעי: 11:00-23:00
+                                ראשון - רביעי: 11:00-23:00
                                 <br />
                                 חמישי: 11:30-23:30
                                 <br />
@@ -363,7 +367,7 @@ const Branches = () => {
                                 <span className="opening-hours" >   שעות פתיחה
                                 </span>
                                 <br style={{ marginBottom: 3 }} />
-                                ראשון-חמישי: 12:00-22:00
+                                ראשון - חמישי: 12:00-22:00
                                 <br />
                                 יום שישי: סגור
                                 <br />
@@ -407,7 +411,7 @@ const Branches = () => {
                                 <span className="opening-hours" >   שעות פתיחה
                                 </span>
                                 <br style={{ marginBottom: 3 }} />
-                                ראשון- חמישי: 11:00-23:30
+                                ראשון - חמישי: 11:00-23:30
                                 <br />
                                 יום שישי: 11:00-15:00
                                 <br />
