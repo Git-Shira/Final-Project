@@ -15,7 +15,7 @@ const Profile = ({ id }) => {
   console.log("id", user);
   
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{marginTop:150}}>
       <h1> פרטים</h1>
       <h3>שם מלא: {id?.fullName}</h3>
       <h3>מייל: {id?.email}</h3>

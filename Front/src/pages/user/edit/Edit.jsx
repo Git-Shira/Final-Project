@@ -10,11 +10,19 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 const Edit = ({ id }) => {
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [vaildationError, setVaildationError] = useState({});
+
+  const navigate = useNavigate();
 
   const [editUser, setEditUser] = useState({
     fullName: id.fullName || "",
@@ -43,33 +51,67 @@ const Edit = ({ id }) => {
     }
   }, [id._id]);
 
+  const Validate = () => {
+    const error = {};
+    if (!editUser.fullName) {
+      error.editUser.fullName = "שדה חובה";
+    } else if (!/^[a-zA-Z]+( [a-zA-Z]+)*$/.test(editUser.fullName)) {
+      error.editUser.fullName = "אנא הכנס שם מלא תקני, ללא רווחים רקים בתחילה או בסוף";
+    }
+    if (!editUser.email) {
+      error.editUser.email = "שדה חובה";
+    } else if (!/\S+@\S+\.\S+/.test(editUser.email)) {
+      error.editUser.email = "המייל אינו תקין";
+    }
+    if (!editUser.password) {
+      error.editUser.password = "שדה חובה";
+    } else if (editUser.password.length < 6) {
+      error.editUser.password = "הסיסמא חייבת להיות באורך של 6 תווים לפחות";
+    }
+    setVaildationError(error);
+    return Object.keys(error).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = {
-      fullName: editUser.fullName,
-      email: editUser.email,
-      password: editUser.password,
-    };
+    // if (Validate()) {
+      const userData = {
+        fullName: editUser.fullName,
+        email: editUser.email,
+        password: editUser.password,
+      };
 
-    try {
-      const response = await axios.put(
-        `http://localhost:3000/auth/update/${userId}/`,
-        userData
-      );
-      console.log("User updated:", response.data);
-      alert("User updated");
-      // Optionally display a success message to the user
-    } catch (error) {
-      console.error("Error updating user:", error);
-      if (error.response) {
-        console.error("Server Error Response:", error.response.data);
-        // Optionally display an error message to the user
-      }
+      try {
+        const response = await axios.put(
+          `http://localhost:3000/auth/update/${userId}/`,
+          userData
+        );
+        console.log("User updated:", response.data);
+        // if (response.status === 200) {
+          // setSuccess("העדכון בוצע בהצלחה");
+          // setTimeout(() => {
+            navigate("/User/profile");
+          // }, 2000);
+          alert("User updated");
+        // }
+
+      } catch (error) {
+        // if (error.response.status === 404) {
+        //   setError("המשתמש לא קיים במערכת");
+        // }
+        // if (error.response.status === 500) {
+        //   setError("משהו השתבש, נסו שוב")
+        // }
+        console.error("Error updating user:", error);
+        if (error.response) {
+          console.error("Server Error Response:", error.response.data);
+        }
+      // }
     }
   };
 
   return (
-    <Container>
+    <Container sx={{ marginTop: 100 }}>
       <Typography variant="h4">Edit User</Typography>
       <form onSubmit={handleSubmit}>
         <Box
@@ -91,6 +133,9 @@ const Edit = ({ id }) => {
               setEditUser({ ...editUser, fullName: e.target.value })
             }
             color="error"
+            required
+          error={vaildationError.fullName}
+          helperText={vaildationError.fullName}
           />
           <TextField
             id="email"
@@ -103,6 +148,9 @@ const Edit = ({ id }) => {
               setEditUser({ ...editUser, email: e.target.value })
             }
             color="error"
+            required
+            error={vaildationError.email}
+            helperText={vaildationError.email}
           />
           <TextField
             id="password"
@@ -124,12 +172,25 @@ const Edit = ({ id }) => {
               ),
             }}
             color="error"
+            required
+            error={vaildationError.password}
+            helperText={vaildationError.password}
           />
           <Button variant="contained" type="submit" fullWidth>
             Update
           </Button>
         </Box>
       </form>
+      {success && (<Alert severity="success"
+      >
+        {success}
+      </Alert>)
+      }
+      {error && (
+        <Alert severity="error"
+        >
+          {error}
+        </Alert>)}
     </Container>
   );
 };

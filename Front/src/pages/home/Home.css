@@ -11,8 +11,7 @@
 }
 
 body {
-    /* background: linear-gradient(to bottom, #FFFFFF 0%, #D9D9D9 50%, #000000 100%); */
-    background-color: black;
+    background: linear-gradient(to bottom, #DCE3E3 0%, #A6A6A6 50%, #000000 100%);
 }
 
 .main {
