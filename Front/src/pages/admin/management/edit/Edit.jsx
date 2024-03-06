@@ -47,7 +47,7 @@ const Edit = ({ product, handleEditSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="edit">
+    <form onSubmit={handleSubmit} className="edit" style={{ height: 610 }}>
       <Box key={product._id} component="form">
         <TextField
           id="name"
@@ -60,7 +60,7 @@ const Edit = ({ product, handleEditSuccess }) => {
             setEditProduct({ ...editproduct, name: e.target.value })
           }
           color="error"
-          />
+        />
         <TextField
           id="outlined-multiline-static"
           label="תיאור"
@@ -75,7 +75,7 @@ const Edit = ({ product, handleEditSuccess }) => {
           }
           sx={{ marginTop: 2, marginBottom: 2 }}
           color="error"
-          />
+        />
         <TextField
           id="image"
           label="קישור לתמונה"
@@ -88,7 +88,7 @@ const Edit = ({ product, handleEditSuccess }) => {
           }
           sx={{ marginBottom: 2 }}
           color="error"
-          />
+        />
         <TextField
           id="price"
           label="מחיר"
@@ -101,7 +101,7 @@ const Edit = ({ product, handleEditSuccess }) => {
           }
           sx={{ width: 100 }}
           color="error"
-          />
+        />
         <FormControl  >
           <InputLabel id="filter-label">פילטר</InputLabel>
           <Select

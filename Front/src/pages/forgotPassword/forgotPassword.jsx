@@ -94,7 +94,7 @@ const ForgotPassword = () => {
 
     return (
         <Container maxWidth="sm">
-            <div className="forgot" style={{ height: 700 }}>
+            <div className="forgot" style={{ height: 610 }}>
                 {/* <Typography className="forgot" variant="h4" component="h2" align="center">
                     שכחתי סיסמא
                 </Typography> */}
