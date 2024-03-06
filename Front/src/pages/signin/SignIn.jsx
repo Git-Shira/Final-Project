@@ -98,7 +98,7 @@ const SignIn = () => {
 
   return (
     <Container maxWidth="sm">
-      <div className="hithabrut" >
+      <div className="hithabrut" style={{ height: 700 }} >
         {/* <Typography className="hithabrut" variant="h4" component="h2" align="center">
           התחברות
         </Typography> */}
@@ -170,7 +170,7 @@ const SignIn = () => {
           עדיין לא רשומים? <Link to={"/SignUp"}>הרשמה </Link>
         </Typography>
         <Typography
-          variant="body1" align="center">
+          variant="body1" align="center" fontSize={18}>
           <Link to={"/ForgotPassword"}>שכחתי סיסמא </Link>
         </Typography>
 

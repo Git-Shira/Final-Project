@@ -1,18 +1,13 @@
 .hithabrut {
     text-align: center !important;
     align-items: center !important;
-    font-size: "50px" !important;
-    color:black  !important;
-    font-weight: 500 !important;
-    line-height: 3 !important;
-    /* margin-top: 150px !important; */
-    font-style: normal !important;
+    line-height: 5.5 !important;
     font-family: "M PLUS Rounded 1c", sans-serif !important;
 }
 
 .typo{
     text-align: center !important;
-    font-size: "80px" !important;
+    font-size: 20px !important;
     font-weight: 500 !important;
     line-height: 4 !important;
     font-family: "M PLUS Rounded 1c", sans-serif !important;
@@ -25,6 +20,13 @@
 }
 
 
+.css-17vbkzs-MuiFormControl-root-MuiTextField-root {
+    width: 428px !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+}
 
-
-
+a {
+    color: #c1121f !important;
+    text-decoration: underline !important; 
+}

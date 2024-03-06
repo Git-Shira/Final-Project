@@ -94,7 +94,7 @@ const ForgotPassword = () => {
 
     return (
         <Container maxWidth="sm">
-            <div className="forgot">
+            <div className="forgot" style={{ height: 700 }}>
                 {/* <Typography className="forgot" variant="h4" component="h2" align="center">
                     שכחתי סיסמא
                 </Typography> */}
@@ -130,7 +130,7 @@ const ForgotPassword = () => {
                             error={vaildationError.date}
                             helperText={vaildationError.date}
                             margin="normal"
-                            color="error" 
+                            color="error"
                         />
                     </div>
                     <div className="spacer">
@@ -155,6 +155,7 @@ const ForgotPassword = () => {
                         color="primary"
                         fullWidth
                         size="large"
+                        style={{ marginTop: "30px" }}
                     >
                         סיסמא חדשה
                     </button>

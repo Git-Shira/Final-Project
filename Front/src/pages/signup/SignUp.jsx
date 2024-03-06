@@ -109,113 +109,114 @@ const SignUp = () => {
     AOS.init();
   }, []);
 
-return (
-  <div className="harshama" >
-    {/* { <h1 className="harshama">הרשמה לאתר</h1> } */}
+  return (
+    <div className="harshama" style={{ height: 700 }}>
 
-    <div className="title-design">
-      <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
-      <h1 data-aos="flip-down" data-aos-duration="1000">הרשמה לאתר</h1>
-      <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
-    </div>
-    <Box
-      component="form"
-      // sx={{
-      //   "& > :not(style)": { m: 1, width: "25ch" },
-      // }}
-      noValidate
-      autoComplete="off"
-    >
-      <div className="spacer">
-        <TextField
-          className="rGap"
-          id="outlined-basic"
-          label="שם מלא"
-          variant="outlined"
-          required
-          error={vaildationError.fullName}
-          helperText={vaildationError.fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          sx={{ marginLeft: 5 }}
-          color="error"
-        />
-        <span></span>
-        <TextField
-          id="outlined-basic"
-          type="date"
-          label="תאריך לידה"
-          variant="outlined"
-          required
-          onChange={(e) => setDate(e.target.value)}
-          helperText={vaildationError.date}
-          error={vaildationError.date}
-          inputProps={{
-            pattern: "\\d{4}-\\d{2}-\\d{2}",
-            title: "Please use the yyyy-mm-dd format",
-          }}
-          color="error"
-        />
-      </div>
-      <div className="spacer">
-        <TextField
-          className="rGap"
-          id="outlined-basic"
-          label="מייל"
-          type={"email"}
-          required
-          variant="outlined"
-          onChange={(e) => setEmail(e.target.value)}
-          error={vaildationError.email}
-          helperText={vaildationError.email}
-          sx={{ marginLeft: 5 }}
-          color="error"
-        />
-        <TextField
-          id="outlined-basic"
-          label="סיסמא"
-          type={showPassword ? "text" : "password"} // Toggle password visibility
-          variant="outlined"
-          fullWidth
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          error={vaildationError.password}
-          helperText={vaildationError.password}
-          margin="normal"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={togglePasswordVisibility} edge="end">
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          color="error"
-        />
-      </div>
+      {/* { <h1 className="harshama">הרשמה לאתר</h1> } */}
 
-      <button
-        className="btn"
-        variant="contained" onClick={submitHandler}>
-        הרשמה
-      </button>
-      {success && (<Alert severity="success"
+      <div className="title-design">
+        <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+        <h1 data-aos="flip-down" data-aos-duration="1000">הרשמה לאתר</h1>
+        <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+      </div>
+      <Box
+        component="form"
+        // sx={{
+        //   "& > :not(style)": { m: 1, width: "25ch" },
+        // }}
+        noValidate
+        autoComplete="off"
+      >
+        <div className="spacer">
+          <TextField
+            className="rGap"
+            id="outlined-basic"
+            label="שם מלא"
+            variant="outlined"
+            required
+            error={vaildationError.fullName}
+            helperText={vaildationError.fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            sx={{ marginLeft: 5 }}
+            color="error"
+          />
+          <span></span>
+          <TextField
+            id="outlined-basic"
+            type="date"
+            label="תאריך לידה"
+            variant="outlined"
+            required
+            onChange={(e) => setDate(e.target.value)}
+            helperText={vaildationError.date}
+            error={vaildationError.date}
+            inputProps={{
+              pattern: "\\d{4}-\\d{2}-\\d{2}",
+              title: "Please use the yyyy-mm-dd format",
+            }}
+            color="error"
+          />
+        </div>
+        <div className="spacer">
+          <TextField
+            className="rGap"
+            id="outlined-basic"
+            label="מייל"
+            type={"email"}
+            required
+            variant="outlined"
+            onChange={(e) => setEmail(e.target.value)}
+            error={vaildationError.email}
+            helperText={vaildationError.email}
+            sx={{ marginLeft: 5 }}
+            color="error"
+          />
+          <TextField
+            id="outlined-basic"
+            label="סיסמא"
+            type={showPassword ? "text" : "password"} // Toggle password visibility
+            variant="outlined"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            error={vaildationError.password}
+            helperText={vaildationError.password}
+            margin="normal"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            color="error"
+          />
+        </div>
+
+        <button
+          className="btn"
+          variant="contained" onClick={submitHandler}>
+          הרשמה
+        </button>
+        {success && (<Alert severity="success"
         >
           {success}
         </Alert>)
         }
-      {error && (
-        <Alert severity="error"
-        // style={{ marginBottom: "10px" }}
-        >
-          {error}
-        </Alert>
-      )}
-    </Box>
+        {error && (
+          <Alert severity="error"
+          // style={{ marginBottom: "10px" }}
+          >
+            {error}
+          </Alert>
+        )}
+      </Box>
 
-  </div>
-);
+    </div>
+  );
 };
 
 export default SignUp;
