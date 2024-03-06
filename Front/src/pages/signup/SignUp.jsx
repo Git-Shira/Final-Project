@@ -29,7 +29,7 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const config = {
     headers: {
       "Content-Type": "application/json",

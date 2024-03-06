@@ -156,7 +156,7 @@ const Pay = () => {
         }
 
       } catch (err) {
-        if (error.response.status === 500) {
+        if (err.response.status === 500) {
           setError("משהו השתבש, נסו שוב")
         }
         console.error(err);

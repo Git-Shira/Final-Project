@@ -74,13 +74,13 @@ const ForgotPassword = () => {
                 }
 
             } catch (err) {
-                if (error.response.status === 400) {
+                if (err.response.status === 400) {
                     setError("המשתמש לא קיים במערכת");
                 }
-                if (error.response.status === 405) {
+                if (err.response.status === 405) {
                     setError("האימות נכשל, התאריך לא תואם לתאריך השמור במערכת")
                 }
-                if (error.response.status === 500) {
+                if (err.response.status === 500) {
                     setError("משהו השתבש, נסו שוב")
                 }
                 console.error(err);
