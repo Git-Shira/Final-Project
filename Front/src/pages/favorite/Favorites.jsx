@@ -143,7 +143,7 @@ const Favorites = () => {
   }, [products]);
 
   return (
-    <div>
+    <div style={{minHeight:610}}>
       <Container>
         <div className="title-design">
           <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
@@ -158,7 +158,7 @@ const Favorites = () => {
               console.log(product._id);
               return (
                 <div data-aos="zoom-in">
-                  <div className="box">
+                  <div className="box" style={{marginBottom:50}}>
                     <IconButton className="eye"
                       onClick={() => {
                         setSelectedProduct(product);

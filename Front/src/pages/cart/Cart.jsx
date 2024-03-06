@@ -125,7 +125,8 @@ export default function Cart() {
                     onChange={(e) =>
                       handleQuantityChange(row.id, e.target.value)
                     }
-                  />
+                    color="error"
+                    />
                 </TableCell>
                 <TableCell align="right">
                   <Button

@@ -59,7 +59,8 @@ const Edit = ({ product, handleEditSuccess }) => {
           onChange={(e) =>
             setEditProduct({ ...editproduct, name: e.target.value })
           }
-        />
+          color="error"
+          />
         <TextField
           id="outlined-multiline-static"
           label="תיאור"
@@ -73,7 +74,8 @@ const Edit = ({ product, handleEditSuccess }) => {
             setEditProduct({ ...editproduct, description: e.target.value })
           }
           sx={{ marginTop: 2, marginBottom: 2 }}
-        />
+          color="error"
+          />
         <TextField
           id="image"
           label="קישור לתמונה"
@@ -85,7 +87,8 @@ const Edit = ({ product, handleEditSuccess }) => {
             setEditProduct({ ...editproduct, image: e.target.value })
           }
           sx={{ marginBottom: 2 }}
-        />
+          color="error"
+          />
         <TextField
           id="price"
           label="מחיר"
@@ -97,7 +100,8 @@ const Edit = ({ product, handleEditSuccess }) => {
             setEditProduct({ ...editproduct, price: e.target.value })
           }
           sx={{ width: 100 }}
-        />
+          color="error"
+          />
         <FormControl  >
           <InputLabel id="filter-label">פילטר</InputLabel>
           <Select

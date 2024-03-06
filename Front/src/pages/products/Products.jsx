@@ -16,7 +16,7 @@ import {
 } from "../../redux/favoritesSlice";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import { DialogContentText, MenuItem, Select } from "@mui/material";
+import { DialogContentText, MenuItem, Select, InputLabel } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
@@ -112,10 +112,13 @@ const Products = () => {
     setSearch("");
   };
 
+  getProducts();
+
   useEffect(() => {
     AOS.init();
 
-    getProducts();
+    // getProducts();
+
   }, []);
 
   const handleChange = (category) => {
@@ -195,9 +198,9 @@ const Products = () => {
 
         </div>
         <div className="buttons-container">
-          <button onClick={prevMessage} className="btn-prev"><i class="fa fa-caret-right" aria-hidden="true"></i>
+          <button onClick={prevMessage} className="btn-prev"><i className="fa fa-caret-right" aria-hidden="true"></i>
           </button>
-          <button onClick={nextMessage} className="btn-next"><i class="fa fa-caret-left" aria-hidden="true"></i>
+          <button onClick={nextMessage} className="btn-next"><i className="fa fa-caret-left" aria-hidden="true"></i>
           </button>
         </div>
 
@@ -255,13 +258,14 @@ const Products = () => {
           <TextField
             id="outlined-basic"
             className="search"
-            label="Search"
+            label="חיפוש"
             type={"text"}
             variant="outlined"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
             defaultValue={search}
             autoComplete="off"
+            color="error"
           />
           <div className="reset">
             {(selectCategory || search || priceRange[0] != 0 || priceRange[1] != 449) &&
@@ -289,7 +293,7 @@ const Products = () => {
                   product.price <= priceRange[1] &&
                   product.name.toLowerCase().startsWith(search.toLowerCase())
               )
-              
+
               .map((product, index) => {
                 console.log(product._id);
                 return (

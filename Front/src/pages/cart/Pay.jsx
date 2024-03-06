@@ -19,6 +19,7 @@ import {
 import { clearCart } from "../../redux/cartSlice";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -41,11 +42,15 @@ const Pay = () => {
   const dateFormat = 'dd/MM/yyyy';
   const formattedDate = format(currentDate, dateFormat);
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [vaildationError, setVaildationError] = useState({});
+
   // עדכון של התאריך בכל שינוי בתוך הקומפוננטה
   useEffect(() => {
     // const interval = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 1000); // עדכון כל שנייה
+    setCurrentDate(new Date());
+  }, 1000); // עדכון כל שנייה
 
   console.log(currentDate);
   console.log(formattedDate);
@@ -72,41 +77,90 @@ const Pay = () => {
     console.log("cardHolder", cardHolder);
   };
 
+  const Validate = () => {
+    const error = {};
+    if (!fullName) {
+      error.fullName = "שדה חובה";
+    } else if (!/^[a-zA-Z]+( [a-zA-Z]+)*$/.test(fullName)) {
+      error.fullName = "אנא הכנס שם מלא תקני, ללא רווחים רקים בתחילה או בסוף";
+    }
+    if (typeCollect === "takeAway" && !city) {
+      error.city = "שדה חובה";
+    } else if (typeCollect === "takeAway" && !/^[a-zA-Z]+( [a-zA-Z]+)*$/.test(city)) {
+      error.city = "שם העיר לא תקין";
+    }
+    if (typeCollect === "takeAway" && !street) {
+      error.street = "שדה חובה";
+    } else if (typeCollect === "takeAway" && !/^[a-zA-Z]+( [a-zA-Z]+)*$/.test(street)) {
+      error.street = "שם העיר לא תקין";
+    }
+    if (typePay === "card" && !cardNumber) {
+      error.cardNumber = "שדה חובה";
+    }
+    if (typePay === "card" && !cardHolder) {
+      error.cardNumber = "שדה חובה";
+    } else if (typePay === "card" && !/^[a-zA-Z]+( [a-zA-Z]+)*$/.test(cardHolder)) {
+      error.cardHolder = "אנא הכנס שם מלא תקני, ללא רווחים רקים בתחילה או בסוף";
+    }
+    if (typePay === "card" && !cardMonth) {
+      error.cardMonth = "שדה חובה";
+    } if (typePay === "card" && !cardYear) {
+      error.cardYear = "שדה חובה";
+    } if (typePay === "card" && !cardCvv) {
+      error.cardCvv = "שדה חובה";
+    } if (typePay === "card" && !cardType) {
+      error.cardType = "שדה חובה";
+    }
+
+    setVaildationError(error);
+    return Object.keys(error).length === 0;
+  };
+
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   console.log("cart", id);
   const handleSubmit = async (e) => {
-    const userData = {
-      userId: id,
-      typePay:typePay,
-      cardNumber: cardNumber,
-      cardHolder: cardHolder,
-      cardMonth: cardMonth,
-      cardYear: cardYear,
-      cardCvv: cardCvv,
-      cardType: cardType,
-      typeCollect:typeCollect,
-      street: street,
-      city: city,
-      fullName: fullName,
-      totalPrice: cart.totalAmount,
-      products: [...cart.item],
-      date: formattedDate,
-    };
-    debugger;
-    try {
-      const response = await axios.post(
-        `http://localhost:3000/cart/user/${id}/new_order`,
-        userData
-      );
-      const user = response.data;
-      if (user) {
-        alert("הזמנתך התקבלה בהצלחה");
-        dispatch(clearCart());
-        navigation("/");
+    if (Validate()) {
+      const userData = {
+        userId: id,
+        typePay: typePay,
+        cardNumber: cardNumber,
+        cardHolder: cardHolder,
+        cardMonth: cardMonth,
+        cardYear: cardYear,
+        cardCvv: cardCvv,
+        cardType: cardType,
+        typeCollect: typeCollect,
+        street: street,
+        city: city,
+        fullName: fullName,
+        totalPrice: cart.totalAmount,
+        products: [...cart.items],
+        date: formattedDate,
+      };
+      debugger;
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/cart/user/${id}/new_order`,
+          userData
+        );
+        const user = response.data;
+
+        if (response.status === 200) {
+          if (user) {
+            setSuccess("הזמנתך התקבלה בהצלחה");
+            //  alert("הזמנתך התקבלה בהצלחה");
+            dispatch(clearCart());
+            navigation("/");
+          }
+        }
+
+      } catch (err) {
+        if (error.response.status === 500) {
+          setError("משהו השתבש, נסו שוב")
+        }
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
     }
   };
 
@@ -132,6 +186,10 @@ const Pay = () => {
           label="שם מלא"
           variant="outlined"
           onChange={(e) => setFullName(e.target.value)}
+          color="error"
+          required
+          error={vaildationError.fullName}
+          helperText={vaildationError.fullName}
         />
 
         <FormControl>
@@ -155,12 +213,20 @@ const Pay = () => {
             label="כתובת מלאה"
             variant="outlined"
             onChange={(e) => setStreet(e.target.value)}
+            color="error"
+
+            error={vaildationError.street}
+            helperText={vaildationError.street}
           />
           <TextField
             id="outlined-basic"
             label="עיר"
             variant="outlined"
             onChange={(e) => setCity(e.target.value)}
+            color="error"
+
+            error={vaildationError.city}
+            helperText={vaildationError.city}
           />
         </div>
         )}
@@ -187,36 +253,60 @@ const Pay = () => {
               label="מספר כרטיס"
               variant="outlined"
               onChange={(e) => setCardNumber(e.target.value)}
+              color="error"
+
+              error={vaildationError.cardNumber}
+              helperText={vaildationError.cardNumber}
             />
             <TextField
               id="outlined-basic"
               label="שם בעל הכרטיס"
               variant="outlined"
               onChange={(e) => setCardHolder(e.target.value)}
+              color="error"
+
+              error={vaildationError.cardHolder}
+              helperText={vaildationError.cardHolder}
             />
             <TextField
               id="outlined-basic"
               label="חודש"
               variant="outlined"
               onChange={(e) => setCardMonth(e.target.value)}
+              color="error"
+
+              error={vaildationError.cardMonth}
+              helperText={vaildationError.cardMonth}
             />
             <TextField
               id="outlined-basic"
               label="שנה"
               variant="outlined"
               onChange={(e) => setCardYear(e.target.value)}
+              color="error"
+
+              error={vaildationError.cardYear}
+              helperText={vaildationError.cardYear}
             />
             <TextField
               id="outlined-basic"
               label="CVV"
               variant="outlined"
               onChange={(e) => setCardCvv(e.target.value)}
+              color="error"
+
+              error={vaildationError.cardCvv}
+              helperText={vaildationError.cardCvv}
             />
             <TextField
               id="outlined-basic"
               label="סוג כרטיס"
               variant="outlined"
               onChange={(e) => setCardType(e.target.value)}
+              color="error"
+
+              error={vaildationError.cardType}
+              helperText={vaildationError.cardType}
             />
           </div>
         )}
@@ -224,9 +314,20 @@ const Pay = () => {
         <h1>סהכ לתשלום {cart.totalAmount}</h1>
 
         <Button variant="contained" onClick={handleSubmit} to="/Pay">
-          תשלום{" "}
+          תשלום
         </Button>
       </Box>
+      {success && (<Alert severity="success"
+        >
+          {success}
+        </Alert>)
+        }
+      {error && (
+        <Alert severity="error"
+        >
+          {error}
+        </Alert>
+      )}
     </Container>
   );
 };

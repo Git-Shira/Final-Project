@@ -19,7 +19,7 @@ const About = () => {
       }, []);
 
     return (
-        <div className="about">
+        <div className="about" style={{minHeight:610}}>
 
             <div className="title-design">
                 <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
@@ -41,10 +41,10 @@ const About = () => {
             </p>
 
             <div className="gallery">
-                <img src={caption1} class="caption1" alt="..." data-aos="zoom-in" data-aos-duration="500" />
-                <img src={caption2} class="caption2" alt="..." data-aos="zoom-in" data-aos-duration="1000" />
-                <img src={caption3} class="caption3" alt="..." data-aos="zoom-in" data-aos-duration="1500" />
-                <img src={caption4} class="caption4" alt="..." data-aos="zoom-in" data-aos-duration="2000" />
+                <img src={caption1} className="caption1" alt="..." data-aos="zoom-in" data-aos-duration="500" />
+                <img src={caption2} className="caption2" alt="..." data-aos="zoom-in" data-aos-duration="1000" />
+                <img src={caption3} className="caption3" alt="..." data-aos="zoom-in" data-aos-duration="1500" />
+                <img src={caption4} className="caption4" alt="..." data-aos="zoom-in" data-aos-duration="2000" />
             </div>
         </div>
     );

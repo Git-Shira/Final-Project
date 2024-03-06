@@ -25,7 +25,7 @@ const Branches = () => {
           }, []);
 
     return (
-        <div class="main-branches">
+        <div>
             <div className="title-design">
                 <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
                 <h1 data-aos="flip-down" data-aos-duration="1000">הסניפים שלנו</h1>
@@ -71,7 +71,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -114,7 +114,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -161,7 +161,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -202,7 +202,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -242,7 +242,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -288,7 +288,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -338,7 +338,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -380,7 +380,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -426,7 +426,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>
@@ -467,7 +467,7 @@ const Branches = () => {
                                 <i className="fas fa-parking"></i>&nbsp; חניה  <br />
                                 <i className="fas fa-utensils"></i> &nbsp; ישיבה במקום     <br />
                                 <i className="fas fa-wheelchair"></i>&nbsp; גישה לנכים    <br />
-                                <i class="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
+                                <i className="fas fa-star-of-david"></i>&nbsp; כשר למהדרין <br />
                             </Grid>
                         </Grid>
                     </AccordionDetails>

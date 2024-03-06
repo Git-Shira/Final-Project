@@ -12,8 +12,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-import AOS from 'aos';
-
 import t1 from "../../../IMAGES/t1.png";
 import t2 from "../../../IMAGES/t2.png";
 
@@ -23,7 +21,6 @@ const TableAdmin = () => {
   const [error, setError] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null); // State to store the ID of the selected user
-  
   const handleOpenModal = (user) => {
     setSelectedUser(user);
     setOpenModal(true);
@@ -31,7 +28,6 @@ const TableAdmin = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,23 +40,17 @@ const TableAdmin = () => {
       }
     };
 
-    AOS.init();
-
     fetchData();
   }, []);
-
-
   console.log(userData);
-
   return (
     <div>
-      
-      <div className="title-design">
+<div className="title-design">
           <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
           <h1 data-aos="flip-down" data-aos-duration="1000">ארכיון הזמנות</h1>
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
-
+      
       <h2>הזמנה</h2>
       {loading ? (
         <p>Loading...</p>
@@ -90,7 +80,9 @@ const TableAdmin = () => {
                   <TableCell>{user.totalPrice}</TableCell>
                   <TableCell>{user.fullName}</TableCell>
                   <TableCell>
-                    <Button onClick={handleOpenModal(user)}>פרטי הזמנה</Button>
+                  <Button onClick={() => handleOpenModal(user)}>
+                      פרטי הזמנה
+                    </Button>
                   </TableCell>
                   <TableCell>מאושר</TableCell>
                   <TableCell>{user.typePay}</TableCell>
@@ -134,8 +126,8 @@ const TableAdmin = () => {
                     <TableCell>{product.price}</TableCell>
                     <TableCell>{product.quantity}</TableCell>
                   </TableRow>
-                ))} 
-              </TableBody>
+                ))}
+                </TableBody>
             </Table>
           </Box>
         </div>

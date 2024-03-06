@@ -41,7 +41,7 @@ const ViewUsers = () => {
                     <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
                 </div>
 
-                <Table class="table table-bordered" style={{ width: 500 }} >
+                <Table className="table table-bordered" style={{ width: 500 }} >
                     <TableHead>
                         <TableRow>
                             <TableCell style={{ textAlign: "center" }}> שם משתמש</TableCell>

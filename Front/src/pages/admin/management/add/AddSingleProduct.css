@@ -1,4 +1,4 @@
-add .btn {
+.add .btn {
     display: inline-block;
     color: #eee;
     background: black;
@@ -8,7 +8,7 @@ add .btn {
 }
 
 .add .btn:hover {
-    background: green;
+    background: #C1121F;
     color: white;
     letter-spacing: .1rem;
 }

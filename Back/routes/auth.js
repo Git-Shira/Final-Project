@@ -42,9 +42,9 @@ router.post("/login", async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).send({ error: "Invalid credentials" });
+      return res.status(405).send({ error: "Invalid credentials" });
     }
-    res.send({ user: user });
+    res.status(200).send({ user: user });
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: "Something went wrong" });
@@ -124,7 +124,7 @@ router.post("/forgot_password", async (req, res) => {
       return res.status(400).send({ error: "User does not exist" });
     }
     if (user.date !== date) {
-      return res.status(400).send({ error: "Invalid date" });
+      return res.status(405).send({ error: "Invalid date" });
     }
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);

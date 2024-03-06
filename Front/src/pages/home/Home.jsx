@@ -66,8 +66,8 @@ const Home = () => {
 
             <div className="div-selector">
                 <a href="#transition">
-                    <div class="selector">
-                        <i class="fa fa-angle-double-down" aria-hidden="true" style={{ color: "white" }}></i>
+                    <div className="selector">
+                        <i className="fa fa-angle-double-down" aria-hidden="true" style={{ color: "white" }}></i>
                     </div>
                 </a>
             </div>

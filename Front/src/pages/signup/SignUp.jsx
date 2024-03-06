@@ -8,6 +8,7 @@ import Alert from "@mui/material/Alert";
 import "./SignUp.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
@@ -21,6 +22,7 @@ const SignUp = () => {
 
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [vaildationError, setVaildationError] = useState({});
 
   const togglePasswordVisibility = () => {
@@ -62,15 +64,18 @@ const SignUp = () => {
     e.preventDefault();
     if (Validate()) {
       const dataObj = new Date(date);
-      const year = dataObj.getFullYear();
-      const month = dataObj.getMonth() + 1;
-      const day = dataObj.getDate();
-      const newDate = `${year}-${month}-${day}`;
+      // const year = dataObj.getFullYear();
+      // const month = dataObj.getMonth() + 1;
+      // const day = dataObj.getDate();
+      // const newDate = `${year}-${month}-${day}`;
+      const dateFormat = 'dd/MM/yyyy';
+      const formattedDate = format(dataObj, dateFormat);
       const userData = {
         fullName: fullName,
         email: email,
         password: password,
-        date: newDate,
+        // date: newDate,
+        date: formattedDate
       };
 
       try {
@@ -82,14 +87,17 @@ const SignUp = () => {
         console.log(response.status);
 
         if (response.status === 200) {
-          setError("ההרשמה בוצעה בהצלחה");
+          setSuccess("ההרשמה בוצעה בהצלחה");
           setTimeout(() => {
-            navigate("/signin");
+            navigate("/signIn");
           }, 2000);
         }
       } catch (error) {
-        if (error.response.status === 409) {
+        if (error.response.status === 400) {
           setError("המייל כבר קיים במערכת");
+        }
+        if (error.response.status === 500) {
+          setError("משהו השתבש, נסו שוב")
         }
         console.error(error);
         // You might also want to display a more user-friendly error message
@@ -129,6 +137,7 @@ return (
           helperText={vaildationError.fullName}
           onChange={(e) => setFullName(e.target.value)}
           sx={{ marginLeft: 5 }}
+          color="error"
         />
         <span></span>
         <TextField
@@ -144,6 +153,7 @@ return (
             pattern: "\\d{4}-\\d{2}-\\d{2}",
             title: "Please use the yyyy-mm-dd format",
           }}
+          color="error"
         />
       </div>
       <div className="spacer">
@@ -158,6 +168,7 @@ return (
           error={vaildationError.email}
           helperText={vaildationError.email}
           sx={{ marginLeft: 5 }}
+          color="error"
         />
         <TextField
           id="outlined-basic"
@@ -180,6 +191,7 @@ return (
               </InputAdornment>
             ),
           }}
+          color="error"
         />
       </div>
 
@@ -188,6 +200,11 @@ return (
         variant="contained" onClick={submitHandler}>
         הרשמה
       </button>
+      {success && (<Alert severity="success"
+        >
+          {success}
+        </Alert>)
+        }
       {error && (
         <Alert severity="error"
         // style={{ marginBottom: "10px" }}

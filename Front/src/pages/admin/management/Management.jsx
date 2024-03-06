@@ -50,7 +50,7 @@ const Management = () => {
   }, []);
 
   return (
-    <div className="management">
+    <div className="management" style={{minHeight:610}}>
       <Container>
 
         <div className="title-design">
@@ -63,23 +63,24 @@ const Management = () => {
           style={{ marginBottom: 15 }}
           onClick={handleClickOpen}>הוספת מוצר חדש</button>
         <br />
-
+        <div style={{ display: 'flex', alignItems: 'center',marginBottom:15 }}>
         <strong
           style={{
             marginLeft: 5
           }}
         >חיפוש מנה: &nbsp;</strong>
         <TextField
-          style={{ marginBottom: 15 }}
+          // style={{ marginBottom: 15 }}
           id="outlined-basic"
           className="search"
-          label="Search"
+          label="חיפוש"
           type={"text"}
           variant="outlined"
           onChange={(e) => setSearch(e.target.value)}
           value={search}
           defaultValue={search}
           autoComplete="off"
+          color="error"
         />
 
         {search && (<button className="btn"
@@ -87,7 +88,7 @@ const Management = () => {
           onClick={() => {
             setSearch("");
           }}>נקה סינון</button>)}
-
+</div>
         <div className="dishes">
           <div className="box-container">
             {allProducts ? (

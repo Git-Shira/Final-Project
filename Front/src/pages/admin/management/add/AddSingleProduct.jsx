@@ -52,6 +52,7 @@ const AddSingleProduct = ({ setOpen }) => {
           required
           value={product.name}
           onChange={(e) => setProduct({ ...product, name: e.target.value })}
+          color="error"
         />
 
         <TextField
@@ -66,7 +67,8 @@ const AddSingleProduct = ({ setOpen }) => {
             setProduct({ ...product, description: e.target.value })
           }
           sx={{ marginTop: 2, marginBottom: 2 }}
-        />
+          color="error"
+          />
 
         <TextField
           id="image"
@@ -77,9 +79,10 @@ const AddSingleProduct = ({ setOpen }) => {
           value={product.image}
           onChange={(e) => setProduct({ ...product, image: e.target.value })}
           sx={{ marginBottom: 2 }}
-        />
+          color="error"
+          />
 
-        <TextField
+        <TextField 
           id="price"
           label="מחיר"
           type="number"
@@ -88,7 +91,8 @@ const AddSingleProduct = ({ setOpen }) => {
           value={product.price}
           onChange={(e) => setProduct({ ...product, price: e.target.value })}
           sx={{ width: 100 }}
-        />
+          color="error"
+          />
 
         <FormControl required>
           <InputLabel id="filter-label">פילטר</InputLabel>
@@ -101,6 +105,7 @@ const AddSingleProduct = ({ setOpen }) => {
             value={product.filter}
             defaultValue={"0"}
             onChange={(e) => setProduct({ ...product, filter: e.target.value })}
+            color="error"
             sx={{ marginRight: 5, width: 220 }}
           >
             <MenuItem value={"0"}>ללא פילטר</MenuItem>
@@ -114,7 +119,7 @@ const AddSingleProduct = ({ setOpen }) => {
           </Select>
         </FormControl>
 
-        <FormControl required >
+        <FormControl required>
           <InputLabel id="category-label">קטגוריה</InputLabel>
           <Select
             labelId="category-label"
@@ -124,6 +129,7 @@ const AddSingleProduct = ({ setOpen }) => {
             required
             value={age}
             onChange={handleChange}
+            color="error"
 
             sx={{ width: 150, marginRight: 5, marginBottom: 2 }}>
             <MenuItem value={"ראשונות"}>ראשונות</MenuItem>

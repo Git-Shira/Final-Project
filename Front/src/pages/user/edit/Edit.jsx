@@ -90,6 +90,7 @@ const Edit = ({ id }) => {
             onChange={(e) =>
               setEditUser({ ...editUser, fullName: e.target.value })
             }
+            color="error"
           />
           <TextField
             id="email"
@@ -101,6 +102,7 @@ const Edit = ({ id }) => {
             onChange={(e) =>
               setEditUser({ ...editUser, email: e.target.value })
             }
+            color="error"
           />
           <TextField
             id="password"
@@ -121,6 +123,7 @@ const Edit = ({ id }) => {
                 </InputAdornment>
               ),
             }}
+            color="error"
           />
           <Button variant="contained" type="submit" fullWidth>
             Update

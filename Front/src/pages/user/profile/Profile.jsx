@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, Link } from "react-router-dom";
 import { Container } from "@mui/system";
 import TableOrder from "./TableOrder";
+
 const Profile = ({ id }) => {
   console.log("id", id);
   const [user, setUser] = useState("");
