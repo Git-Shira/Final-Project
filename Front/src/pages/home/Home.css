@@ -7,7 +7,6 @@
     font-style: normal;
 
     /* background-color: linear-gradient(to bottom, #FFFFFF 0%, #D9D9D9 100%) !important;  */
-
 }
 
 body {
@@ -135,10 +134,10 @@ section.big-deal {
 }
 
 .third-pic {
-    margin-right: 235px;
-    height: 450px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-right: 435px;
+    /* height: 450px; */
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 .button-link {

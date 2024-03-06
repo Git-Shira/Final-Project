@@ -3,11 +3,14 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { Container } from "@mui/system";
 
 import pic1 from "../../IMAGES/pic1.jpg";
 import pic2 from "../../IMAGES/pic2.jpg";
 import pic3 from "../../IMAGES/pic3.jpg";
 import pic4 from "../../IMAGES/pic4.jpg";
+
+import footer from "./home-footer.png";
 
 import thirdpic from "../../IMAGES/third-pic.png";
 
@@ -82,7 +85,7 @@ const Home = () => {
                 <section className="my-container">
 
 
-                    <p style={{marginTop:50}}>
+                    <p style={{ marginTop: 50 }}>
                         <div data-aos="fade-down"
                             data-aos-easing="linear"
                             data-aos-duration="500"
@@ -199,9 +202,10 @@ const Home = () => {
 
                 </section>
                 {/* <hr /> */}
+                <img className="third-pic" src={footer} alt="" />
 
-                <img className="third-pic" src={thirdpic} alt="" />
-
+                {/* <img className="third-pic" src={thirdpic} alt="" /> */}
+                <h5 style={{ textAlign: "center", marginBottom: 50 }}>© כל הזכויות שמורות למסעדת טריאקי</h5>
             </div>
         </div>
     );
