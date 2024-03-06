@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import "./Pay.css";
+
+import t1 from "../../IMAGES/t1.png";
+import t2 from "../../IMAGES/t2.png";
 import {
   TextField,
   Button,
@@ -165,169 +169,177 @@ const Pay = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        component="form"
-        sx={{
-          marginTop: "2rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "1rem",
-          width: "50%",
-          margin: "auto",
-        }}
-      >
-        <Typography variant="h4">תשלום</Typography>
+    <Container maxWidth="sm" >
+      <div className="pay" style={{ height: 750 }}>
+        <Box
+          component="form"
+          sx={{
+            marginTop: "2rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1rem",
+            width: "50%",
+            margin: "auto",
+          }}
+        >
 
-        <TextField
-          id="outlined-basic"
-          label="שם מלא"
-          variant="outlined"
-          onChange={(e) => setFullName(e.target.value)}
-          color="error"
-          required
-          error={vaildationError.fullName}
-          helperText={vaildationError.fullName}
-        />
-
-        <FormControl>
-          <FormLabel id="demo-controlled-radio-buttons-group">סוג קניה</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="controlled-radio-buttons-group"
-            value={typeCollect}
-            onChange={handleChangeCollect}
-          >
-            <FormControlLabel value="selfCollection" control={<Radio />} label="איסוף עצמי" />
-            <FormControlLabel value="takeAway" control={<Radio />} label="משלוח" />
-          </RadioGroup>
-        </FormControl>
-
-        {typeCollect === "takeAway" && (<div>
-          {/* <Typography variant="h4">פרטי משלוח</Typography> */}
-
+          <div className="title-design">
+            <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+            <h1 data-aos="flip-down" data-aos-duration="1000">תשלום</h1>
+            <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+          </div>
           <TextField
             id="outlined-basic"
-            label="כתובת מלאה"
+            label="שם מלא"
             variant="outlined"
-            onChange={(e) => setStreet(e.target.value)}
+            onChange={(e) => setFullName(e.target.value)}
             color="error"
-
-            error={vaildationError.street}
-            helperText={vaildationError.street}
+            required
+            error={vaildationError.fullName}
+            helperText={vaildationError.fullName}
           />
-          <TextField
-            id="outlined-basic"
-            label="עיר"
-            variant="outlined"
-            onChange={(e) => setCity(e.target.value)}
-            color="error"
 
-            error={vaildationError.city}
-            helperText={vaildationError.city}
-          />
-        </div>
-        )}
+          <FormControl>
+            <FormLabel id="demo-controlled-radio-buttons-group">סוג קניה</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={typeCollect}
+              onChange={handleChangeCollect}
+            >
+              <FormControlLabel value="selfCollection" control={<Radio />} label="איסוף עצמי" />
+              <FormControlLabel value="takeAway" control={<Radio />} label="משלוח" />
+            </RadioGroup>
+          </FormControl>
 
-        <FormControl>
-          <FormLabel id="demo-controlled-radio-buttons-group">סוג תשלום</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="controlled-radio-buttons-group"
-            value={typePay}
-            onChange={handleChangePay}
-          >
-            <FormControlLabel value="cash" control={<Radio />} label="מזומן" />
-            <FormControlLabel value="card" control={<Radio />} label="אשראי" />
-          </RadioGroup>
-        </FormControl>
+          {typeCollect === "takeAway" && (<div>
+            {/* <Typography variant="h4">פרטי משלוח</Typography> */}
 
-
-        {typePay === "card" && (
-          <div>
-            {/* <Typography variant="h4">פרטי תשלום</Typography> */}
             <TextField
               id="outlined-basic"
-              label="מספר כרטיס"
+              label="כתובת מלאה"
               variant="outlined"
-              onChange={(e) => setCardNumber(e.target.value)}
+              onChange={(e) => setStreet(e.target.value)}
               color="error"
 
-              error={vaildationError.cardNumber}
-              helperText={vaildationError.cardNumber}
+              error={vaildationError.street}
+              helperText={vaildationError.street}
             />
             <TextField
               id="outlined-basic"
-              label="שם בעל הכרטיס"
+              label="עיר"
               variant="outlined"
-              onChange={(e) => setCardHolder(e.target.value)}
+              onChange={(e) => setCity(e.target.value)}
               color="error"
 
-              error={vaildationError.cardHolder}
-              helperText={vaildationError.cardHolder}
-            />
-            <TextField
-              id="outlined-basic"
-              label="חודש"
-              variant="outlined"
-              onChange={(e) => setCardMonth(e.target.value)}
-              color="error"
-
-              error={vaildationError.cardMonth}
-              helperText={vaildationError.cardMonth}
-            />
-            <TextField
-              id="outlined-basic"
-              label="שנה"
-              variant="outlined"
-              onChange={(e) => setCardYear(e.target.value)}
-              color="error"
-
-              error={vaildationError.cardYear}
-              helperText={vaildationError.cardYear}
-            />
-            <TextField
-              id="outlined-basic"
-              label="CVV"
-              variant="outlined"
-              onChange={(e) => setCardCvv(e.target.value)}
-              color="error"
-
-              error={vaildationError.cardCvv}
-              helperText={vaildationError.cardCvv}
-            />
-            <TextField
-              id="outlined-basic"
-              label="סוג כרטיס"
-              variant="outlined"
-              onChange={(e) => setCardType(e.target.value)}
-              color="error"
-
-              error={vaildationError.cardType}
-              helperText={vaildationError.cardType}
+              error={vaildationError.city}
+              helperText={vaildationError.city}
             />
           </div>
-        )}
+          )}
 
-        <h1>סהכ לתשלום {cart.totalAmount}</h1>
+          <FormControl>
+            <FormLabel id="demo-controlled-radio-buttons-group">סוג תשלום</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={typePay}
+              onChange={handleChangePay}
+            >
+              <FormControlLabel value="cash" control={<Radio />} label="מזומן" />
+              <FormControlLabel value="card" control={<Radio />} label="אשראי" />
+            </RadioGroup>
+          </FormControl>
 
-        <Button variant="contained" onClick={handleSubmit} to="/Pay">
-          תשלום
-        </Button>
-      </Box>
-      {success && (<Alert severity="success"
+
+          {typePay === "card" && (
+            <div>
+              {/* <Typography variant="h4">פרטי תשלום</Typography> */}
+              <TextField
+                id="outlined-basic"
+                label="מספר כרטיס"
+                variant="outlined"
+                onChange={(e) => setCardNumber(e.target.value)}
+                color="error"
+
+                error={vaildationError.cardNumber}
+                helperText={vaildationError.cardNumber}
+              />
+              <TextField
+                id="outlined-basic"
+                label="שם בעל הכרטיס"
+                variant="outlined"
+                onChange={(e) => setCardHolder(e.target.value)}
+                color="error"
+
+                error={vaildationError.cardHolder}
+                helperText={vaildationError.cardHolder}
+              />
+              <TextField
+                id="outlined-basic"
+                label="חודש"
+                variant="outlined"
+                onChange={(e) => setCardMonth(e.target.value)}
+                color="error"
+
+                error={vaildationError.cardMonth}
+                helperText={vaildationError.cardMonth}
+              />
+              <TextField
+                id="outlined-basic"
+                label="שנה"
+                variant="outlined"
+                onChange={(e) => setCardYear(e.target.value)}
+                color="error"
+
+                error={vaildationError.cardYear}
+                helperText={vaildationError.cardYear}
+              />
+              <TextField
+                id="outlined-basic"
+                label="CVV"
+                variant="outlined"
+                onChange={(e) => setCardCvv(e.target.value)}
+                color="error"
+
+                error={vaildationError.cardCvv}
+                helperText={vaildationError.cardCvv}
+              />
+              <TextField
+                id="outlined-basic"
+                label="סוג כרטיס"
+                variant="outlined"
+                onChange={(e) => setCardType(e.target.value)}
+                color="error"
+
+                error={vaildationError.cardType}
+                helperText={vaildationError.cardType}
+              />
+            </div>
+          )}
+
+          <h1>סהכ לתשלום {cart.totalAmount}</h1>
+
+          <button
+            className="btn"
+            variant="contained" onClick={handleSubmit} to="/Pay">
+            תשלום
+          </button>
+        </Box>
+        {success && (<Alert severity="success"
         >
           {success}
         </Alert>)
         }
-      {error && (
-        <Alert severity="error"
-        >
-          {error}
-        </Alert>
-      )}
+        {error && (
+          <Alert severity="error"
+          >
+            {error}
+          </Alert>
+        )}
+      </div>
     </Container>
   );
 };

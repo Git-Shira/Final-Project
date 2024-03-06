@@ -110,7 +110,7 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="harshama" style={{ height: 700 }}>
+    <div className="harshama" style={{ height: 610 }}>
 
       {/* { <h1 className="harshama">הרשמה לאתר</h1> } */}
 

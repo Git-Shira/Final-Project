@@ -29,7 +29,7 @@
 .product-dialog .btn,
 .reset .btn,
 .not-connected-dialog .btn,
-.forgot .btn, .harshama .btn,.hithabrut .btn,
+.forgot .btn, .harshama .btn,.hithabrut .btn,.pay .btn,
 .btn {
   display: inline-block;
   color: #eee;
@@ -43,7 +43,7 @@
 .product-dialog .btn:hover,
 .reset .btn:hover,
 .not-connected-dialog .btn:hover,
-.forgot .btn:hover, .harshama .btn:hover,.hithabrut .btn:hover,
+.forgot .btn:hover, .harshama .btn:hover,.hithabrut .btn:hover,.pay .btn:hover,
 .btn:hover {
   background:#c1121F;
   color: white;
