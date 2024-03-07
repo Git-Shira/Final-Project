@@ -204,13 +204,13 @@ const SignUp = () => {
           הרשמה
         </button>
 
-        {success && (<Alert severity="success"
+        {success && (<Alert severity="success" style={{margin:"0 auto",width:500,justifyContent:"center"}}
         >
           {success}
         </Alert>)
         }
         {error && (
-          <Alert severity="error"
+          <Alert severity="error" style={{margin:"0 auto",width:500,justifyContent:"center"}}
           // style={{ marginBottom: "10px" }}
           >
             {error}

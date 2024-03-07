@@ -243,9 +243,8 @@ const Pay = () => {
             </RadioGroup>
           </FormControl>
 
-          {typeCollect === "משלוח" && (<div>
+          {typeCollect === "משלוח" && (<div style={{ marginRight: 35 }}>
             {/* <Typography variant="h4">פרטי משלוח</Typography> */}
-
             <TextField
               id="outlined-basic"
               label="כתובת מלאה"
@@ -256,7 +255,7 @@ const Pay = () => {
               error={vaildationError.street}
               helperText={vaildationError.street}
             />
-            <br />
+
             <TextField
               id="outlined-basic"
               label="עיר"
@@ -266,7 +265,7 @@ const Pay = () => {
 
               error={vaildationError.city}
               helperText={vaildationError.city}
-              sx={{ marginRight: 30, marginTop: -7 }}
+              sx={{ marginRight: 5, }}
 
             />
           </div>
@@ -289,80 +288,85 @@ const Pay = () => {
 
 
           {typePay === "אשראי" && (
-            <div style={{ marginRight: 150 }}>
+            <div style={{ marginRight: 35 }}>
               {/* <Typography variant="h4">פרטי תשלום</Typography> */}
-              <TextField
-                id="outlined-basic"
-                label="מספר כרטיס"
-                variant="outlined"
-                onChange={(e) => setCardNumber(e.target.value)}
-                color="error"
 
-                error={vaildationError.cardNumber}
-                helperText={vaildationError.cardNumber}
-                sx={{ marginBottom: 3 }}
-              />
+              <div sx={{ marginBottom: 3 }}>
+                <TextField
+                  id="outlined-basic"
+                  label="שם בעל הכרטיס"
+                  variant="outlined"
+                  onChange={(e) => setCardHolder(e.target.value)}
+                  color="error"
+
+                  error={vaildationError.cardHolder}
+                  helperText={vaildationError.cardHolder}
+
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="סוג כרטיס"
+                  variant="outlined"
+                  onChange={(e) => setCardType(e.target.value)}
+                  color="error"
+
+                  error={vaildationError.cardType}
+                  helperText={vaildationError.cardType}
+                  sx={{ marginRight: 3 }}
+                />
+              </div>
               <br />
-              <TextField
-                id="outlined-basic"
-                label="שם בעל הכרטיס"
-                variant="outlined"
-                onChange={(e) => setCardHolder(e.target.value)}
-                color="error"
+              <div >
+                <TextField
+                  id="outlined-basic"
+                  label="CVV"
+                  type="number"
+                  variant="outlined"
+                  onChange={(e) => setCardCvv(e.target.value)}
+                  color="error"
 
-                error={vaildationError.cardHolder}
-                helperText={vaildationError.cardHolder}
-                sx={{ marginBottom: 3 }}
+                  error={vaildationError.cardCvv}
+                  helperText={vaildationError.cardCvv}
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="מספר כרטיס"
+                  variant="outlined"
+                  onChange={(e) => setCardNumber(e.target.value)}
+                  color="error"
 
-              />
+                  error={vaildationError.cardNumber}
+                  helperText={vaildationError.cardNumber}
+                  sx={{ marginRight: 3 }}
+                />
+              </div>
               <br />
-              <TextField
-                id="outlined-basic"
-                label="חודש"
-                variant="outlined"
-                onChange={(e) => setCardMonth(e.target.value)}
-                color="error"
+              <div >
+                <TextField
+                  id="outlined-basic"
+                  label="תוקף הכרטיס - חודש"
+                  variant="outlined"
+                  onChange={(e) => setCardMonth(e.target.value)}
+                  color="error"
 
-                error={vaildationError.cardMonth}
-                helperText={vaildationError.cardMonth}
-              // sx={{marginBottom:3}}
+                  error={vaildationError.cardMonth}
+                  helperText={vaildationError.cardMonth}
 
-              />
-              <TextField
-                id="outlined-basic"
-                label="שנה"
-                variant="outlined"
-                onChange={(e) => setCardYear(e.target.value)}
-                color="error"
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="תוקף הכרטיס - שנה"
+                  variant="outlined"
+                  onChange={(e) => setCardYear(e.target.value)}
+                  color="error"
 
-                error={vaildationError.cardYear}
-                helperText={vaildationError.cardYear}
-                sx={{ marginRight: 30, marginTop: -27 }}
+                  error={vaildationError.cardYear}
+                  helperText={vaildationError.cardYear}
+                  sx={{ marginRight: 3 }}
 
-              />
-              <TextField
-                id="outlined-basic"
-                label="CVV"
-                type="number"
-                variant="outlined"
-                onChange={(e) => setCardCvv(e.target.value)}
-                color="error"
+                />
+              </div>
 
-                error={vaildationError.cardCvv}
-                helperText={vaildationError.cardCvv}
-                sx={{ marginRight: 30, marginTop: -20 }}
-              />
-              <TextField
-                id="outlined-basic"
-                label="סוג כרטיס"
-                variant="outlined"
-                onChange={(e) => setCardType(e.target.value)}
-                color="error"
-
-                error={vaildationError.cardType}
-                helperText={vaildationError.cardType}
-                sx={{ marginRight: 30, marginTop: -13 }}
-              />
             </div>
           )}
 
@@ -378,13 +382,15 @@ const Pay = () => {
           </div>
         </Box>
       </div>
-      {success && (<Alert severity="success"
-      >
-        {success}
-      </Alert>)
+
+      {success &&
+        (<Alert severity="success" style={{ margin: "0 auto", width: 500, justifyContent: "center" }}
+        >
+          {success}
+        </Alert>)
       }
       {error && (
-        <Alert severity="error"
+        <Alert severity="error" style={{ margin: "0 auto", width: 500, justifyContent: "center" }}
         >
           {error}
         </Alert>
