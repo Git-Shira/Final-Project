@@ -51,7 +51,7 @@ const TableAdmin = () => {
   }, []);
   console.log(userData);
   return (
-    <div>
+    <div style={{minHeight:610}}>
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
         <h1 data-aos="flip-down" data-aos-duration="1000">ארכיון הזמנות</h1>

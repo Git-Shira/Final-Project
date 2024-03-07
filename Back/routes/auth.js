@@ -89,6 +89,7 @@ router.put("/update/:id", async (req, res) => {
     if (!user) {
       return res.status(404).send({ error: "User does not exist" });
     }
+    
     return res.status(200).send({
       message: "User updated successfully",
       user: { id: user._id, name: user.name, email: user.email },

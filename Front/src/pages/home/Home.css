@@ -146,7 +146,8 @@ section.big-deal {
 }
 
 .button-link:hover {
-    color: black;
+    color: #C1121F;
+    font-weight: bold;
 }
 
 .button {

@@ -143,7 +143,7 @@ const Favorites = () => {
   }, [products]);
 
   return (
-    <div style={{minHeight:610}}>
+    <div style={{ minHeight: 610 }}>
       <Container>
         <div className="title-design">
           <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
@@ -151,14 +151,14 @@ const Favorites = () => {
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 
-        <div className="dishes" style={{marginTop:50}} >
+        <div className="dishes">
           <div className="box-container">
             {/* {products?.map((product, index) => { */}
             {getAllFavorites?.map((product, index) => {
               console.log(product._id);
               return (
                 <div data-aos="zoom-in">
-                  <div className="box" style={{marginBottom:50}}>
+                  <div className="box" >
                     <IconButton className="eye"
                       onClick={() => {
                         setSelectedProduct(product);
@@ -179,8 +179,11 @@ const Favorites = () => {
                       />
                     </IconButton>
                     <img src={product.image} alt={product.name} />
-                    <h5>{product.name}</h5>
-                    <span> {product.price} ₪</span>
+                    <div style={{ height: 20, alignItems: "center", margin: 0 }}>
+                      <h5> {product.name}</h5>
+                    </div>
+                    <br />
+                                        <span className="product-price"> {product.price} ₪</span>
                     <button className="btn"
                       onClick={() => {
                         addShoppingCart(product);
@@ -192,7 +195,7 @@ const Favorites = () => {
             })}
           </div>
         </div>
-
+        <div style={{ height: 30 }}></div>
         {selectedProduct && (
           <Dialog
             className="product-dialog"

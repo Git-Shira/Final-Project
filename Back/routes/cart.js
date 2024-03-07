@@ -15,7 +15,6 @@ router.post("/add", async (req, res) => {
     res.status(500).send({ error: "Something went wrong" });
   }
 });
-
 router.post("/user/:id/new_order", async (req, res) => {
   const id = req.params.id;
 
@@ -32,12 +31,16 @@ router.post("/user/:id/new_order", async (req, res) => {
         userId: orderData.userId,
         fullName: orderData.fullName, // Extract other relevant fields from orderData
         totalPrice: orderData.totalPrice,
-        typeCollect:orderData.typeCollect,
-        street: orderData.street,
-        city: orderData.city,
-        typePay:orderData.typePay,
-        products: orderData.products, // Assuming products are in the correct format
+
+        typeCollect: orderData.typeCollect,
+
+        typePay: orderData.typePay,
+
+        fullAddress: orderData.fullAddress,
+
         date: orderData.date,
+
+        products: orderData.products, // Assuming products are in the correct format
       });
       await newOrder.save();
       res
@@ -76,19 +79,20 @@ router.get("/user/:email", async (req, res) => {
 });
 
 router.get("/user/:id/getOrders", async (req, res) => {
-  const userId = req.params.id; // Use req.params.id to get the provided user ID
-  console.log("get user", id);
+  const userId = req.params.id;
 
   try {
-      const cart = await Cart.findOne({ userId: userId }); // Compare userId with userId
-      if (!cart) {
-        return res.status(400).send({ error: "Cart does not exist" });
-      }
-      res.status(200).send({ message: "Cart", cart: cart });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send({ error: "Something went wrong" });
+    const orders = await Cart.find({ userId: userId });
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).send({ error: "No orders found for this user" });
     }
+
+    res.status(200).send({ message: "Orders", orders: orders });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: "Something went wrong" });
+  }
 });
 
 module.exports = router;

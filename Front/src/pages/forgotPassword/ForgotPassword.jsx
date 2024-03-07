@@ -94,15 +94,16 @@ const ForgotPassword = () => {
 
     return (
         <Container maxWidth="sm">
-            <div className="forgot" style={{ height: 610 }}>
+            <div className="forgot" style={{ minHeight: 610 }}>
                 {/* <Typography className="forgot" variant="h4" component="h2" align="center">
                     שכחתי סיסמא
                 </Typography> */}
-                <div className="title-design">
+                <div className="title-design" style={{marginBottom:15}}>
                     <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
                     <h1 data-aos="flip-down" data-aos-duration="1000">שכחתי סיסמא</h1>
                     <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
                 </div>
+
                 <form onSubmit={handleSubmit}>
                     <div className="spacer">
                         <TextField
@@ -149,15 +150,15 @@ const ForgotPassword = () => {
                         />
                     </div>
                     <button
-                        className="btn"
+                        className="btn btn-shadow"
                         type="submit"
                         variant="contained"
                         color="primary"
                         fullWidth
                         size="large"
-                        style={{ marginTop: "30px" }}
+                        style={{width:200,fontSize:"x-large", marginTop: 50 }}
                     >
-                        סיסמא חדשה
+                        עדכון סיסמא
                     </button>
                 </form>
             </div>

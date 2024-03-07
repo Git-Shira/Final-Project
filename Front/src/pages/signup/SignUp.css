@@ -27,7 +27,8 @@
     text-align: center !important;
     align-items: center !important;
     line-height: 5 !important;
-    
 }
 
-
+.btn-shadow{
+    box-shadow: 1px 0px 20px .5px #FFFFFF;
+}

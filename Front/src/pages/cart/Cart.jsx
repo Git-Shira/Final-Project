@@ -34,8 +34,6 @@ export default function Cart() {
   const cookieCart = Cookies.get("cart");
 
   useEffect(() => {
-    AOS.init();
-
     if (cookieCart) {
       const parsedCart = JSON.parse(cookieCart);
       setCartData(parsedCart);
@@ -92,13 +90,15 @@ export default function Cart() {
       updateTotalPrice(updatedCart);
       dispatch(editItem({ id, quantity: newQuantity }));
     }
-    else
-      deleteItem(id);
+    else if (newQuantity === 0)
+      dispatch(removeItem(id));
   };
-
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
-    <div className="cart">
+    <div className="cart" style={{ minHeight: 610 }}>
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
         <h1 data-aos="flip-down" data-aos-duration="1000">קצת עלינו</h1>
@@ -107,14 +107,19 @@ export default function Cart() {
       <div style={{ textAlign: "center", marginTop: 50 }}>
         <h3 style={{ color: "white", marginRight: -470 }}>סה"כ לתשלום : &nbsp;
           <span style={{ color: "#C1121F", fontWeight: "bold" }}>{totalPrice}</span>       ₪</h3>
-        <button variant="contained" to="/Pay" component={Link} className="btn" style={{ marginTop: -70, marginRight: 660 }}>
+
+        {/* <Button> */}
+          <Link to="/Pay" className="btn"
+          style={{ marginTop: -70, marginRight: 660 }}
+        >
           מעבר לתשלום
-        </button>
+        </Link>
+         {/* </Button> */}
       </div>
       {/* <TableContainer component={Paper}> */}
       <Table className="table table-bordered"
         style={{
-          maxWidth: 800, 
+          maxWidth: 800,
         }}
       >
 
@@ -176,6 +181,7 @@ export default function Cart() {
         </TableBody>
       </Table>
 
+
       {/* </TableContainer> */}
 
       <Dialog
@@ -194,25 +200,26 @@ export default function Cart() {
           alignItems: 'center', // מרכז אנכי 
         }}>
         <div className="dialog-delete-border">
-        <DialogContent sx={{
-          width: 350,
-        }}>
-          <DialogContentText id="alert-dialog-description"
-                      sx={{ marginTop: 5, textAlign: "center" }}>
-                      
-            בטוחים שאתם רוצים להסיר את
-           <span style={{color:"C1121F",fontWeight:"bold"}}>  {selectedProduct.name} </span>
-            מההזמנה שלכם ?
-            <br />        </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ marginBottom: 2, marginLeft: 2 }}>
-        <button className="btn" onClick={handleCloseDialog} style={{marginLeft:15}}>לא</button>
-          <button className="btn" onClick={() => deleteItem(selectedProduct.id)} autoFocus>
-            כן
-          </button>
-        </DialogActions>
+          <DialogContent sx={{
+            width: 350,
+          }}>
+            <DialogContentText id="alert-dialog-description"
+              sx={{ marginTop: 5, textAlign: "center" }}>
+
+              בטוחים שאתם רוצים להסיר את
+              <span style={{ color: "C1121F", fontWeight: "bold" }}>  {selectedProduct.name} </span>
+              מההזמנה שלכם ?
+              <br />        </DialogContentText>
+          </DialogContent>
+          <DialogActions sx={{ marginBottom: 2, marginLeft: 2 }}>
+            <button className="btn" onClick={handleCloseDialog} style={{ marginLeft: 15 }}>לא</button>
+            <button className="btn" onClick={() => deleteItem(selectedProduct.id)} autoFocus>
+              כן
+            </button>
+          </DialogActions>
         </div>
       </Dialog>
+
     </div>
   );
 }

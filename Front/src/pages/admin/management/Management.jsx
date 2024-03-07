@@ -12,6 +12,7 @@ import { TextField, Box } from "@mui/material";
 import Edit from "./edit/Edit";
 import axios from "axios";
 import ProductsCard from "../../../components/card/products/ProductsCard";
+import Pagination from "@mui/material/Pagination";
 
 import AOS from 'aos';
 
@@ -26,6 +27,28 @@ const Management = () => {
   const [editProductId, setEditProductId] = useState(null); // State to store the ID of the product to be edited
 
   const [search, setSearch] = React.useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20); // Number of items per page
+
+  const paginate = (event, value) => setCurrentPage(value);
+
+  const filteredProducts = allProducts.filter(
+    (product) =>
+        product.name.toLowerCase().startsWith(search.toLowerCase())
+  );
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+    setCurrentPage(1); // Reset pagination when search changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredProducts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -76,7 +99,8 @@ const Management = () => {
             label="חיפוש"
             type={"text"}
             variant="outlined"
-            onChange={(e) => setSearch(e.target.value)}
+            // onChange={(e) => setSearch(e.target.value)}
+            onChange={handleSearchChange}
             value={search}
             defaultValue={search}
             autoComplete="off"
@@ -88,27 +112,38 @@ const Management = () => {
             onClick={() => {
               setSearch("");
             }}>נקה סינון</button>)}
+
         </div>
         <div className="dishes">
           <div className="box-container">
-            {allProducts ? (
+            {/* {allProducts ? (
               allProducts?.filter(
                 (product) =>
                   product.name.toLowerCase().startsWith(search.toLowerCase())
-              )
+              ) */}
 
-                .map((product, index) => {
+                {/* .map((product, index) => { */}
+                {currentItems ? (
+                currentItems.map((product) => {
                   return (
                     <>
                       <ProductsCard key={product._id} product={product} fetchProducts={fetchProducts} />
                     </>
                   );
                 })
-            ) : (
+               ) : (
               <p>No products available</p>
             )}
           </div>
         </div>
+        <Pagination
+            className="pagination"
+              count={Math.ceil(filteredProducts.length / itemsPerPage)}
+              page={currentPage}
+              onChange={paginate}
+              variant="outlined" color="error" 
+              />
+
         <Dialog
           open={open}
           onClose={handleClose}

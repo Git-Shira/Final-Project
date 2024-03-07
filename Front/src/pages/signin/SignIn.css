@@ -21,7 +21,30 @@
     padding: 0 !important;
 }
 
-a {
-    /* color: #c1121f !important; */
-    /* text-decoration: underline !important;  */
+.hithabrut a {
+    color: #c1121f !important;
+    text-decoration: none !important; 
+    position: relative;
+
+}
+
+.hithabrut a::after {
+    content: "";
+    width: 0%;
+    height: 1.5px;
+    display: block;
+    margin: 0 auto;
+    transition: 1000ms;
+    position: absolute;
+
+    transform: translateX(-50%);
+
+    bottom: -3px;
+    left: 50%;
+}
+
+.hithabrut a:hover::after {
+    background: white;
+    width: 90%;
+
 }

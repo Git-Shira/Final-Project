@@ -9,7 +9,9 @@ const Profile = ({ id }) => {
         const user = JSON.parse(localStorage.getItem("user"));
         setUser(user?.user);
     }, []);
+
     console.log("id", user);
+
     return (
         <Container maxWidth="sm">
             <h1> פרטים</h1>

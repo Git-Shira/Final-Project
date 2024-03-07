@@ -175,9 +175,13 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
             height: 150,
           }}>
             <DialogContentText id="alert-dialog-description"
-              sx={{ marginTop: 5, textAlign: "center" }}>
+              sx={{ marginTop: 5, textAlign: "center",            width: 350,
+            }}>
               <Container>
-                האם אתה בטוח שברצונך למחוק את המוצר הזה?              </Container>
+                האם אתה בטוח שברצונך למחוק את 
+                <span style={{ color: "C1121F", fontWeight: "bold" }}>  {product.name} </span>
+
+                מרשימת המוצרים ?              </Container>
             </DialogContentText>
           </DialogContent>
           <DialogActions sx={{ marginBottom: 2, marginLeft: 2 }}>

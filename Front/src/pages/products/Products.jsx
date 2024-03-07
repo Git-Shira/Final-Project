@@ -22,6 +22,7 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { addItem, removeItem } from "../../redux/cartSlice";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Pagination from "@mui/material/Pagination";
 
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -40,6 +41,9 @@ const Products = () => {
   const [priceRange, setPriceRange] = React.useState([0, 449]);
   const [open, setOpen] = React.useState(false);
   const [favoriteStatus, setFavoriteStatus] = React.useState({});
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(20); // Number of items per page
 
   const userCookies = Cookies.get("user");
   const user = userCookies ? JSON.parse(userCookies) : null;
@@ -112,13 +116,12 @@ const Products = () => {
     setSearch("");
   };
 
-  getProducts();
+  // getProducts();
 
   useEffect(() => {
     AOS.init();
 
-    // getProducts();
-
+    getProducts();
   }, []);
 
   const handleChange = (category) => {
@@ -176,6 +179,33 @@ const Products = () => {
     return () => clearInterval(intervalId);
   }, []); // Run once on mount to start the automatic rotation
 
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+    setCurrentPage(1); // Reset pagination when search changes
+  };
+
+  const paginate = (event, value) => setCurrentPage(value);
+
+  const filteredProducts = products.filter(
+    (product) =>
+      (selectCategory === "")
+        ? product.price >= priceRange[0] &&
+        product.price <= priceRange[1] &&
+        product.name.toLowerCase().startsWith(search.toLowerCase())
+        : product.category === selectCategory
+        &&
+        product.price >= priceRange[0] &&
+        product.price <= priceRange[1] &&
+        product.name.toLowerCase().startsWith(search.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredProducts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
   return (
     <div>
       <Container>
@@ -224,7 +254,11 @@ const Products = () => {
           })}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 50 }}>
-          <strong style={{ marginLeft: 5 }}> סינון לפי מחיר: &nbsp;  </strong>
+          <strong style={{
+            marginLeft: 5, color: "#C1121F",fontSize:"larger"
+          }}>
+            סינון לפי מחיר: &nbsp;
+          </strong>
 
           {priceRange[1]} ₪
 
@@ -245,14 +279,16 @@ const Products = () => {
               marks
               min={0}
               max={449}
-              sx={{ color: "black", height: 10, }} />
+              sx={{ color: "#C1121F", height: 10, }} />
           </Box>
           {priceRange[0]} ₪
 
           <strong
             style={{
               marginRight: 50,
-              marginLeft: 5
+              marginLeft: 5,
+              color: "#C1121F",
+              fontSize:"larger"
             }}
           >חיפוש מנה: &nbsp;</strong>
           <TextField
@@ -261,7 +297,8 @@ const Products = () => {
             label="חיפוש"
             type={"text"}
             variant="outlined"
-            onChange={(e) => setSearch(e.target.value)}
+            // onChange={(e) => setSearch(e.target.value)}
+            onChange={handleSearchChange}
             value={search}
             defaultValue={search}
             autoComplete="off"
@@ -280,67 +317,64 @@ const Products = () => {
 
         <div className="dishes">
           <div className="box-container">
+            {currentItems.map((product) => {
+              console.log(product._id);
+              return (
+                <div data-aos="zoom-in">
+                  <div className="box">
+                    <IconButton className="eye"
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        setOpen(true);
+                      }}>
+                      <Visibility />
+                    </IconButton>
 
+                    <IconButton
+                      className="heart"
+                      onClick={() => {
+                        if (!user) {
+                          handleOpenIt();
+                        }
+                        else
+                          handleFavoriteToggle(product);
+                      }}
+                    >
+                      <FavoriteIcon
+                        color={isFavorite(product._id) ? "error" : "disabled"}
+                      />
+                    </IconButton>
+                    <img src={product.image} alt={product.name} />
 
-            {products
-              .filter(
-                (product) =>
-                  (selectCategory === ""
-                    ? true
-                    : product.category === selectCategory)
-                  &&
-                  product.price >= priceRange[0] &&
-                  product.price <= priceRange[1] &&
-                  product.name.toLowerCase().startsWith(search.toLowerCase())
-              )
-
-              .map((product, index) => {
-                console.log(product._id);
-                return (
-                  <div data-aos="zoom-in">
-                    <div className="box">
-                      <IconButton className="eye"
-                        onClick={() => {
-                          setSelectedProduct(product);
-                          setOpen(true);
-                        }}>
-                        <Visibility />
-                      </IconButton>
-
-                      <IconButton
-                        className="heart"
-                        onClick={() => {
-                          if (!user) {
-                            handleOpenIt();
-                          }
-                          else
-                            handleFavoriteToggle(product);
-
-                        }}
-                      >
-                        <FavoriteIcon
-                          color={isFavorite(product._id) ? "error" : "disabled"}
-                        />
-                      </IconButton>
-                      <img src={product.image} alt={product.name} />
-                      
-                      <div style={{height:20,alignItems:"center",margin:0}}>
-                       <h5> {product.name}</h5>
-                        </div>
-<br />
-                      <span className="product-price"> {product.price} ₪</span>
-
-                      <button className="btn"
-                        onClick={() => {
-                          addShoppingCart(product);
-                        }}>
-                        הוספה לסל</button>
+                    <div style={{ height: 20, alignItems: "center", margin: 0 }}>
+                      <h5> {product.name}</h5>
                     </div>
+                    <br />
+                    <span className="product-price"> {product.price} ₪</span>
+
+                    <button className="btn"
+                      onClick={() => {
+                        addShoppingCart(product);
+                      }}>
+                      הוספה לסל</button>
                   </div>
-                );
-              })}
-          </div>
+                </div>
+              );
+            })}
+            </div>
         </div>
+            <Pagination
+            className="pagination"
+              count={Math.ceil(filteredProducts.length / itemsPerPage)}
+              page={currentPage}
+              onChange={paginate}
+              variant="outlined" color="error" 
+
+              // color="white"
+              // sx={{ color: 'white','& MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':{color:"white"}}}
+
+              />
+          
 
         {selectedProduct && (
           <Dialog

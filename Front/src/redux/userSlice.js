@@ -22,6 +22,7 @@ const userSlice = createSlice({
       state.user = null;
       state.isAuthenticating = false;
       Cookies.remove("user"); // Remove the user cookie
+      localStorage.removeItem("user");
     },
   },
 });

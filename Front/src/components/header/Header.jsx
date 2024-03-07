@@ -70,6 +70,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action
+    localStorage.removeItem("user");
     Cookies.remove("user", { path: "/" }); // Clear the user cookie
     Cookies.remove("cart", { path: "/" });
     Cookies.remove("favorites", { path: "/" });

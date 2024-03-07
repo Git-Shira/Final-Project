@@ -19,6 +19,7 @@
     margin-top: 15px;
     margin-bottom: -15px;
     color: #C1121F;
+    font-weight: bold;
 }
 
 .branches .grid .opening-hours {
@@ -43,7 +44,7 @@
     margin-right: -30px;
     margin-top: 15px;
     color: #C1121F;
-    background-color: black;
+    background-color: white;
 }
 
 /* .b > div {

@@ -30,8 +30,10 @@
 .reset .btn,
 .not-connected-dialog .btn,
 .cart .btn,
-.forgot .btn, .harshama .btn,
-.hithabrut .btn,.pay .btn,
+.forgot .btn,
+.harshama .btn,
+.hithabrut .btn,
+.pay .btn,
 .btn {
   display: inline-block;
   color: #eee;
@@ -39,6 +41,10 @@
   border-radius: .5rem;
   cursor: pointer;
   padding: .6rem 1rem;
+/* border-radius: black; */
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .dishes .box-container .btn:hover,
@@ -46,10 +52,12 @@
 .reset .btn:hover,
 .not-connected-dialog .btn:hover,
 .cart .btn:hover,
-.forgot .btn:hover, .harshama .btn:hover,
-.hithabrut .btn:hover,.pay .btn:hover,
+.forgot .btn:hover,
+.harshama .btn:hover,
+.hithabrut .btn:hover,
+.pay .btn:hover,
 .btn:hover {
-  background:#c1121F;
+  background: #c1121F;
   color: white;
   letter-spacing: .1rem;
 }
@@ -81,7 +89,7 @@
   position: absolute;
   top: .5rem;
   /* background: #eee; */
-  border:2px solid #C1121F;
+  border: 2px solid #C1121F;
   border-radius: 50%;
   height: 2.5rem;
   width: 2.5rem;
@@ -206,7 +214,6 @@
   width: 100%;
   margin-top: -140px;
   height: 125px;
-
 }
 
 .btn-prev {
@@ -222,4 +229,19 @@
 .btn-prev:hover,
 .btn-next:hover {
   background-color: aliceblue;
+}
+
+.MuiPaginationItem-root.Mui-selected,
+.MuiPaginationItem-root {
+  color: white !important;
+}
+
+.pagination {
+  margin-right: 785px !important;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 10px;
+  box-shadow: 1px 0px 20px 5px #FFFFFF;
+  /* direction: ltr !important; */
+  border-radius: 50px;
 }

@@ -110,7 +110,7 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="harshama" style={{ height: 610 }}>
+    <div className="harshama" style={{ minHeight: 610 }}>
 
       {/* { <h1 className="harshama">הרשמה לאתר</h1> } */}
 
@@ -121,9 +121,10 @@ const SignUp = () => {
       </div>
       <Box
         component="form"
-        // sx={{
+        sx={{
+          marginTop:8
         //   "& > :not(style)": { m: 1, width: "25ch" },
-        // }}
+        }}
         noValidate
         autoComplete="off"
       >
@@ -197,10 +198,12 @@ const SignUp = () => {
         </div>
 
         <button
-          className="btn"
-          variant="contained" onClick={submitHandler}>
+          className="btn btn-shadow"
+          variant="contained" onClick={submitHandler}
+          style={{width:150,fontSize:"x-large",marginTop:50}}>
           הרשמה
         </button>
+
         {success && (<Alert severity="success"
         >
           {success}

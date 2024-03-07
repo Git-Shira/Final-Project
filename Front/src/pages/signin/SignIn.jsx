@@ -98,12 +98,12 @@ const SignIn = () => {
 
   return (
     <Container maxWidth="sm">
-      <div className="hithabrut" style={{ height: 610 }} >
+      <div className="hithabrut" style={{ minHeight: 610 }} >
         {/* <Typography className="hithabrut" variant="h4" component="h2" align="center">
           התחברות
         </Typography> */}
 
-        <div className="title-design">
+        <div className="title-design" style={{marginBottom:20}}>
           <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
           <h1 data-aos="flip-down" data-aos-duration="1000">התחברות</h1>
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
@@ -151,13 +151,15 @@ const SignIn = () => {
             />
           </div>
           <button
-            className="btn"
+            className="btn btn-shadow"
             type="submit"
             variant="contained"
             color="primary"
             fullWidth
             size="large"
-            style={{ marginBottom: "10px" }}
+            style={{
+              marginBottom: 30, marginTop: 30,width:150,fontSize:"x-large"
+            }}
           >
             כניסה
           </button>
@@ -166,8 +168,11 @@ const SignIn = () => {
         <Typography
           className="typo"
           variant="body1"
-          align="center">
-          עדיין לא רשומים? <Link to={"/SignUp"}>הרשמה </Link>
+          align="center" color="white"
+          // style={{ marginTop: 10 }}
+          >
+          עדיין לא רשומים?
+          <Link to={"/SignUp"} style={{ marginRight: 20 }}>הרשמה </Link>
         </Typography>
         <Typography
           variant="body1" align="center" fontSize={18}>

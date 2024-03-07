@@ -11,6 +11,15 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+import AOS from 'aos';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import { DialogContentText } from "@mui/material";
+
+import t1 from "../../../IMAGES/t1.png";
+import t2 from "../../../IMAGES/t2.png";
+
 const TableOrder = ({ id }) => {
   console.log("id", id);
   const [userData, setUserData] = useState([]);
@@ -57,6 +66,7 @@ const TableOrder = ({ id }) => {
   console.log(userData);
   return (
     <div className="profile-user">
+
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -64,45 +74,59 @@ const TableOrder = ({ id }) => {
       ) : (
         <Table className="table table-bordered"
           style={{
-            maxWidth: 800,
+            maxWidth: 1000, marginTop: 50
           }}
         >
           <TableHead>
             <TableRow style={{ borderColor: "#C1121F" }} className="table-row">
-              <TableCell align="center" style={{ width: 70 }}>מספר הזמנה</TableCell>{" "}
-              <TableCell align="center" style={{ width: 70 }}>מחיר כולל</TableCell>
-              <TableCell align="center" style={{ width: 70 }}>פרטי הזמנה</TableCell>
-              <TableCell align="center" style={{ width: 70 }}>תאריך</TableCell>
-              <TableCell align="center" style={{ width: 70 }}>אישור הזמנה</TableCell>
+              <TableCell align="center" >תאריך</TableCell>
+              <TableCell align="center" >מספר הזמנה</TableCell>
+              <TableCell align="center" >מחיר כולל</TableCell>
+              <TableCell align="center" >פרטי הזמנה</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {userData.map((user) => (
               <TableRow style={{ borderColor: "#C1121F", borderRadius: 2 }}>
-                <TableCell align="center" style={{ width: 11 }}>
+                <TableCell align="center" >
+                  {user.date}</TableCell>
+                <TableCell align="center" >
                   {user._id}</TableCell> {/* Display userId */}
                 {/* Display fullAddress */}
-                <TableCell align="center" style={{ width: 11 }}>
-                  {user.totalPrice}</TableCell>{" "}
+                <TableCell align="center" >
+                  {user.totalPrice} ₪</TableCell>{" "}
                 {/* Display totalPrice */}
-                <TableCell align="center" style={{ width: 11 }}>
+                <TableCell align="center" >
 
-                  <Button onClick={() => handleOpenModal(user)}>
+                  <Button onClick={() => handleOpenModal(user)}
+                    sx={{ color: "#C1121F", "&:hover": { backgroundColor: "black", color: "white" } }}
+                  >
                     פרטי הזמנה
                   </Button>
                 </TableCell>
-                <TableCell align="center" style={{ width: 11 }}>
-                  {user.date}</TableCell>
-                <TableCell align="center" style={{ width: 11 }}>
-                  מאושר</TableCell>
+
               </TableRow>
             ))}
           </TableBody>
         </Table>
       )}
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <div>
-          <Box
+      <Dialog open={openModal} onClose={handleCloseModal} aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          width: '100%', // רוחב מלא
+          height: '100%', // גובה מלא
+          display: 'flex',
+          justifyContent: 'center', // מרכז אופקי
+          alignItems: 'center', // מרכז אנכי
+        }}>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description"
+            sx={{
+              width: 550,
+              height: 480,
+            }}
+          >
+            {/* <Box
             component="form"
             sx={{
               "& > :not(style)": { m: 1, width: "25ch" },
@@ -115,31 +139,32 @@ const TableOrder = ({ id }) => {
               width: "50%",
               margin: "auto",
             }}
-          >
-            <h2>פרטי הזמנה</h2>
-            <Table>
+          > */}
+            <h2 style={{ color: "#C1121F", fontWeight: "bold", marginBottom: 10 }}>פרטי הזמנה</h2>
+            <Table className="table table-bordered">
               <TableHead>
-                <TableRow>
-                  <TableCell>שם מוצר</TableCell>
-                  <TableCell>מחיר</TableCell>
-                  <TableCell>כמות</TableCell>
+                <TableRow style={{ borderColor: "#C1121F" }} className="table-row">
+                  <TableCell align="center">שם מוצר</TableCell>
+                  <TableCell align="center" style={{ width: 50 }}>מחיר</TableCell>
+                  <TableCell align="center" style={{ width: 70 }}>כמות</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {selectedUser?.products?.map((product) => {
                   return (
-                    <TableRow key={product._id}>
-                      <TableCell>{product.name}</TableCell>
-                      <TableCell>{product.price}</TableCell>
-                      <TableCell>{product.quantity}</TableCell>
+                    <TableRow style={{ borderColor: "#C1121F" }} className="table-row"
+                      key={product._id}>
+                      <TableCell align="center">{product.name}</TableCell>
+                      <TableCell align="center">{product.price}</TableCell>
+                      <TableCell align="center">{product.quantity}</TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
-          </Box>
-        </div>
-      </Modal>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

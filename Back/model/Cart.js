@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const CartSchema = new mongoose.Schema({
   userId: String,
   fullName: String,
-  totaPrice: Number,
+  totalPrice: Number,
 
   typeCollect: String,
   street: String,
