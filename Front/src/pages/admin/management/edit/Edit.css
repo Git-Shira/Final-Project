@@ -1,0 +1,14 @@
+.edit .btn {
+    display: inline-block;
+    color: #eee;
+    background: black;
+    border-radius: .5rem;
+    cursor: pointer;
+    padding: .6rem 1rem;
+}
+
+.edit .btn:hover {
+    background: #C1121F;
+    color: white;
+    letter-spacing: .1rem;
+}

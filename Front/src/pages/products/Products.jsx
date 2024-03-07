@@ -323,9 +323,12 @@ const Products = () => {
                         />
                       </IconButton>
                       <img src={product.image} alt={product.name} />
-                      <h5>{product.name}</h5>
-
-                      <span> {product.price} ₪</span>
+                      
+                      <div style={{height:20,alignItems:"center",margin:0}}>
+                       <h5> {product.name}</h5>
+                        </div>
+<br />
+                      <span className="product-price"> {product.price} ₪</span>
 
                       <button className="btn"
                         onClick={() => {

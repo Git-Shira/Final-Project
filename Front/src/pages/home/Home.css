@@ -134,10 +134,10 @@ section.big-deal {
 }
 
 .third-pic {
-    margin-right: 435px;
-    /* height: 450px; */
-    margin-top: 100px;
-    margin-bottom: 100px;
+    /* margin-right: 435px; */
+    height: 130px;
+    margin-top: 50px;
+    margin-bottom: 50px; 
 }
 
 .button-link {
@@ -163,4 +163,25 @@ section.big-deal {
 .button:hover {
     background-color: white;
     color: black;
+}
+
+.my-container-img {
+    /* max-width: 500px; */
+
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 100px;
+}
+.s1{
+height: 200px;
+}
+.s2{
+    margin-right: 100px;
+    height: 200px;
+
+}
+.s3{
+    margin-right: 100px;
+    height: 200px;
+
 }

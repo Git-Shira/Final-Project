@@ -45,7 +45,7 @@ const TableOrder = ({ id }) => {
           setUserData(response.data.orders);
           setLoading(false);
         }
-        
+
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -56,39 +56,45 @@ const TableOrder = ({ id }) => {
   }, [idPerson]);
   console.log(userData);
   return (
-    <div>
-      <h2>הזמנה</h2>
+    <div className="profile-user">
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
         <p>Error: {error.message}</p>
       ) : (
-        <Table>
+        <Table className="table table-bordered"
+          style={{
+            maxWidth: 800,
+          }}
+        >
           <TableHead>
-            <TableRow>
-              <TableCell>מספר הזמנה</TableCell>{" "}
-              {/* Replace with relevant user data */}
-              {/* Replace with relevant user data */}
-              <TableCell>מחיר כולל</TableCell>
-              <TableCell>פרטי הזמנה</TableCell>
-              <TableCell>תאריך</TableCell>
-              <TableCell>אישור הזמנה</TableCell>
+            <TableRow style={{ borderColor: "#C1121F" }} className="table-row">
+              <TableCell align="center" style={{ width: 70 }}>מספר הזמנה</TableCell>{" "}
+              <TableCell align="center" style={{ width: 70 }}>מחיר כולל</TableCell>
+              <TableCell align="center" style={{ width: 70 }}>פרטי הזמנה</TableCell>
+              <TableCell align="center" style={{ width: 70 }}>תאריך</TableCell>
+              <TableCell align="center" style={{ width: 70 }}>אישור הזמנה</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {userData.map((user) => (
-              <TableRow>
-                <TableCell>{user._id}</TableCell> {/* Display userId */}
+              <TableRow style={{ borderColor: "#C1121F", borderRadius: 2 }}>
+                <TableCell align="center" style={{ width: 11 }}>
+                  {user._id}</TableCell> {/* Display userId */}
                 {/* Display fullAddress */}
-                <TableCell>{user.totalPrice}</TableCell>{" "}
+                <TableCell align="center" style={{ width: 11 }}>
+                  {user.totalPrice}</TableCell>{" "}
                 {/* Display totalPrice */}
-                <TableCell>
+                <TableCell align="center" style={{ width: 11 }}>
+
                   <Button onClick={() => handleOpenModal(user)}>
                     פרטי הזמנה
                   </Button>
                 </TableCell>
-                <TableCell>{user.date}</TableCell>
-                <TableCell>מאושר</TableCell>
+                <TableCell align="center" style={{ width: 11 }}>
+                  {user.date}</TableCell>
+                <TableCell align="center" style={{ width: 11 }}>
+                  מאושר</TableCell>
               </TableRow>
             ))}
           </TableBody>

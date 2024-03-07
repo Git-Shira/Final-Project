@@ -82,7 +82,7 @@ router.put("/update/:id", async (req, res) => {
 
     // If updating password, hash it before updating (implement hashPassword function)
     if (update.password) {
-      update.password = await hashPassword(update.password);
+     update.password = await hashPassword(update.password);
     }
 
     const user = await User.findByIdAndUpdate(id, update, { new: true });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Pay.css";
+// import "./Pay.css";
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";

@@ -10,6 +10,10 @@ import pic2 from "../../IMAGES/pic2.jpg";
 import pic3 from "../../IMAGES/pic3.jpg";
 import pic4 from "../../IMAGES/pic4.jpg";
 
+import sushi1 from "../../IMAGES/s1.png";
+import sushi2 from "../../IMAGES/s2.png";
+import sushi3 from "../../IMAGES/s3.png";
+
 import footer from "./home-footer.png";
 
 import thirdpic from "../../IMAGES/third-pic.png";
@@ -202,9 +206,18 @@ const Home = () => {
 
                 </section>
                 {/* <hr /> */}
-                <img className="third-pic" src={footer} alt="" />
+                <section className="my-container">
+                    <img className="third-pic" src={footer} alt="" />
+                </section>
 
                 {/* <img className="third-pic" src={thirdpic} alt="" /> */}
+
+                <section className="my-container-img">
+                    <img src={sushi1} alt="" className="s1"/>
+                    <img src={sushi2} alt="" className="s2" />
+                    <img src={sushi3} alt="" className="s3" />
+                </section>
+
                 <h5 style={{ textAlign: "center", marginBottom: 50 }}>© כל הזכויות שמורות למסעדת טריאקי</h5>
             </div>
         </div>
