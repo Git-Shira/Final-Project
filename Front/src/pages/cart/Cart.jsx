@@ -90,8 +90,10 @@ export default function Cart() {
       updateTotalPrice(updatedCart);
       dispatch(editItem({ id, quantity: newQuantity }));
     }
-    else if (newQuantity === 0)
+    else {
       dispatch(removeItem(id));
+      window.location.reload();
+    }
   };
   useEffect(() => {
     AOS.init();
