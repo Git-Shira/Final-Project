@@ -98,9 +98,9 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
           </Button>
         </CardActions>
       </Card> */}
-                  <div >
-      <div className="box-admin" data-aos="zoom-in">
-        {/* <IconButton className="eye"
+      <div >
+        <div className="box-admin" data-aos="zoom-in">
+          {/* <IconButton className="eye"
                       onClick={() => {
                         setSelectedProduct(product);
                         setOpen(true);
@@ -108,7 +108,7 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
                       <Visibility />
                     </IconButton> */}
 
-        {/* <IconButton
+          {/* <IconButton
                       className="heart"
                       onClick={() => {
                         if (!user) {
@@ -125,33 +125,34 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
                       />
                     </IconButton> */}
 
-        <img src={product.image} alt={product.name} />
-        <h5 style={{ marginTop: 5 }}>{product.name}</h5>
-
-        {/* <span className="span"> {product.price} ₪</span> */}
-        <br />
-        <div >
-          <button className="btn"
-            onClick={() => {
-              handleEditDialogOpen(product)
-            }}
-            style={{
-              justifyContent: "space-evenly",
-              marginTop: 0, marginBottom: 0, marginRight: 17, marginLeft: 17
-            }}>
-            עריכה</button>
-          <button className="btn"
-            onClick={
-              handleClickOpen
-            }
-            style={{
-              justifyContent: "space-evenly",
-              marginTop: 0, marginBottom: 0, marginRight: 17, marginLeft: 17
-            }}>
-            מחיקה</button>
+          <img src={product.image} alt={product.name} />
+          <div style={{ height: 20, alignItems: "center", margin: 0 }}>
+            <h5> {product.name}</h5>
+          </div>
+          {/* <span className="span"> {product.price} ₪</span> */}
+          <br />
+          <div style={{ marginTop: 8 }}>
+            <button className="btn"
+              onClick={() => {
+                handleEditDialogOpen(product)
+              }}
+              style={{
+                justifyContent: "space-evenly",
+                marginTop: 0, marginBottom: 0, marginRight: 17, marginLeft: 17
+              }}>
+              עריכה</button>
+            <button className="btn"
+              onClick={
+                handleClickOpen
+              }
+              style={{
+                justifyContent: "space-evenly",
+                marginTop: 0, marginBottom: 0, marginRight: 17, marginLeft: 17
+              }}>
+              מחיקה</button>
+          </div>
         </div>
       </div>
-</div>
 
       <Dialog
         open={open}
@@ -170,22 +171,22 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
         }}
       >
         <div className="dialog-delete-border">
-        <DialogContent sx={{
-          height: 150,
-        }}>
-          <DialogContentText id="alert-dialog-description"
-            sx={{ marginTop: 5, textAlign: "center" }}>
-            <Container>
-              האם אתה בטוח שברצונך למחוק את המוצר הזה?              </Container>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ marginBottom: 2, marginLeft: 2 }}>
-          <button className="btn" onClick={handleClose}
-          style={{marginLeft:15}}>ביטול</button>
-          <button className="btn" onClick={deleteProduct} autoFocus>
-            מחק
-          </button>
-        </DialogActions>
+          <DialogContent sx={{
+            height: 150,
+          }}>
+            <DialogContentText id="alert-dialog-description"
+              sx={{ marginTop: 5, textAlign: "center" }}>
+              <Container>
+                האם אתה בטוח שברצונך למחוק את המוצר הזה?              </Container>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions sx={{ marginBottom: 2, marginLeft: 2 }}>
+            <button className="btn" onClick={handleClose}
+              style={{ marginLeft: 15 }}>ביטול</button>
+            <button className="btn" onClick={deleteProduct} autoFocus>
+              מחק
+            </button>
+          </DialogActions>
         </div>
       </Dialog>
       <Dialog
