@@ -46,7 +46,7 @@ const ViewUsers = () => {
                     <TableRow style={{ borderColor:"#C1121F", color:"C1121F"}}>
                             <TableCell style={{ textAlign: "center" }}> שם משתמש</TableCell>
                             <TableCell style={{ textAlign: "center" }}> תאריך לידה</TableCell>
-                            <TableCell style={{ textAlign: "center" }}>כתובת אימייל</TableCell>
+                            <TableCell style={{ textAlign: "center" }}>כתובת דוא''ל</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

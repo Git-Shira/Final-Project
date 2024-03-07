@@ -112,7 +112,7 @@ const SignIn = () => {
           <div className="spacer">
             <TextField
               className="rGap"
-              label="מייל"
+              label="כתובת דוא''ל"
               variant="outlined"
               fullWidth
               value={email}

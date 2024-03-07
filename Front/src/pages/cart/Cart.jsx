@@ -108,13 +108,17 @@ export default function Cart() {
         <h3 style={{ color: "white", marginRight: -470 }}>סה"כ לתשלום : &nbsp;
           <span style={{ color: "#C1121F", fontWeight: "bold" }}>{totalPrice}</span>       ₪</h3>
 
-        {/* <Button> */}
-          <Link to="/Pay" className="btn"
+        {totalPrice > 0 && (<Link to="/Pay" className="btn"
           style={{ marginTop: -70, marginRight: 660 }}
         >
           מעבר לתשלום
-        </Link>
-         {/* </Button> */}
+        </Link>)}
+
+        {/* <Link to="/Pay" className="btn"
+          style={{ marginTop: -70, marginRight: 660 }}
+        >
+          מעבר לתשלום
+        </Link> */}
       </div>
       {/* <TableContainer component={Paper}> */}
       <Table className="table table-bordered"

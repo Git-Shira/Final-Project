@@ -68,13 +68,13 @@ const TableOrder = ({ id }) => {
     <div className="profile-user">
 
       {loading ? (
-        <p>Loading...</p>
+        <p style={{color:"white"}}>Loading...</p>
       ) : error ? (
-        <p>Error: {error.message}</p>
+        <p  style={{color:"white"}}>Error: {error.message}</p>
       ) : (
         <Table className="table table-bordered"
           style={{
-            maxWidth: 1000, marginTop: 50
+            maxWidth: 1000, marginTop: 30
           }}
         >
           <TableHead>

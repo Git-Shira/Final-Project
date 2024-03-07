@@ -12,6 +12,10 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
+import AOS from 'aos';
+
+import t1 from "../../../IMAGES/t1.png";
+import t2 from "../../../IMAGES/t2.png";
 
 const Edit = ({ id }) => {
   const [user, setUser] = useState({});
@@ -55,8 +59,8 @@ const Edit = ({ id }) => {
     const error = {};
     if (!editUser.fullName) {
       error.editUser.fullName = "שדה חובה";
-    } else if (!/^[a-zA-Z]+( [a-zA-Z]+)*$/.test(editUser.fullName)) {
-      error.editUser.fullName = "אנא הכנס שם מלא תקני, ללא רווחים רקים בתחילה או בסוף";
+    } else if (!/^[א-ת]+( [א-ת]+)*$/.test(editUser.fullName)) {
+      error.editUser.fullName = "אנא הכנס שם מלא תקני, ללא רווחים ריקים בתחילה או בסוף";
     }
     if (!editUser.email) {
       error.editUser.email = "שדה חובה";
@@ -65,8 +69,8 @@ const Edit = ({ id }) => {
     }
     if (!editUser.password) {
       error.editUser.password = "שדה חובה";
-    } else if (editUser.password.length < 6) {
-      error.editUser.password = "הסיסמא חייבת להיות באורך של 6 תווים לפחות";
+    } else if (editUser.password.length < 8) {
+      error.editUser.password = "הסיסמא חייבת להיות באורך של 8 תווים לפחות";
     }
     setVaildationError(error);
     return Object.keys(error).length === 0;
@@ -74,58 +78,70 @@ const Edit = ({ id }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (Validate()) {
-      const userData = {
-        fullName: editUser.fullName,
-        email: editUser.email,
-        password: editUser.password,
-      };
+    if (Validate()) {
+    const userData = {
+      fullName: editUser.fullName,
+      email: editUser.email,
+      password: editUser.password,
+    };
 
-      try {
-        const response = await axios.put(
-          `http://localhost:3000/auth/update/${userId}/`,
-          userData
-        );
-        console.log("User updated:", response.data);
-        // if (response.status === 200) {
-          // setSuccess("העדכון בוצע בהצלחה");
-          // setTimeout(() => {
-            navigate("/User/profile");
-          // }, 2000);
-          alert("User updated");
-        // }
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/auth/update/${userId}/`,
+        userData
+      );
+      console.log("User updated:", response.data);
+      if (response.status === 200) {
+      setSuccess("העדכון בוצע בהצלחה");
+      setTimeout(() => {
+      navigate("/User/profile");
+      }, 2000);
+      alert("User updated");
+      }
 
-      } catch (error) {
-        // if (error.response.status === 404) {
-        //   setError("המשתמש לא קיים במערכת");
-        // }
-        // if (error.response.status === 500) {
-        //   setError("משהו השתבש, נסו שוב")
-        // }
-        console.error("Error updating user:", error);
-        if (error.response) {
-          console.error("Server Error Response:", error.response.data);
-        }
-      // }
+    } catch (error) {
+      if (error.response.status === 404) {
+        setError("המשתמש לא קיים במערכת");
+      }
+      if (error.response.status === 500) {
+        setError("משהו השתבש, נסו שוב")
+      }
+      console.error("Error updating user:", error);
+      if (error.response) {
+        console.error("Server Error Response:", error.response.data);
+      }
+      }
     }
   };
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
-    <Container sx={{ marginTop: 100 }}>
-      <Typography variant="h4">Edit User</Typography>
+        <Container sx={{ minHeight:610 ,textAlign:"center",}}>
+
+      <div className="title-design">
+        <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+        <h1 data-aos="flip-down" data-aos-duration="1000">עריכת פרטים</h1>
+        <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+      </div>
+
       <form onSubmit={handleSubmit}>
         <Box
-          component="div"
+          component="form"
+          className="edit-profile-user"
           sx={{
             width: "100%",
             maxWidth: "400px",
             margin: "0 auto",
             "& > :not(style)": { m: 1 },
+            marginTop:3
           }}
         >
           <TextField
             id="fullName"
-            label="Full Name"
+            label="שם מלא"
             variant="outlined"
             fullWidth
             value={editUser.fullName}
@@ -134,12 +150,12 @@ const Edit = ({ id }) => {
             }
             color="error"
             required
-          error={vaildationError.fullName}
-          helperText={vaildationError.fullName}
+            error={vaildationError.fullName}
+            helperText={vaildationError.fullName}
           />
           <TextField
             id="email"
-            label="Email"
+            label="כתובת דוא''ל"
             type="email"
             variant="outlined"
             fullWidth
@@ -176,9 +192,9 @@ const Edit = ({ id }) => {
             error={vaildationError.password}
             helperText={vaildationError.password}
           />
-          <Button variant="contained" type="submit" fullWidth>
-            Update
-          </Button>
+          <button variant="contained" type="submit" className="btn btn-shadow" style={{marginTop:40,width:150,fontSize:"x-large"}}>
+            עדכון
+          </button>
         </Box>
       </form>
       {success && (<Alert severity="success"
@@ -190,7 +206,8 @@ const Edit = ({ id }) => {
         <Alert severity="error"
         >
           {error}
-        </Alert>)}
+        </Alert>
+      )}
     </Container>
   );
 };

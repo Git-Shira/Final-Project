@@ -40,8 +40,8 @@ const SignUp = () => {
     const error = {};
     if (!fullName) {
       error.fullName = "שדה חובה";
-    } else if (!/^[a-zA-Z]+( [a-zA-Z]+)*$/.test(fullName)) {
-      error.fullName = "אנא הכנס שם מלא תקני, ללא רווחים רקים בתחילה או בסוף";
+    } else if (!/^[א-ת]+( [א-ת]+)*$/.test(fullName)) {
+      error.fullName = "אנא הכנס שם מלא תקני, ללא רווחים ריקים בתחילה או בסוף";
     }
     if (!email) {
       error.email = "שדה חובה";
@@ -162,7 +162,7 @@ const SignUp = () => {
           <TextField
             className="rGap"
             id="outlined-basic"
-            label="מייל"
+            label="כתובת דוא''ל"
             type={"email"}
             required
             variant="outlined"

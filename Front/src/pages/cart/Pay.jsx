@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import "./Pay.css";
+import "./Pay.css";
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
@@ -24,6 +24,7 @@ import { clearCart } from "../../redux/cartSlice";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
+import AOS from 'aos';
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -80,44 +81,127 @@ const Pay = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   console.log("cart", id);
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [vaildationError, setVaildationError] = useState({});
+
+  const Validate = () => {
+    const error = {};
+    if (!fullName) {
+      error.fullName = "שדה חובה";
+    } else if (!/^[א-ת]+( [א-ת]+)*$/.test(fullName)) {
+      error.fullName = "אנא הכנס שם מלא תקני, ללא רווחים ריקים בתחילה או בסוף";
+    }
+    if (!(typeCollect === "משלוח" || typeCollect === "איסוף עצמי")) {
+      error.typeCollect = "שדה חובה";
+    }
+    if (typeCollect === "משלוח" && !city) {
+      error.city = "שדה חובה";
+    } else if (typeCollect === "משלוח" && !/^[א-ת]+( [א-ת]+)*$/.test(city)) {
+      error.city = "אנא הכנס שם עיר תקני, ללא רווחים ריקים בתחילה או בסוף";
+    }
+    if (typeCollect === "משלוח" && !street) {
+      error.street = "שדה חובה";
+    } else if (typeCollect === "משלוח" && !/^[א-ת]+( [א-ת]+)*$/.test(street)) {
+      error.street = "אנא הכנס שם עיר תקני, ללא רווחים ריקים בתחילה או בסוף";
+    }
+    if (typePay === "אשראי" && !cardNumber) {
+      error.cardNumber = "שדה חובה";
+    }
+    if (typePay === "אשראי" && !cardHolder) {
+      error.cardHolder = "שדה חובה";
+    } else if (typePay === "אשראי" && !/^[א-ת]+( [א-ת]+)*$/.test(cardHolder)) {
+      error.cardHolder = "אנא הכנס שם מלא תקני, ללא רווחים ריקים בתחילה או בסוף";
+    }
+    if (typePay === "אשראי" && !cardMonth) {
+      error.cardMonth = "שדה חובה";
+    } else if (typePay === "אשראי" && (cardMonth > 12 || cardMonth < 1)) {
+      error.cardMonth = "מספר חודש לא תקין";
+    }
+    if (typePay === "אשראי" && !cardYear) {
+      error.cardYear = "שדה חובה";
+    } else if (typePay === "אשראי" && (cardYear < 2024)) {
+      error.cardYear = " תוקף הכרטיס פג";
+    }
+    if (typePay === "אשראי" && !cardCvv) {
+      error.cardCvv = "שדה חובה";
+    } else if (typePay === "אשראי" && (cardCvv > 1000 || cardCvv < 100)) {
+      error.cardCvv = "CVV לא תקין";
+    }
+    if (typePay === "אשראי" && !cardType) {
+      error.cardType = "שדה חובה";
+    }
+    setVaildationError(error);
+    return Object.keys(error).length === 0;
+  };
+
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   const handleSubmit = async (e) => {
-    const userData = {
-      userId: id,
-      typePay: typePay,
-      cardNumber: cardNumber,
-      cardHolder: cardHolder,
-      cardMonth: cardMonth,
-      cardYear: cardYear,
-      cardCvv: cardCvv,
-      cardType: cardType,
-      typeCollect: typeCollect,
-      street: street,
-      city: city,
-      fullName: fullName,
-      totalPrice: cart.totalAmount,
-      products: [...cart.items],
-      date: formattedDate,
-    };
-    debugger;
-    try {
-      const response = await axios.post(
-        `http://localhost:3000/cart/user/${id}/new_order`,
-        userData
-      );
-      const user = response.data;
-      if (user) {
-        alert("הזמנתך התקבלה בהצלחה");
-        dispatch(clearCart());
-        navigation("/");
+    if (Validate()) {
+      const userData = {
+        userId: id,
+        typePay: typePay,
+        cardNumber: cardNumber,
+        cardHolder: cardHolder,
+        cardMonth: cardMonth,
+        cardYear: cardYear,
+        cardCvv: cardCvv,
+        cardType: cardType,
+        typeCollect: typeCollect,
+        street: street,
+        city: city,
+        fullName: fullName,
+        totalPrice: cart.totalAmount,
+        products: [...cart.items],
+        date: formattedDate,
+      };
+      debugger;
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/cart/user/${id}/new_order`,
+          userData
+        );
+        const user = response.data;
+        if (response.status === 200) {
+          if (user) {
+            setSuccess("הזמנתך התקבלה בהצלחה");
+            dispatch(clearCart());
+
+            setTimeout(() => {
+              navigation("/");
+            }, 2000);
+          }
+        }
+        // if (user) {
+        // alert("הזמנתך התקבלה בהצלחה");
+        // dispatch(clearCart());
+        // navigation("/");
+        // }
+      } catch (err) {
+        if (err.response.status === 400) {
+          setError("התחברו לחשבון כדי לבצע את ההזמנה");
+        }
+        if (err.response.status === 500) {
+          setError("משהו השתבש, נסו שוב")
+        }
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
     }
   };
 
   return (
-    <Container maxWidth="sm" >
-      <div className="pay" style={{ minHeight: 750 }}>
+    // <Container>
+    <div className="pay" style={{ minHeight: 610, }}>
+      <div className="title-design">
+        <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
+        <h1 data-aos="flip-down" data-aos-duration="1000">תשלום</h1>
+        <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
+      </div>
+      <div >
         <Box
           component="form"
           sx={{
@@ -132,11 +216,7 @@ const Pay = () => {
           }}
         >
 
-          <div className="title-design">
-            <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
-            <h1 data-aos="flip-down" data-aos-duration="1000">תשלום</h1>
-            <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
-          </div>
+
           <TextField
             id="outlined-basic"
             label="שם מלא"
@@ -144,12 +224,13 @@ const Pay = () => {
             onChange={(e) => setFullName(e.target.value)}
             color="error"
             required
-          // error={vaildationError.fullName}
-          // helperText={vaildationError.fullName}
+            error={vaildationError.fullName}
+            helperText={vaildationError.fullName}
+            style={{ marginRight: -200 }}
           />
 
-          <FormControl>
-            <FormLabel id="demo-controlled-radio-buttons-group">סוג קניה</FormLabel>
+          <FormControl style={{ marginRight: -200 }}>
+            <FormLabel id="demo-controlled-radio-buttons-group" sx={{ marginRight: 4, color: "white" }}>סוג קניה</FormLabel>
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
@@ -157,7 +238,8 @@ const Pay = () => {
               onChange={handleChangeCollect}
             >
               <FormControlLabel value="איסוף עצמי" control={<Radio />} label="איסוף עצמי" />
-              <FormControlLabel value="משלוח" control={<Radio />} label="משלוח" />
+              <br />
+              <FormControlLabel value="משלוח" control={<Radio />} label="משלוח" style={{ marginTop: -65, marginRight: 200 }} />
             </RadioGroup>
           </FormControl>
 
@@ -171,9 +253,10 @@ const Pay = () => {
               onChange={(e) => setStreet(e.target.value)}
               color="error"
 
-            // error={vaildationError.street}
-            // helperText={vaildationError.street}
+              error={vaildationError.street}
+              helperText={vaildationError.street}
             />
+            <br />
             <TextField
               id="outlined-basic"
               label="עיר"
@@ -181,28 +264,32 @@ const Pay = () => {
               onChange={(e) => setCity(e.target.value)}
               color="error"
 
-            // error={vaildationError.city}
-            // helperText={vaildationError.city}
+              error={vaildationError.city}
+              helperText={vaildationError.city}
+              sx={{ marginRight: 30, marginTop: -7 }}
+
             />
           </div>
           )}
 
-          <FormControl>
-            <FormLabel id="demo-controlled-radio-buttons-group">סוג תשלום</FormLabel>
+          <FormControl style={{ marginRight: -200 }}>
+            <FormLabel id="demo-controlled-radio-buttons-group" sx={{ marginRight: 4, color: "white" }}>סוג תשלום</FormLabel>
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={typePay}
               onChange={handleChangePay}
+
             >
               <FormControlLabel value="מזומן" control={<Radio />} label="מזומן" />
-              <FormControlLabel value="אשראי" control={<Radio />} label="אשראי" />
+              <br />
+              <FormControlLabel value="אשראי" control={<Radio />} label="אשראי" style={{ marginTop: -65, marginRight: 200 }} />
             </RadioGroup>
           </FormControl>
 
 
           {typePay === "אשראי" && (
-            <div>
+            <div style={{ marginRight: 150 }}>
               {/* <Typography variant="h4">פרטי תשלום</Typography> */}
               <TextField
                 id="outlined-basic"
@@ -211,9 +298,11 @@ const Pay = () => {
                 onChange={(e) => setCardNumber(e.target.value)}
                 color="error"
 
-              // error={vaildationError.cardNumber}
-              // helperText={vaildationError.cardNumber}
+                error={vaildationError.cardNumber}
+                helperText={vaildationError.cardNumber}
+                sx={{ marginBottom: 3 }}
               />
+              <br />
               <TextField
                 id="outlined-basic"
                 label="שם בעל הכרטיס"
@@ -221,9 +310,12 @@ const Pay = () => {
                 onChange={(e) => setCardHolder(e.target.value)}
                 color="error"
 
-              // error={vaildationError.cardHolder}
-              // helperText={vaildationError.cardHolder}
+                error={vaildationError.cardHolder}
+                helperText={vaildationError.cardHolder}
+                sx={{ marginBottom: 3 }}
+
               />
+              <br />
               <TextField
                 id="outlined-basic"
                 label="חודש"
@@ -231,8 +323,10 @@ const Pay = () => {
                 onChange={(e) => setCardMonth(e.target.value)}
                 color="error"
 
-              // error={vaildationError.cardMonth}
-              // helperText={vaildationError.cardMonth}
+                error={vaildationError.cardMonth}
+                helperText={vaildationError.cardMonth}
+              // sx={{marginBottom:3}}
+
               />
               <TextField
                 id="outlined-basic"
@@ -241,18 +335,22 @@ const Pay = () => {
                 onChange={(e) => setCardYear(e.target.value)}
                 color="error"
 
-              // error={vaildationError.cardYear}
-              // helperText={vaildationError.cardYear}
+                error={vaildationError.cardYear}
+                helperText={vaildationError.cardYear}
+                sx={{ marginRight: 30, marginTop: -27 }}
+
               />
               <TextField
                 id="outlined-basic"
                 label="CVV"
+                type="number"
                 variant="outlined"
                 onChange={(e) => setCardCvv(e.target.value)}
                 color="error"
 
-              // error={vaildationError.cardCvv}
-              // helperText={vaildationError.cardCvv}
+                error={vaildationError.cardCvv}
+                helperText={vaildationError.cardCvv}
+                sx={{ marginRight: 30, marginTop: -20 }}
               />
               <TextField
                 id="outlined-basic"
@@ -261,35 +359,38 @@ const Pay = () => {
                 onChange={(e) => setCardType(e.target.value)}
                 color="error"
 
-              // error={vaildationError.cardType}
-              // helperText={vaildationError.cardType}
+                error={vaildationError.cardType}
+                helperText={vaildationError.cardType}
+                sx={{ marginRight: 30, marginTop: -13 }}
               />
             </div>
           )}
 
-          <h1>סהכ לתשלום {cart.totalAmount}</h1>
+          <div style={{ textAlign: "center", marginTop: 50 }}>
+            <h3 style={{ color: "white", marginRight: -200 }}>סה"כ לתשלום : &nbsp;
+              <span style={{ color: "#C1121F", fontWeight: "bold" }}>{cart.totalAmount}</span>       ₪</h3>
 
-          {/* <button 
-             variant="contained" onClick={handleSubmit} >*/}
-            <Link to="/Pay" className="btn" onClick={handleSubmit}>
+            <Link to="/Pay" className="btn btn-shadow" onClick={handleSubmit}
+              style={{ marginTop: -70, marginRight: 400 }}
+            >
               תשלום
             </Link>
-          {/* </button> */}
+          </div>
         </Box>
-
-        {/* {success && (<Alert severity="success"
-        >
-          {success}
-        </Alert>)
-        }
-        {error && (
-          <Alert severity="error"
-          >
-            {error}
-          </Alert>
-        )} */}
       </div>
-    </Container>
+      {success && (<Alert severity="success"
+      >
+        {success}
+      </Alert>)
+      }
+      {error && (
+        <Alert severity="error"
+        >
+          {error}
+        </Alert>
+      )}
+    </div>
+    // </Container>
   );
 };
 

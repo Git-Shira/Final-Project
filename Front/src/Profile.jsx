@@ -16,7 +16,7 @@ const Profile = ({ id }) => {
         <Container maxWidth="sm">
             <h1> פרטים</h1>
             <h3>שם מלא: {id?.fullName}</h3>
-            <h3>מייל: {id?.email}</h3>
+            <h3>כתובת דוא''ל': {id?.email}</h3>
 
             <TableOrder id={id} />
         </Container>
