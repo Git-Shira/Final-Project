@@ -1,51 +1,40 @@
 import React, { useEffect, useState } from "react";
-import "./Pay.css";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { format } from 'date-fns';
+
+import { TextField,  Box, FormControl, InputLabel, MenuItem, Select,  FormControlLabel, FormLabel, RadioGroup, Radio } from "@mui/material";
+import Alert from "@mui/material/Alert";
+
+import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../../redux/cartSlice";
+
+import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
-import {
-  TextField,
-  Button,
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-  Card,
-  CardContent,
-  CardActions,
-  CardMedia,
-  Container,
-  FormControlLabel, FormLabel, RadioGroup, Radio
 
-} from "@mui/material";
-import { clearCart } from "../../redux/cartSlice";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Alert from "@mui/material/Alert";
-import AOS from 'aos';
-
-import { useSelector, useDispatch } from "react-redux";
-
-import { format } from 'date-fns';
-
+import "./Pay.css";
 
 const Pay = () => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardHolder, setCardHolder] = useState("");
   const [id, setId] = useState("");
-  const [cardMonth, setCardMonth] = useState("");
-  const [cardYear, setCardYear] = useState("");
+  const [fullName, setFullName] = useState("");
+
+  const [cardHolder, setCardHolder] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
   const [cardCvv, setCardCvv] = useState("");
   const [cardType, setCardType] = useState("");
+  const [cardMonth, setCardMonth] = useState("");
+  const [cardYear, setCardYear] = useState("");
+
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
-  const [fullName, setFullName] = useState("");
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const dateFormat = 'dd/MM/yyyy';
   const formattedDate = format(currentDate, dateFormat);
+
+  const [comments, setComments] = useState("");
 
   // עדכון של התאריך בכל שינוי בתוך הקומפוננטה
   useEffect(() => {
@@ -56,6 +45,11 @@ const Pay = () => {
   console.log(currentDate);
   console.log(formattedDate);
 
+  const [branch, setBranch] = useState("");
+  const handleChangeBranch = (event) => {
+    setBranch(event.target.value);
+  };
+
   const [typeCollect, setTypeCollect] = React.useState("");
   const handleChangeCollect = (event) => {
     setTypeCollect(event.target.value);
@@ -65,6 +59,7 @@ const Pay = () => {
   const handleChangePay = (event) => {
     setTypePay(event.target.value);
   };
+
 
   const navigation = useNavigate();
   useEffect(() => {
@@ -126,7 +121,7 @@ const Pay = () => {
     }
     if (typePay === "אשראי" && !cardCvv) {
       error.cardCvv = "שדה חובה";
-    } else if (typePay === "אשראי" && (cardCvv > 1000 || cardCvv < 100)) {
+    } else if (typePay === "אשראי" && (cardCvv.length != 3)) {
       error.cardCvv = "CVV לא תקין";
     }
     if (typePay === "אשראי" && !cardType) {
@@ -144,6 +139,14 @@ const Pay = () => {
     if (Validate()) {
       const userData = {
         userId: id,
+        fullName: fullName,
+
+        typeCollect: typeCollect,
+        street: street,
+        city: city,
+
+        branch: branch,
+
         typePay: typePay,
         cardNumber: cardNumber,
         cardHolder: cardHolder,
@@ -151,13 +154,13 @@ const Pay = () => {
         cardYear: cardYear,
         cardCvv: cardCvv,
         cardType: cardType,
-        typeCollect: typeCollect,
-        street: street,
-        city: city,
-        fullName: fullName,
+
         totalPrice: cart.totalAmount,
-        products: [...cart.items],
         date: formattedDate,
+
+        products: [...cart.items],
+
+        comments: comments,
       };
       debugger;
       try {
@@ -166,8 +169,9 @@ const Pay = () => {
           userData
         );
         const user = response.data;
-        if (response.status === 200) {
-          if (user) {
+        if (user) {
+
+          if (response.status === 200) {
             setSuccess("הזמנתך התקבלה בהצלחה");
             dispatch(clearCart());
 
@@ -175,12 +179,10 @@ const Pay = () => {
               navigation("/");
             }, 2000);
           }
+          else
+            setError("התחבר לחשבון כדי להשלים את תהליך ההזמנה");
         }
-        // if (user) {
-        // alert("הזמנתך התקבלה בהצלחה");
-        // dispatch(clearCart());
-        // navigation("/");
-        // }
+
       } catch (err) {
         if (err.response.status === 400) {
           setError("התחברו לחשבון כדי לבצע את ההזמנה");
@@ -194,14 +196,16 @@ const Pay = () => {
   };
 
   return (
-    // <Container>
-    <div className="pay" style={{ minHeight: 610, }}>
+    <div style={{ minHeight: 850}}>
+
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
         <h1 data-aos="flip-down" data-aos-duration="1000">תשלום</h1>
         <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
       </div>
-      <div >
+
+      <div className="pay" style={{marginTop:"10px"}}>
+
         <Box
           component="form"
           sx={{
@@ -216,7 +220,6 @@ const Pay = () => {
           }}
         >
 
-
           <TextField
             id="outlined-basic"
             label="שם מלא"
@@ -229,8 +232,35 @@ const Pay = () => {
             style={{ marginRight: -200 }}
           />
 
+          <FormControl required style={{ marginRight: -200 }}>
+            <InputLabel id="filter-label">בחירת סניף</InputLabel>
+            <Select
+              labelId="branch-label"
+              id="branch"
+              label="בחירת סניף"
+              fullWidth
+              required
+              value={branch}
+              // defaultValue={"0"}
+              onChange={handleChangeBranch}
+              color="error"
+              sx={{ width: 210, }}
+            >
+              <MenuItem value={"אשדוד"}>אשדוד</MenuItem>
+              <MenuItem value={"באר שבע"}>באר שבע</MenuItem>
+              <MenuItem value={"רמת גן"}>רמת גן</MenuItem>
+              <MenuItem value={"תל אביב"}>תל אביב</MenuItem>
+              <MenuItem value={"לוד"}>לוד</MenuItem>
+              <MenuItem value={"ראש העין"}>ראש העין</MenuItem>
+              <MenuItem value={"כפר סבא"}>כפר סבא</MenuItem>
+              <MenuItem value={"נתניה"}>נתניה</MenuItem>
+              <MenuItem value={"עפולה"}>עפולה</MenuItem>
+              <MenuItem value={"קרית אתא"}>קרית אתא</MenuItem>
+            </Select>
+          </FormControl>
+
           <FormControl style={{ marginRight: -200 }}>
-            <FormLabel id="demo-controlled-radio-buttons-group" sx={{ marginRight: 4, color: "white" }}>סוג קניה</FormLabel>
+            <FormLabel id="demo-controlled-radio-buttons-group" sx={{ marginRight: 4, color: "white" }}>סוג איסוף</FormLabel>
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
@@ -244,7 +274,6 @@ const Pay = () => {
           </FormControl>
 
           {typeCollect === "משלוח" && (<div style={{ marginRight: 35 }}>
-            {/* <Typography variant="h4">פרטי משלוח</Typography> */}
             <TextField
               id="outlined-basic"
               label="כתובת מלאה"
@@ -289,8 +318,6 @@ const Pay = () => {
 
           {typePay === "אשראי" && (
             <div style={{ marginRight: 35 }}>
-              {/* <Typography variant="h4">פרטי תשלום</Typography> */}
-
               <div sx={{ marginBottom: 3 }}>
                 <TextField
                   id="outlined-basic"
@@ -320,7 +347,6 @@ const Pay = () => {
                 <TextField
                   id="outlined-basic"
                   label="CVV"
-                  type="number"
                   variant="outlined"
                   onChange={(e) => setCardCvv(e.target.value)}
                   color="error"
@@ -370,8 +396,22 @@ const Pay = () => {
             </div>
           )}
 
+          <TextField
+            id="outlined-multiline-static"
+            label="הערות על ההזמנה"
+            multiline
+            // fullWidth
+            rows={4}
+            value={comments}
+            // required
+            onChange={(e) => setComments(e.target.value)}
+            sx={{ marginTop: 2, marginBottom: 2, marginRight: -3, height: 100, width: 400 }}
+            color="error"
+          />
+
+
           <div style={{ textAlign: "center", marginTop: 50 }}>
-            <h3 style={{ color: "white", marginRight: -200 }}>סה"כ לתשלום : &nbsp;
+            <h3 style={{ color: "white", marginRight: "-170px" }}>סה"כ לתשלום : &nbsp;
               <span style={{ color: "#C1121F", fontWeight: "bold" }}>{cart.totalAmount}</span>       ₪</h3>
 
             <Link to="/Pay" className="btn btn-shadow" onClick={handleSubmit}
@@ -396,7 +436,6 @@ const Pay = () => {
         </Alert>
       )}
     </div>
-    // </Container>
   );
 };
 

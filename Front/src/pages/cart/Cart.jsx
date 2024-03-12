@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { useDispatch } from "react-redux";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { removeItem, editItem } from "../../redux/cartSlice";
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
+
+import { useDispatch } from "react-redux";
+import { removeItem, editItem } from "../../redux/cartSlice";
+
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
 
-import "./Cart.css";
-
-export default function Cart() {
+const Cart = () => {
   const [cartData, setCartData] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState({});
@@ -100,14 +97,14 @@ export default function Cart() {
   }, []);
 
   return (
-    <div className="cart" style={{ minHeight: 610 }}>
+    <div className="cart" style={{ minHeight: 610}}>
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
         <h1 data-aos="flip-down" data-aos-duration="1000">קצת עלינו</h1>
         <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
       </div>
-      <div style={{ textAlign: "center", marginTop: 50 }}>
-        <h3 style={{ color: "white", marginRight: -470 }}>סה"כ לתשלום : &nbsp;
+      <div style={{ textAlign: "center", marginTop: "10px" }}>
+        <h3 style={{ color: "white", marginRight: "-535px" }}>סה"כ לתשלום : &nbsp;
           <span style={{ color: "#C1121F", fontWeight: "bold" }}>{totalPrice}</span>       ₪</h3>
 
         {totalPrice > 0 && (<Link to="/Pay" className="btn"
@@ -116,20 +113,13 @@ export default function Cart() {
           מעבר לתשלום
         </Link>)}
 
-        {/* <Link to="/Pay" className="btn"
-          style={{ marginTop: -70, marginRight: 660 }}
-        >
-          מעבר לתשלום
-        </Link> */}
       </div>
-      {/* <TableContainer component={Paper}> */}
       <Table className="table table-bordered"
         style={{
           maxWidth: 800,
         }}
       >
 
-        {/* <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"> */}
         <TableHead>
           <TableRow style={{ borderColor: "#C1121F" }} className="table-row">
             <TableCell align="center" style={{ width: 10 }}> תמונה</TableCell>
@@ -143,7 +133,6 @@ export default function Cart() {
           {cartData.map((row, index) => (
             <TableRow style={{ borderColor: "#C1121F", borderRadius: 2 }}
               key={row.id}
-            // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="center" style={{ width: 11 }}>
                 <img
@@ -187,9 +176,6 @@ export default function Cart() {
         </TableBody>
       </Table>
 
-
-      {/* </TableContainer> */}
-
       <Dialog
         open={open}
         onClose={handleCloseDialog}
@@ -197,13 +183,11 @@ export default function Cart() {
         aria-describedby="alert-dialog-description"
         className="dialog-delete"
         sx={{
-          // width: '900px', // רוחב מרבי
-          // height: '800px', // גובה מרבי
-          width: '100%', // רוחב מלא
-          height: '100%', // גובה מלא
+          width: '100%', 
+          height: '100%', 
           display: 'flex',
-          justifyContent: 'center', // מרכז אופקי
-          alignItems: 'center', // מרכז אנכי 
+          justifyContent: 'center', 
+          alignItems: 'center' 
         }}>
         <div className="dialog-delete-border">
           <DialogContent sx={{
@@ -213,7 +197,7 @@ export default function Cart() {
               sx={{ marginTop: 5, textAlign: "center" }}>
 
               בטוחים שאתם רוצים להסיר את
-              <span style={{ color: "C1121F", fontWeight: "bold" }}>  {selectedProduct.name} </span>
+              <span style={{ color: "#C1121F", fontWeight: "bold" }}>  {selectedProduct.name} </span>
               מההזמנה שלכם ?
               <br />        </DialogContentText>
           </DialogContent>
@@ -229,3 +213,5 @@ export default function Cart() {
     </div>
   );
 }
+
+export default Cart;

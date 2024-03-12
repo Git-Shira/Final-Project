@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+
 import { TextField, Button, Box } from "@mui/material";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
@@ -17,7 +18,7 @@ const AddSingleProduct = ({ setOpen }) => {
   });
   const [age, setAge] = React.useState("");
 
-  const AddProjact = async () => {
+  const AddProduct = async () => {
     const updateProduct = {
       ...product,
       category: age,
@@ -42,7 +43,7 @@ const AddSingleProduct = ({ setOpen }) => {
   };
 
   return (
-    <form onSubmit={AddProjact} className="add">
+    <form onSubmit={AddProduct} className="add">
       <Box component="form">
         <TextField
           id="name"
@@ -68,7 +69,7 @@ const AddSingleProduct = ({ setOpen }) => {
           }
           sx={{ marginTop: 2, marginBottom: 2 }}
           color="error"
-          />
+        />
 
         <TextField
           id="image"
@@ -80,9 +81,9 @@ const AddSingleProduct = ({ setOpen }) => {
           onChange={(e) => setProduct({ ...product, image: e.target.value })}
           sx={{ marginBottom: 2 }}
           color="error"
-          />
+        />
 
-        <TextField 
+        <TextField
           id="price"
           label="מחיר"
           type="number"
@@ -92,7 +93,7 @@ const AddSingleProduct = ({ setOpen }) => {
           onChange={(e) => setProduct({ ...product, price: e.target.value })}
           sx={{ width: 100 }}
           color="error"
-          />
+        />
 
         <FormControl required>
           <InputLabel id="filter-label">פילטר</InputLabel>

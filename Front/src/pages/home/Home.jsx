@@ -1,9 +1,8 @@
 import React from "react";
-import "./Home.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { Container } from "@mui/system";
+import AOS from 'aos';
 
 import pic1 from "../../IMAGES/pic1.jpg";
 import pic2 from "../../IMAGES/pic2.jpg";
@@ -16,10 +15,7 @@ import sushi3 from "../../IMAGES/s3.png";
 
 import footer from "./home-footer.png";
 
-import thirdpic from "../../IMAGES/third-pic.png";
-
-import AOS from 'aos';
-
+import "./Home.css";
 
 const Home = () => {
     const [imageIndex, setImageIndex] = useState(0);
@@ -80,11 +76,9 @@ const Home = () => {
             </div>
 
             <br /><br />
-            {/* text1 */}
 
             <div className="container-fluid">
 
-                {/* <hr /> */}
 
                 <section className="my-container">
 
@@ -116,21 +110,12 @@ const Home = () => {
 
 
                 </section>
-                {/* <hr /> */}
 
-
-                {/* </div> */}
-
-                {/* pic1 */}
 
                 <section className="big-deal first-pic">
-                    {/* <div className="container">
-                </div> */}
+                    
                 </section>
 
-                {/* text2 */}
-                {/* <div className="container-fluid"> */}
-                {/* <hr /> */}
 
                 <section className="my-container">
 
@@ -152,29 +137,20 @@ const Home = () => {
                         </div><br />
                         <button className="button">
                             <Link to="/Products" className="button-link">
-                                תפריטים                        </Link>
+                                תפריטים               
+                            </Link>
                         </button>
                         <br /><br />
                     </p>
 
 
                 </section>
-                {/* <hr /> */}
-
-
-                {/* </div> */}
-
-
-                {/* pic2 */}
+                
+                
                 <section className="big-deal sec-pic">
-                    {/* <div className="container">
-
-                </div> */}
+                    
                 </section>
 
-                {/* text3 */}
-                {/* <div className="container-fluid"> */}
-                {/* <hr /> */}
 
                 <section className="my-container">
                     <div data-aos="fade-down"
@@ -203,14 +179,12 @@ const Home = () => {
                         <br /><br />
                     </p>
 
-
                 </section>
-                {/* <hr /> */}
+
                 <section className="my-container">
-                    <img className="third-pic" src={footer} alt="" />
+                    <img className="footer-pic" src={footer} alt="" />
                 </section>
 
-                {/* <img className="third-pic" src={thirdpic} alt="" /> */}
 
                 <section className="my-container-img">
                     <img src={sushi1} alt="" className="s1"/>

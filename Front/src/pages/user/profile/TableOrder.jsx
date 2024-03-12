@@ -1,24 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Button,
-  Modal,
-  Box,
-} from "@mui/material";
 import axios from "axios";
 
-import AOS from 'aos';
+import {  Table,  TableHead,  TableBody,  TableRow,  TableCell,  Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { DialogContentText } from "@mui/material";
-
-import t1 from "../../../IMAGES/t1.png";
-import t2 from "../../../IMAGES/t2.png";
 
 const TableOrder = ({ id }) => {
   console.log("id", id);
@@ -68,9 +54,9 @@ const TableOrder = ({ id }) => {
     <div className="profile-user">
 
       {loading ? (
-        <p style={{color:"white"}}>Loading...</p>
+        <p style={{ color: "white" }}>Loading...</p>
       ) : error ? (
-        <p  style={{color:"white"}}>Error: {error.message}</p>
+        <p style={{ color: "white" }}>Error: {error.message}</p>
       ) : (
         <Table className="table table-bordered"
           style={{
@@ -81,6 +67,7 @@ const TableOrder = ({ id }) => {
             <TableRow style={{ borderColor: "#C1121F" }} className="table-row">
               <TableCell align="center" >תאריך</TableCell>
               <TableCell align="center" >מספר הזמנה</TableCell>
+              <TableCell align="center" >סניף</TableCell>
               <TableCell align="center" >מחיר כולל</TableCell>
               <TableCell align="center" >פרטי הזמנה</TableCell>
             </TableRow>
@@ -93,6 +80,8 @@ const TableOrder = ({ id }) => {
                 <TableCell align="center" >
                   {user._id}</TableCell> {/* Display userId */}
                 {/* Display fullAddress */}
+                <TableCell align="center" >
+                  {user.branch}</TableCell>
                 <TableCell align="center" >
                   {user.totalPrice} ₪</TableCell>{" "}
                 {/* Display totalPrice */}

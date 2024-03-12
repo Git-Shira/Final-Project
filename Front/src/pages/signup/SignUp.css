@@ -1,11 +1,8 @@
-
-
 .harshama .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     width: 400px !important;
     margin: 0 !important;
     margin-bottom: 5px !important;
 }
-
 
 .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root {
     width: 400px !important;
@@ -26,9 +23,13 @@
 .harshama {
     text-align: center !important;
     align-items: center !important;
-    line-height: 5 !important;
+    line-height: 4.5 !important;
 }
 
 .btn-shadow{
     box-shadow: 1px 0px 20px .5px #FFFFFF;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+padding-inline-end: 280px;
+} 

@@ -12,3 +12,7 @@
     color: white;
     letter-spacing: .1rem;
 }
+
+.MuiInputLabel-root {
+    color: #C1121F !important;
+}

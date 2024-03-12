@@ -1,0 +1,12 @@
+.my-progress {
+    height: 5px;
+    width: 0%;
+    background-color: #C1121F;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation: 1s linear;
+
+    z-index: 200 !important;
+  }

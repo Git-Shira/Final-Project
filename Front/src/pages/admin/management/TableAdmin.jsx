@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Button,
-  Modal,
-  Box,
-  Container,
-} from "@mui/material";
 import axios from "axios";
-import AOS from 'aos';
+
+import { Table, TableHead, TableBody, TableRow, TableCell, Button}  from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { DialogContentText } from "@mui/material";
+
+import AOS from 'aos';
 
 import t1 from "../../../IMAGES/t1.png";
 import t2 from "../../../IMAGES/t2.png";
@@ -49,9 +40,11 @@ const TableAdmin = () => {
 
     AOS.init();
   }, []);
+
   console.log(userData);
+
   return (
-    <div style={{minHeight:610}}>
+    <div style={{ minHeight: 610 }}>
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
         <h1 data-aos="flip-down" data-aos-duration="1000">ארכיון הזמנות</h1>
@@ -59,19 +52,22 @@ const TableAdmin = () => {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p
+          style={{ marginTop: "10px" }}
+        >Loading...</p>
       ) : error ? (
-        <p>Error: {error.message}</p>
+        <p
+          style={{ marginTop: "10px" }}
+        >Error: {error.message}</p>
       ) : (
         <Table className="table table-bordered" style={{
-          maxWidth: 1000, marginTop: 50
+          maxWidth: 1000, marginTop: "10px"
         }}>
           <TableHead>
             <TableRow style={{ borderColor: "#C1121F" }} className="table-row">
               <TableCell align="center" > תאריך</TableCell>
               <TableCell align="center" >מספר הזמנה</TableCell>{" "}
-              {/* Replace with relevant user data */}
-              {/* Replace with relevant user data */}
+              <TableCell align="center" >סניף</TableCell>{" "}
               <TableCell align="center" >שם המזמין</TableCell>
               <TableCell align="center" >סוג איסוף</TableCell>
               <TableCell align="center" >אופן תשלום</TableCell>
@@ -88,8 +84,9 @@ const TableAdmin = () => {
                 <TableCell align="center" >
                   {user._id}</TableCell>
                 <TableCell align="center" >
+                  {user.branch}</TableCell>
+                <TableCell align="center" >
                   {user.fullName}</TableCell>
-
                 <TableCell align="center" >
                   {user.typePay}</TableCell>
                 <TableCell align="center" >
@@ -111,11 +108,11 @@ const TableAdmin = () => {
       <Dialog open={openModal} onClose={handleCloseModal} aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         sx={{
-          width: '100%', // רוחב מלא
-          height: '100%', // גובה מלא
+          width: '100%', 
+          height: '100%',
           display: 'flex',
-          justifyContent: 'center', // מרכז אופקי
-          alignItems: 'center', // מרכז אנכי
+          justifyContent: 'center', 
+          alignItems: 'center'
         }}>
         <DialogContent>
           <DialogContentText id="alert-dialog-description"
@@ -124,28 +121,6 @@ const TableAdmin = () => {
               height: 480,
             }}
           >
-            {/* <Box 
-            // component="form"
-            // sx={{
-            //   "& > :not(style)": { m: 1, width: "25ch" },
-            //   display: "flex",
-            //   flexDirection: "column",
-            //   alignItems: "center",
-            //   backgroundColor: "white",
-            //   justifyContent: "center",
-            //   gap: "1rem",
-            //   width: "50%",
-            //   margin: "auto",
-            // }}
-            // sx={{
-            //   width: '100%', // רוחב מלא
-            //   height: '100%', // גובה מלא
-            //   display: 'flex',
-            //   justifyContent: 'center', // מרכז אופקי
-            //   alignItems: 'center', // מרכז אנכי
-            // }}
-            // >
-          */}
             <h2 style={{ color: "#C1121F", fontWeight: "bold", marginBottom: 10 }}>פרטי הזמנה</h2>
             <Table className="table table-bordered">
               <TableHead>

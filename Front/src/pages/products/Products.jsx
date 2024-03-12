@@ -1,46 +1,38 @@
 import React, { useEffect, useState } from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Container } from "@mui/system";
-import Dialog from "@mui/material/Dialog";
 import axios from "axios";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { IconButton, TextField } from "@mui/material";
-import {
-  addToFavorites,
-  removeFromFavorites,
-} from "../../redux/favoritesSlice";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import { DialogContentText, MenuItem, Select, InputLabel } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-import { addItem, removeItem } from "../../redux/cartSlice";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Pagination from "@mui/material/Pagination";
-
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import "./Products.css";
+import { Container } from "@mui/system";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import { DialogContentText } from "@mui/material";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import { IconButton, TextField } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Visibility } from "@mui/icons-material";
+import Pagination from "@mui/material/Pagination";
+
+import { useSelector, useDispatch } from "react-redux";
+import { addToFavorites, removeFromFavorites } from "../../redux/favoritesSlice";
+import { addItem } from "../../redux/cartSlice";
+
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
 
+import "./Products.css";
+
 const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [selectedProduct, setSelectedProduct] = React.useState();
-  const [selectCategory, setSelectCategory] = React.useState("");
+  const [selectCategory, setSelectCategory] = React.useState([]);
+
   const [priceRange, setPriceRange] = React.useState([0, 449]);
   const [open, setOpen] = React.useState(false);
-  const [favoriteStatus, setFavoriteStatus] = React.useState({});
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20); // Number of items per page
@@ -48,7 +40,8 @@ const Products = () => {
   const userCookies = Cookies.get("user");
   const user = userCookies ? JSON.parse(userCookies) : null;
 
-  const [selectedButton, setSelectedButton] = React.useState("");
+  const [selectedButton, setSelectedButton] = useState([]);
+
   const [search, setSearch] = React.useState("");
 
   const categorys = ["ראשונות", "מרקים", "סושי ספיישל", "ניגירי", "סשימי", "קומבינציות", "מגשי מסיבה", "באנים", "מוקפצים", "עיקריות", "סלטים", "תפריט טבעוני", "קינוחים", "משקאות"];
@@ -66,10 +59,6 @@ const Products = () => {
 
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.favorites); // Updated selector
-
-  const handleAddToFavorites = (product) => {
-    dispatch(addToFavorites(product));
-  };
 
   const addShoppingCart = (products) => {
     dispatch(
@@ -110,13 +99,15 @@ const Products = () => {
   };
 
   const resetFilter = () => {
-    setSelectedButton("");
-    setSelectCategory("");
-    setPriceRange([0, 449]);
-    setSearch("");
-  };
+    setSelectedButton([]);
+    setSelectCategory([]);
 
-  // getProducts();
+    setPriceRange([0, 449]);
+
+    setSearch("");
+
+    setCurrentPage(1); // Reset pagination when search changes
+  };
 
   useEffect(() => {
     AOS.init();
@@ -126,12 +117,14 @@ const Products = () => {
 
   const handleChange = (category) => {
     if (selectedButton.includes(category)) {
-      setSelectedButton("");
-      setSelectCategory("");
+      setSelectedButton(selectedButton.filter((item) => item !== category));
+      setSelectCategory(selectCategory.filter((item) => item !== category));
     } else {
-      setSelectedButton(category);
-      setSelectCategory(category);
+      setSelectedButton([...selectedButton, category]);
+      setSelectCategory([...selectCategory, category]);
     }
+
+    setCurrentPage(1); // Reset pagination when search changes
   };
 
   const isButtonSelected = (category) => {
@@ -140,7 +133,9 @@ const Products = () => {
 
   const handleChangePrice = (event, newValue) => {
     setPriceRange(newValue);
+    setCurrentPage(1); // Reset pagination when search changes
   };
+
   const isFavorite = (productId) => {
     return favorites.some((favorite) => favorite._id === productId);
   };
@@ -157,7 +152,7 @@ const Products = () => {
   console.log(isFavorite);
 
   const messages = [
-    '.במידה ויש שינוי שאותו אתם רוצים לבצע בהזמנה יש להתקשר לסניף ולבצע שינוי זה. ',
+    'במידה ויש שינוי שאותו אתם רוצים לבצע בהזמנה יש להתקשר לסניף ולבצע שינוי זה ',
     'בעקבות מזג האוויר ייתכנו זמני המתנה ארוכים מהרגיל, אנו פועלים על מנת לספק את ההזמנות מהר ככל האפשר',
     `לחצו על ה- &nbsp;&nbsp;&nbsp; כדי להוסיף למוצרים האהובים`,
     `לחצו על ה- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; כדי לראות פרטים נוספים על המנה`,
@@ -184,16 +179,19 @@ const Products = () => {
     setCurrentPage(1); // Reset pagination when search changes
   };
 
-  const paginate = (event, value) => setCurrentPage(value);
+  const paginate = (event, value) => {
+    setCurrentPage(value);
+    window.scrollTo(0, 0);
+  }
 
   const filteredProducts = products.filter(
     (product) =>
-      (selectCategory === "")
+      (selectCategory.length === 0)
         ? product.price >= priceRange[0] &&
         product.price <= priceRange[1] &&
         product.name.toLowerCase().startsWith(search.toLowerCase())
-        : product.category === selectCategory
-        &&
+        :
+        selectCategory.includes(product.category) &&
         product.price >= priceRange[0] &&
         product.price <= priceRange[1] &&
         product.name.toLowerCase().startsWith(search.toLowerCase())
@@ -206,10 +204,13 @@ const Products = () => {
     indexOfLastItem
   );
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <Container>
-
         <div className="title-design">
           <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
           <h1 data-aos="flip-down" data-aos-duration="1000">התפריט שלנו</h1>
@@ -245,7 +246,8 @@ const Products = () => {
                 }}
                 style={{
                   backgroundColor: isButtonSelected(category) ? "black" : "white", // Change to black when selected
-                  color: isButtonSelected(category) ? "white" : "black",
+                  color: isButtonSelected(category) ? "#C1121F" : "black",
+                  fontWeight: isButtonSelected(category) ? "bold" : "normal"
                 }}
               >
                 {category}
@@ -255,7 +257,7 @@ const Products = () => {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 50 }}>
           <strong style={{
-            marginLeft: 5, color: "#C1121F",fontSize:"larger"
+            marginLeft: 5, color: "#C1121F", fontSize: "larger"
           }}>
             סינון לפי מחיר: &nbsp;
           </strong>
@@ -264,8 +266,7 @@ const Products = () => {
 
           <Box
             sx={{
-              width: 300
-              , marginRight: 2, marginLeft: 2
+              width: 300, marginRight: 2, marginLeft: 2
             }}
           >
             <Slider
@@ -288,7 +289,7 @@ const Products = () => {
               marginRight: 50,
               marginLeft: 5,
               color: "#C1121F",
-              fontSize:"larger"
+              fontSize: "larger"
             }}
           >חיפוש מנה: &nbsp;</strong>
           <TextField
@@ -297,7 +298,6 @@ const Products = () => {
             label="חיפוש"
             type={"text"}
             variant="outlined"
-            // onChange={(e) => setSearch(e.target.value)}
             onChange={handleSearchChange}
             value={search}
             defaultValue={search}
@@ -305,12 +305,12 @@ const Products = () => {
             color="error"
           />
           <div className="reset">
-            {(selectCategory || search || priceRange[0] != 0 || priceRange[1] != 449) &&
+            {(selectCategory.length != 0 || search || priceRange[0] != 0 || priceRange[1] != 449) &&
               <button className="btn"
                 onClick={() => {
                   resetFilter();
                 }}
-                style={{ marginRight: 140 }}>נקה סינון</button>
+                style={{ marginRight: 85 }}>איפוס סינון</button>
             }
           </div>
         </div>
@@ -341,7 +341,8 @@ const Products = () => {
                       }}
                     >
                       <FavoriteIcon
-                        color={isFavorite(product._id) ? "error" : "disabled"}
+                        // color={isFavorite(product._id) ? "error" : "disabled"}
+                        color={isFavorite(product._id) ? "black" : "disabled"}
                       />
                     </IconButton>
                     <img src={product.image} alt={product.name} />
@@ -361,20 +362,15 @@ const Products = () => {
                 </div>
               );
             })}
-            </div>
+          </div>
         </div>
-            <Pagination
-            className="pagination"
-              count={Math.ceil(filteredProducts.length / itemsPerPage)}
-              page={currentPage}
-              onChange={paginate}
-              variant="outlined" color="error" 
-
-              // color="white"
-              // sx={{ color: 'white','& MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':{color:"white"}}}
-
-              />
-          
+        <Pagination
+          className="pagination"
+          count={Math.ceil(filteredProducts.length / itemsPerPage)}
+          page={currentPage}
+          onChange={paginate}
+          variant="outlined" color="error"
+        />
 
         {selectedProduct && (
           <Dialog
@@ -384,11 +380,11 @@ const Products = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             sx={{
-              width: '100%', // רוחב מלא
-              height: '100%', // גובה מלא
+              width: '100%', 
+              height: '100%', 
               display: 'flex',
-              justifyContent: 'center', // מרכז אופקי
-              alignItems: 'center', // מרכז אנכי
+              justifyContent: 'center', 
+              alignItems: 'center'
             }}>
             <DialogContent>
               <DialogContentText id="alert-dialog-description"
@@ -419,11 +415,11 @@ const Products = () => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           sx={{
-            width: '100%', // רוחב מלא
-            height: '100%', // גובה מלא
+            width: '100%', 
+            height: '100%', 
             display: 'flex',
-            justifyContent: 'center', // מרכז אופקי
-            alignItems: 'center', // מרכז אנכי
+            justifyContent: 'center', 
+            alignItems: 'center'
           }}>
           <DialogContent
             sx={{ height: 200, width: 400, paddingTop: 7, paddingLeft: 3, paddingRight: 3 }}>
@@ -434,7 +430,6 @@ const Products = () => {
             </button>
           </DialogContent>
           <DialogActions>
-
           </DialogActions>
         </Dialog>
       </Container>

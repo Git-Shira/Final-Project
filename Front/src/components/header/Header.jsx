@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import PersonIcon from "@mui/icons-material/Person";
 import { List } from "@mui/material";
 import { ListItem } from "@mui/material";
 import { ListItemText } from "@mui/material";
-import { Divider } from "@mui/material";
 import { Popover } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useSelector } from "react-redux";
-import Cookies from "js-cookie";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import { logout } from "../../redux/userSlice";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { logout } from "../../redux/userSlice";
+
+import logo from "./logo.png";
 
 import "./Header.css";
-import logo from "./logo.png";
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Header = () => {
   const [isLogin, setIsLogin] = React.useState(false);
-  const [lengthCart, setLengthCart] = React.useState([]);
   const [lengthFavorite, setLengthFavorite] = React.useState([]);
   const [admin, setAdmin] = React.useState(false);
 
@@ -117,16 +114,15 @@ const Header = () => {
   return (
     <Box
       className="header"
-    // sx={{ flexGrow: 0}}
     >
       <AppBar
         sx={{ background: "black", color: "white", width: "100%" }}
       >
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 0, padding: 1, marginRight: -3 }}>
-          <Link to={"/"}>
-            <img src={logo} alt="" sx={{ marginRight: -20, marginTop: 5 }} />
-          </Link>
+            <Link to={"/"}>
+              <img src={logo} alt="" sx={{ marginRight: -20, marginTop: 5 }} />
+            </Link>
           </Typography>
           <Typography variant="h6" component="div" className="nav" sx={{ flexGrow: 0, marginRight: 3 }}>
             <Link to={"/"} className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>בית</Link>
@@ -137,8 +133,6 @@ const Header = () => {
           <Typography variant="h6" component="div" className="nav" sx={{ flexGrow: 0, marginRight: 3 }}>
             <Link to={"/Cart"} className={`nav-link ${location.pathname === '/Cart' ? 'active' : ''}`}>
               סל קניות
-              {/* <ShoppingCartIcon /> */}
-
               {cartLength.length > 0 && (
                 <Box
                   sx={{
@@ -172,14 +166,12 @@ const Header = () => {
 
           {isLogin ? (
             <>
-              
-
               <Link to={"/favorites"}>
                 <IconButton
                   color="inherit"
                   aria-haspopup="true"
                   onClick={handleMenuClickFavorite}
-                  sx={{marginRight: -10 , flex: 10, '& .MuiSvgIcon-root': { fontSize: 32, color: "white" } }}
+                  sx={{ marginRight: -10, flex: 10, '& .MuiSvgIcon-root': { fontSize: 32, color: "white" } }}
                 >
                   {/* <FavoriteIcon /> */}
                   <FavoriteBorderOutlinedIcon />
@@ -198,11 +190,11 @@ const Header = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        marginRight:4
+                        marginRight: 4
                       }}
                     >
-                      {/* {lengthFavorite.length} */}
-                      {favorites.length}
+                      {lengthFavorite.length}
+                      {/* {favorites.length} */}
                     </Box>
                   )}
                 </IconButton>
@@ -212,44 +204,29 @@ const Header = () => {
                 color="inherit"
                 aria-haspopup="true"
                 onClick={handleMenuClick}
-                sx={{  '& .MuiSvgIcon-root': { fontSize: 32 } }}
+                sx={{ '& .MuiSvgIcon-root': { fontSize: 32 } }}
               >
-                {/* <PersonIcon /> */}
                 <AccountCircleOutlinedIcon />
               </IconButton>
-
-              {/* <Popover
-                open={isPopoverOpen} // Use isPopoverOpen to control the open state
-                anchorEl={anchorElFavorite}
-                onClose={() => setIsPopoverOpen(false)} // Close the popover when the user clicks outside
-              >
-                {dataFavorite.map((item) => (
-                  <List>
-                    <ListItem>
-                      <ListItemText primary={item.name} />
-                    </ListItem>
-                  </List>
-                ))}
-              </Popover>   */}
 
               {admin ? (
                 <Popover
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleMenuClose}
-                  sx={{marginTop: 2.5, marginLeft: 2.5}}
+                  sx={{ marginTop: 5.5, marginLeft: 3.5 }}
                 >
                   <List>
-                    <ListItem button component={Link} to="/Admin/Management">
-                      <ListItemText primary="עריכת מוצרים" />
+                    <ListItem button component={Link} to="/Admin/Management" sx={{ textAlign: "right" }}>
+                      <ListItemText primary="מוצרים" />
                     </ListItem>
-                    <ListItem button component={Link} to="/Admin/TableAdmin">
+                    <ListItem button component={Link} to="/Admin/TableAdmin" sx={{ textAlign: "right" }}>
                       <ListItemText primary="הזמנות" />
                     </ListItem>
-                    <ListItem button component={Link} to="/Admin/ViewUsers">
+                    <ListItem button component={Link} to="/Admin/ViewUsers" sx={{ textAlign: "right" }}>
                       <ListItemText primary="לקוחות" />
                     </ListItem>
-                    <ListItem button onClick={handleLogout}>
+                    <ListItem button onClick={handleLogout} sx={{ textAlign: "right" }}>
                       <ListItemText primary="התנתקות" />
                     </ListItem>
                   </List>
@@ -259,16 +236,16 @@ const Header = () => {
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleMenuClose}
-                  sx={{marginTop: 2.5, marginLeft: 2.5}}
+                  sx={{ marginTop: 5.5, marginLeft: 3.5 }}
                 >
                   <List>
-                    <ListItem button component={Link} to="/user/profile">
+                    <ListItem button component={Link} to="/user/profile" sx={{ textAlign: "right" }}>
                       <ListItemText primary="הפרופיל שלי" />
                     </ListItem>
-                    <ListItem button component={Link} to="/user/edit">
-                      <ListItemText primary="עריכת פרופיל" />
+                    <ListItem button component={Link} to="/user/edit" sx={{ textAlign: "right" }}>
+                      <ListItemText primary="עריכת פרטים" />
                     </ListItem>
-                    <ListItem button onClick={handleLogout}>
+                    <ListItem button onClick={handleLogout} sx={{ textAlign: "right" }}>
                       <ListItemText primary="התנתקות" />
                     </ListItem>
                   </List>
@@ -283,7 +260,6 @@ const Header = () => {
               <Button color="inherit">
                 <Link to={"/SignIn"} className="nav-link2">התחברות</Link>
               </Button>
-
             </>
           )}
         </Toolbar>

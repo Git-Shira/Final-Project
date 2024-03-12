@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { IconButton, InputAdornment, } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import Alert from "@mui/material/Alert";
-import "./SignUp.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { format } from 'date-fns';
+
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { IconButton, InputAdornment, } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Alert from "@mui/material/Alert";
+
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
+
+import "./SignUp.css";
 
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
@@ -46,7 +48,7 @@ const SignUp = () => {
     if (!email) {
       error.email = "שדה חובה";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      error.email = "המייל אינו תקין";
+      error.email = "כתובת הדוא''ל אינה תקינה";
     }
     if (!password) {
       error.password = "שדה חובה";
@@ -94,13 +96,12 @@ const SignUp = () => {
         }
       } catch (error) {
         if (error.response.status === 400) {
-          setError("המייל כבר קיים במערכת");
+          setError("כתובת הדוא''ל כבר קיימת במערכת");
         }
         if (error.response.status === 500) {
           setError("משהו השתבש, נסו שוב")
         }
         console.error(error);
-        // You might also want to display a more user-friendly error message
       }
     }
   };
@@ -112,8 +113,6 @@ const SignUp = () => {
   return (
     <div className="harshama" style={{ minHeight: 610 }}>
 
-      {/* { <h1 className="harshama">הרשמה לאתר</h1> } */}
-
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
         <h1 data-aos="flip-down" data-aos-duration="1000">הרשמה לאתר</h1>
@@ -122,97 +121,107 @@ const SignUp = () => {
       <Box
         component="form"
         sx={{
-          marginTop:8
-        //   "& > :not(style)": { m: 1, width: "25ch" },
+          marginTop: "10px"
         }}
         noValidate
         autoComplete="off"
       >
-        <div className="spacer">
-          <TextField
-            className="rGap"
-            id="outlined-basic"
-            label="שם מלא"
-            variant="outlined"
-            required
-            error={vaildationError.fullName}
-            helperText={vaildationError.fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            sx={{ marginLeft: 5 }}
-            color="error"
-          />
-          <span></span>
-          <TextField
-            id="outlined-basic"
-            type="date"
-            label="תאריך לידה"
-            variant="outlined"
-            required
-            onChange={(e) => setDate(e.target.value)}
-            helperText={vaildationError.date}
-            error={vaildationError.date}
-            inputProps={{
-              pattern: "\\d{4}-\\d{2}-\\d{2}",
-              title: "Please use the yyyy-mm-dd format",
-            }}
-            color="error"
-          />
-        </div>
-        <div className="spacer">
-          <TextField
-            className="rGap"
-            id="outlined-basic"
-            label="כתובת דוא''ל"
-            type={"email"}
-            required
-            variant="outlined"
-            onChange={(e) => setEmail(e.target.value)}
-            error={vaildationError.email}
-            helperText={vaildationError.email}
-            sx={{ marginLeft: 5 }}
-            color="error"
-          />
-          <TextField
-            id="outlined-basic"
-            label="סיסמא"
-            type={showPassword ? "text" : "password"} // Toggle password visibility
-            variant="outlined"
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            error={vaildationError.password}
-            helperText={vaildationError.password}
-            margin="normal"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            color="error"
-          />
-        </div>
+
+        <TextField
+          className="rGap"
+          id="outlined-basic"
+          label="שם מלא"
+          variant="outlined"
+          data-aos="fade-right"
+          data-aos-duration="1000"
+          required
+          error={vaildationError.fullName}
+          helperText={vaildationError.fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          color="error"
+        />
+
+        <br />
+
+        <TextField
+          id="outlined-basic"
+          type="date"
+          label="תאריך לידה"
+          variant="outlined"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+          required
+          onChange={(e) => setDate(e.target.value)}
+          helperText={vaildationError.date}
+          error={vaildationError.date}
+          // inputProps={{
+          //   pattern: "\\d{4}-\\d{2}-\\d{2}",
+          //   title: "Please use the yyyy-mm-dd format",
+          // }}
+          color="error"
+
+        />
+
+        <br />
+
+        <TextField
+          className="rGap"
+          id="outlined-basic"
+          label="כתובת דוא''ל"
+          type={"email"}
+          data-aos="fade-right"
+          data-aos-duration="1000"
+          required
+          variant="outlined"
+          onChange={(e) => setEmail(e.target.value)}
+          error={vaildationError.email}
+          helperText={vaildationError.email}
+          color="error"
+        />
+        <br />
+        <TextField
+          id="outlined-basic"
+          label="סיסמא"
+          type={showPassword ? "text" : "password"} // Toggle password visibility
+          variant="outlined"
+          fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          data-aos="fade-left"
+          data-aos-duration="1000"
+          required
+          error={vaildationError.password}
+          helperText={vaildationError.password}
+          margin="normal"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={togglePasswordVisibility} edge="end" sx={{ left: 55 }}>
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          color="error"
+        />
+
+        <br />
 
         <button
           className="btn btn-shadow"
           variant="contained" onClick={submitHandler}
-          style={{width:150,fontSize:"x-large",marginTop:50}}>
+          style={{ width: 150, fontSize: "x-large", marginTop: -15 }}>
           הרשמה
         </button>
 
-        {success && (<Alert severity="success" style={{margin:"0 auto",width:500,justifyContent:"center"}}
-        >
-          {success}
-        </Alert>)
-        }
-        {error && (
-          <Alert severity="error" style={{margin:"0 auto",width:500,justifyContent:"center"}}
-          // style={{ marginBottom: "10px" }}
+        {success && (
+          <Alert severity="success" style={{ margin: "0 auto", width: 500, justifyContent: "center" }}
           >
+            {success}
+          </Alert>
+        )}
+        {error && (
+          <Alert severity="error" style={{ margin: "0 auto", width: 500, justifyContent: "center" }} >
             {error}
           </Alert>
         )}

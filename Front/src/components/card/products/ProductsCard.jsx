@@ -1,18 +1,14 @@
 import * as React from "react";
 import { useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import axios from "axios";
+
 import { Container } from "@mui/system";
 import Dialog from "@mui/material/Dialog";
-import axios from "axios";
-import Edit from "../../../pages/admin/management/edit/Edit";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { DialogContentText } from "@mui/material";
+
+import Edit from "../../../pages/admin/management/edit/Edit";
 
 import AOS from 'aos';
 
@@ -47,6 +43,7 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
       );
       alert("המוצר נמחק בהצלחה");
       setOpen(false);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +54,6 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
     setIsEditDialogOpen(false);
 
     // Refresh the data
-    // If you are fetching products from an API, call that function here.
     fetchProducts();
   };
 
@@ -67,37 +63,6 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
 
   return (
     <div>
-      {/* <Card sx={{ maxWidth: 345 }}>
-        <CardMedia
-          sx={{ height: 140 }}
-          image={product.image}
-          title={product.name} />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {product.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Price: {product.price}
-          </Typography> */}
-      {/* <Typography variant="body2" color="text.secondary">
-            Amount: {product.amount}
-          </Typography> */}
-      {/* <Typography variant="body2" color="text.secondary">
-            Category: {product.category}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Description: {product.description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small" onClick={() => handleEditDialogOpen(product)}>
-            Edit
-          </Button>
-          <Button size="small" onClick={handleClickOpen}>
-            Delete
-          </Button>
-        </CardActions>
-      </Card> */}
       <div >
         <div className="box-admin" data-aos="zoom-in">
           {/* <IconButton className="eye"
@@ -161,13 +126,11 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
         aria-describedby="alert-dialog-description"
         className="dialog-delete"
         sx={{
-          // width: '900px', // רוחב מרבי
-          // height: '800px', // גובה מרבי
-          width: '100%', // רוחב מלא
-          height: '100%', // גובה מלא
+          width: '100%', 
+          height: '100%', 
           display: 'flex',
-          justifyContent: 'center', // מרכז אופקי
-          alignItems: 'center', // מרכז אנכי 
+          justifyContent: 'center', 
+          alignItems: 'center'
         }}
       >
         <div className="dialog-delete-border">
@@ -175,13 +138,14 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
             height: 150,
           }}>
             <DialogContentText id="alert-dialog-description"
-              sx={{ marginTop: 5, textAlign: "center",            width: 350,
-            }}>
+              sx={{
+                marginTop: 5, textAlign: "center", width: 350,
+              }}>
               <Container>
-                האם אתה בטוח שברצונך למחוק את 
-                <span style={{ color: "C1121F", fontWeight: "bold" }}>  {product.name} </span>
-
-                מרשימת המוצרים ?              </Container>
+                האם את/ה בטוח/ה שברצונך למחוק את
+                <span style={{ color: "#C1121F", fontWeight: "bold" }}>  {product.name} </span>
+                מרשימת המוצרים ?
+              </Container>
             </DialogContentText>
           </DialogContent>
           <DialogActions sx={{ marginBottom: 2, marginLeft: 2 }}>

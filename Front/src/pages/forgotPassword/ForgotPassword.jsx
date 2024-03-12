@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./ForgotPassword.css";
-import { login } from "../../redux/userSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { format } from 'date-fns';
+
+import { Container, TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
 import AOS from 'aos';
@@ -13,13 +11,13 @@ import AOS from 'aos';
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
 
+import "./ForgotPassword.css";
+
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userDe, setUserDe] = useState({});
     const [date, setDate] = useState("");
     const navigation = useNavigate();
-    const dispatch = useDispatch();
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -30,7 +28,7 @@ const ForgotPassword = () => {
         if (!email) {
             error.email = "שדה חובה";
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            error.email = "המייל אינו תקין";
+            error.email = "כתובת הדוא''ל אינה תקינה";
         }
         if (!password) {
             error.password = "שדה חובה";
@@ -50,14 +48,17 @@ const ForgotPassword = () => {
         if (Validate()) {
 
             const dataObj = new Date(date);
-            const year = dataObj.getFullYear();
-            const month = dataObj.getMonth() + 1;
-            const day = dataObj.getDate();
-            const newDate = `${year}-${month}-${day}`;
+            // const year = dataObj.getFullYear();
+            // const month = dataObj.getMonth() + 1;
+            // const day = dataObj.getDate();
+            // const newDate = `${year}-${month}-${day}`;
+            const dateFormat = 'dd/MM/yyyy';
+            const formattedDate = format(dataObj, dateFormat);
             const userData = {
                 email: email,
-                date: newDate,
                 newPassword: password,
+                // date: newDate,
+                date: formattedDate,
             };
             try {
                 const response = await axios.post(
@@ -95,23 +96,23 @@ const ForgotPassword = () => {
     return (
         <Container maxWidth="sm">
             <div className="forgot" style={{ minHeight: 610 }}>
-                {/* <Typography className="forgot" variant="h4" component="h2" align="center">
-                    שכחתי סיסמא
-                </Typography> */}
-                <div className="title-design" style={{marginBottom:15}}>
+                <div className="title-design">
                     <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
                     <h1 data-aos="flip-down" data-aos-duration="1000">שכחתי סיסמא</h1>
                     <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <div style={{ marginTop: "10px" }}>
+                    {/* <form onSubmit={handleSubmit} style={{marginTop:"10px"}}> */}
                     <div className="spacer">
                         <TextField
-                            label="מייל"
+                            label="כתובת דוא''ל"
                             variant="outlined"
                             fullWidth
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            data-aos="fade-right"
+                            data-aos-duration="1000"
                             required
                             error={vaildationError.email}
                             helperText={vaildationError.email}
@@ -127,6 +128,8 @@ const ForgotPassword = () => {
                             fullWidth
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
+                            data-aos="fade-left"
+                            data-aos-duration="1000"
                             required
                             error={vaildationError.date}
                             helperText={vaildationError.date}
@@ -142,6 +145,8 @@ const ForgotPassword = () => {
                             fullWidth
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            data-aos="fade-right"
+                            data-aos-duration="1000"
                             required
                             error={vaildationError.password}
                             helperText={vaildationError.password}
@@ -151,27 +156,31 @@ const ForgotPassword = () => {
                     </div>
                     <button
                         className="btn btn-shadow"
-                        type="submit"
+                        // type="submit"
+                        onClick={handleSubmit}
                         variant="contained"
                         color="primary"
                         fullWidth
                         size="large"
-                        style={{width:200,fontSize:"x-large", marginTop: 50 }}
+                        style={{ width: 200, fontSize: "x-large", marginTop: 40 }}
                     >
                         עדכון סיסמא
                     </button>
-                </form>
+                    {/* </form> */}
+                </div>
             </div>
-            {success && (<Alert severity="success" style={{margin:"0 auto",width:500,justifyContent:"center"}}
+            {success && (
+            <Alert severity="success" style={{ margin: "0 auto", width: 500, justifyContent: "center" ,marginBottom:15,marginTop:-63}}
             >
                 {success}
-            </Alert>)
-            }
+            </Alert>
+            )}
             {error && (
-                <Alert severity="error" style={{margin:"0 auto",width:500,justifyContent:"center"}}
+                <Alert severity="error" style={{ margin: "0 auto", width: 500, justifyContent: "center"  ,marginBottom:15,marginTop:-65 }}
                 >
                     {error}
-                </Alert>)}
+                </Alert>
+                 )}
         </Container>
     );
 };

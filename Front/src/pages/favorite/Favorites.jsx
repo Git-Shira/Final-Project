@@ -1,30 +1,19 @@
 import React, { useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Container } from "@mui/system";
-import Dialog from "@mui/material/Dialog";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { IconButton } from "@mui/material";
-import {
-  addToFavorites,
-  removeFromFavorites,
-} from "../../redux/favoritesSlice";
-
-import DialogActions from "@mui/material/DialogActions";
+import { Container } from "@mui/system";
+import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { DialogContentText, MenuItem, Select } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-import { addItem, removeItem } from "../../redux/cartSlice";
+import { DialogContentText, Select } from "@mui/material";
+import { IconButton } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Visibility } from "@mui/icons-material";
+
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "../../redux/cartSlice";
+import { addToFavorites,  removeFromFavorites,} from "../../redux/favoritesSlice";
+
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
@@ -33,10 +22,7 @@ import t2 from "../../IMAGES/t2.png";
 const Favorites = () => {
   const [products, setProducts] = React.useState([]);
   const [selectedProduct, setSelectedProduct] = React.useState();
-  const [selectCategory, setSelectCategory] = React.useState("");
-  const [priceRange, setPriceRange] = React.useState([0, 150]);
   const [open, setOpen] = React.useState(false);
-  const [favoriteStatus, setFavoriteStatus] = React.useState({});
   const cartFromCookies = Cookies.get("favorites");
 
   const [getAllFavorites, setGetAllFavorites] = React.useState([]);
@@ -46,15 +32,6 @@ const Favorites = () => {
   };
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.favorites); // Updated selector
-
-  const handleAddToFavorites = (product) => {
-    dispatch(addToFavorites(product));
-  };
-  console.log(products);
-  const handleRemoveFromFavorites = (productId) => {
-    dispatch(removeFromFavorites(productId));
-  };
-
 
   const addShoppingCart = (products) => {
     dispatch(
@@ -133,7 +110,6 @@ const Favorites = () => {
 
   useEffect(() => {
     if (products.length > 0) {
-      // setGetAllFavorites([]);
       products.forEach((product) => {
         showFavorites(product);
       });
@@ -151,7 +127,7 @@ const Favorites = () => {
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 
-        <div className="dishes">
+        <div className="dishes" style={{marginTop:"10px"}}>
           <div className="box-container">
             {/* {products?.map((product, index) => { */}
             {getAllFavorites?.map((product, index) => {
@@ -175,7 +151,7 @@ const Favorites = () => {
                       }}
                     >
                       <FavoriteIcon
-                        color={isFavorite(product._id) ? "error" : "disabled"}
+                        color={isFavorite(product._id) ? "black" : "disabled"}
                       />
                     </IconButton>
                     <img src={product.image} alt={product.name} />
@@ -204,11 +180,11 @@ const Favorites = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             sx={{
-              width: '100%', // רוחב מלא
-              height: '100%', // גובה מלא
+              width: '100%',
+              height: '100%', 
               display: 'flex',
-              justifyContent: 'center', // מרכז אופקי
-              alignItems: 'center', // מרכז אנכי
+              justifyContent: 'center', 
+              alignItems: 'center'
             }}>
             <DialogContent>
               <DialogContentText id="alert-dialog-description"

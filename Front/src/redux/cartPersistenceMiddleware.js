@@ -1,4 +1,3 @@
-// cartPersistenceMiddleware.js
 import Cookies from "js-cookie";
 
 const cartPersistenceMiddleware = (store) => (next) => (action) => {

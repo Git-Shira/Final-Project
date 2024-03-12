@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, TextField, Button, IconButton, InputAdornment, } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./SignIn.css";
-import { login } from "../../redux/userSlice";
-import { useSelector, useDispatch } from "react-redux";
+
 import Alert from "@mui/material/Alert";
+import { Container, Typography, TextField, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/userSlice";
+
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
+
+import "./SignIn.css";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -35,7 +39,7 @@ const SignIn = () => {
     if (!email) {
       error.email = "שדה חובה";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      error.email = "המייל אינו תקין";
+      error.email = "כתובת הדוא''ל אינה תקינה";
     }
     if (!password) {
       error.password = "שדה חובה";
@@ -99,16 +103,14 @@ const SignIn = () => {
   return (
     <Container maxWidth="sm">
       <div className="hithabrut" style={{ minHeight: 610 }} >
-        {/* <Typography className="hithabrut" variant="h4" component="h2" align="center">
-          התחברות
-        </Typography> */}
-
-        <div className="title-design" style={{marginBottom:20}}>
+        <div className="title-design">
           <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
           <h1 data-aos="flip-down" data-aos-duration="1000">התחברות</h1>
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
-        <form onSubmit={handleSubmit}>
+
+        <div style={{marginTop:"10px"}} >
+        {/* <form onSubmit={handleSubmit} style={{marginTop:"10px"}} > */}
           <div className="spacer">
             <TextField
               className="rGap"
@@ -117,6 +119,8 @@ const SignIn = () => {
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              data-aos="fade-right"
+          data-aos-duration="1000"
               required
               error={vaildationError.email}
               helperText={vaildationError.email}
@@ -134,7 +138,9 @@ const SignIn = () => {
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
+              data-aos="fade-left"
+          data-aos-duration="1000"
+          required
               error={vaildationError.password}
               helperText={vaildationError.password}
               color="error"
@@ -142,7 +148,7 @@ const SignIn = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={togglePasswordVisibility} edge="end">
+                    <IconButton onClick={togglePasswordVisibility} edge="end" sx={{left:55}}>
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
@@ -152,24 +158,25 @@ const SignIn = () => {
           </div>
           <button
             className="btn btn-shadow"
-            type="submit"
+            // type="submit"
+            onClick={handleSubmit}
             variant="contained"
             color="primary"
             fullWidth
             size="large"
             style={{
-              marginBottom: 30, marginTop: 30,width:150,fontSize:"x-large"
+              marginBottom: 25, marginTop: 15,width:150,fontSize:"x-large"
             }}
           >
             כניסה
           </button>
-        </form>
+        {/* </form> */}
+        </div>
 
         <Typography
           className="typo"
           variant="body1"
           align="center" color="white"
-          // style={{ marginTop: 10 }}
           >
           עדיין לא רשומים?
           <Link to={"/SignUp"} style={{ marginRight: 20 }}>הרשמה </Link>
@@ -179,13 +186,14 @@ const SignIn = () => {
           <Link to={"/ForgotPassword"}>שכחתי סיסמא </Link>
         </Typography>
 
-        {success && (<Alert severity="success" style={{margin:"0 auto",width:500,justifyContent:"center"}}
+        {success && (
+        <Alert severity="success" style={{margin:"0 auto",width:500,justifyContent:"center",marginTop:15}}
         >
           {success}
-        </Alert>)
-        }
+        </Alert>
+         )}
         {error && (
-          <Alert severity="error" style={{margin:"0 auto",width:500,justifyContent:"center"}}
+          <Alert severity="error" style={{margin:"0 auto",width:500,justifyContent:"center" ,marginTop:15}}
           >
             {error}
           </Alert>

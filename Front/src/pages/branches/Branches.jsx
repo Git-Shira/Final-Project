@@ -1,17 +1,19 @@
 import * as React from 'react';
 import { useEffect } from "react";
+
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import "./Branches.css";
 import { Grid } from "@mui/material";
+
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
+
+import "./Branches.css";
 
 const Branches = () => {
     const [expanded, setExpanded] = React.useState(false);
@@ -22,7 +24,11 @@ const Branches = () => {
 
     useEffect(() => {
         AOS.init();
-          }, []);
+    }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div>
@@ -32,8 +38,7 @@ const Branches = () => {
                 <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
             </div>
 
-            <br />
-            
+
             <div className="branches">
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary

@@ -3,7 +3,6 @@
     padding-top: 1rem;
     background: #fff;
     border-radius: .5rem;
-    /* border: .1rem solid rgba(0, 0, 0, .2); */
     border: .1rem solid #C1121F;
     position: relative;
     overflow: hidden;
@@ -45,7 +44,3 @@
     color: white;
     letter-spacing: .1rem;
 }
-
-/* .dialog-delete .dialog-delete-border {
-    border: 2px solid black;
-} */

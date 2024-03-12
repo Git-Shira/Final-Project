@@ -2,13 +2,8 @@
     max-width: 850px;
     margin: 0 auto;
     border-radius: .5rem;
+    margin-top: 10px;
 }
-
-/* .branches .b {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-} */
 
 .branches .grid {
     padding-bottom: 25px;
@@ -25,8 +20,6 @@
 .branches .grid .opening-hours {
     font-weight: bold;
     margin: 0 auto;
-    /* text-decoration: underline double #C1121F;
-    text-decoration-thickness: 1px; */
 }
 
 .branches .grid .grid2 {
@@ -46,10 +39,6 @@
     color: #C1121F;
     background-color: white;
 }
-
-/* .b > div {
-    border: 2px solid green;
-} */
 
 .branches .accordion-icon{
     color:#C1121F;
