@@ -9,4 +9,5 @@ const ProductSchema = new mongoose.Schema({
   category: String,
   filter:String
 });
+
 module.exports = mongoose.model("Product", ProductSchema);

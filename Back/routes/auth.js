@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
 const User = require("../model/User");
+
 const bcrypt = require("bcrypt");
 
 router.post("/register", async (req, res) => {
@@ -67,7 +69,7 @@ router.get("/user/:id", async (req, res) => {
     res.status(500).send({ error: "Something went wrong" });
   }
 });
-const saltRounds = 10; // You can adjust the salt rounds based on security requirements
+const saltRounds = 10;
 
 async function hashPassword(password) {
   return await bcrypt.hash(password, saltRounds);
@@ -92,7 +94,7 @@ router.put("/update/:id", async (req, res) => {
     
     return res.status(200).send({
       message: "User updated successfully",
-      user: { id: user._id, name: user.name, email: user.email },
+      user: { id: user._id, fullName: user.name, email: user.email },
     });
 
   } catch (err) {
@@ -148,4 +150,3 @@ router.get("/all", async (req, res) => {
 });
 
 module.exports = router;
-

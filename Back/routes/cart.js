@@ -32,15 +32,17 @@ router.post("/user/:id/new_order", async (req, res) => {
         fullName: orderData.fullName, // Extract other relevant fields from orderData
         totalPrice: orderData.totalPrice,
 
+        branch: orderData.branch,
+
         typeCollect: orderData.typeCollect,
 
         typePay: orderData.typePay,
 
-        fullAddress: orderData.fullAddress,
-
         date: orderData.date,
 
         products: orderData.products, // Assuming products are in the correct format
+      
+        comments: orderData.comments,
       });
       await newOrder.save();
       res
