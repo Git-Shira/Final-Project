@@ -162,7 +162,7 @@ const Pay = () => {
 
         comments: comments,
       };
-      debugger;
+      // debugger;
       try {
         const response = await axios.post(
           `http://localhost:3000/cart/user/${id}/new_order`,

@@ -29,7 +29,7 @@ const Profile = ({ id }) => {
 
         <div className="title-design">
           <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
-          <h1 data-aos="flip-down" data-aos-duration="1000">ארכיון הזמנות</h1>
+          <h1 data-aos="flip-down" data-aos-duration="1000">הפרופיל שלי</h1>
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 

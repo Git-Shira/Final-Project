@@ -393,7 +393,7 @@ const Products = () => {
                   height: 480,
                 }}
               >
-                <h1> {selectedProduct.name}</h1>
+                <h2> {selectedProduct.name}</h2>
                 <p className="description"> {selectedProduct.description}</p>
                 <img src={selectedProduct.image} alt="" />
                 <button className="btn" onClick={addToCart} autoFocus sx={{ display: 'flex', }}>

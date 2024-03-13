@@ -60,7 +60,7 @@ function App() {
                     element={userDetails ? <AdminRoute /> : <Navigate to="/login" />}
                 />
                 <Route path="/User/*" element={<UserRoute />} />
-                <Route path="/Products" element={<Products />} />
+                <Route path="/Menu" element={<Products />} />
                 <Route path="/Cart" element={<Cart />} />
                 <Route path="/Pay" element={<Pay />} />
                 <Route path="/favorites" element={<Favorites />} />

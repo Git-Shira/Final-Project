@@ -74,7 +74,7 @@ const Cart = () => {
   };
 
   const handleQuantityChange = (id, newQuantity) => {
-    debugger;
+    // debugger;
     newQuantity = parseInt(newQuantity, 10);
     if (newQuantity > 0) {
       const updatedCart = cartData.map((item) => {
@@ -100,7 +100,7 @@ const Cart = () => {
     <div className="cart" style={{ minHeight: 610}}>
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
-        <h1 data-aos="flip-down" data-aos-duration="1000">קצת עלינו</h1>
+        <h1 data-aos="flip-down" data-aos-duration="1000">סל קניות</h1>
         <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
       </div>
       <div style={{ textAlign: "center", marginTop: "10px" }}>

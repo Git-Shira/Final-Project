@@ -45,7 +45,7 @@ const cartSlice = createSlice({
 
     // Action to remove an item from the cart
     removeItem: (state, action) => {
-      debugger;
+      // debugger;
       state.items = state.items.filter((item) => item.id !== action.payload);
       state.totalAmount = calculateTotalAmount(state.items);
     },

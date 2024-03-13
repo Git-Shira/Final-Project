@@ -70,13 +70,15 @@ const SignIn = () => {
             setSuccess("התחברת בהצלחה");
             // alert("התחברת בהצלחה");
             setTimeout(() => {
-              navigation("/Admin/Management");
+              // navigation("/Admin/Management");
+              navigation("/Menu");
+
             }, 2000);
           } else {
             setSuccess("התחברת בהצלחה");
             // alert("התחברת בהצלחה");
             setTimeout(() => {
-              navigation("/");
+              navigation("/Menu");
             }, 2000);
           }
         }

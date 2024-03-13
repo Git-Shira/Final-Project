@@ -94,12 +94,14 @@ const Home = () => {
                         <div data-aos="flip-left"
                             data-aos-easing="ease-out-cubic"
                             data-aos-duration="1000">                        טריאקי מטבח אסייתי וסושי בר, רשת המציעה תפריט ייחודי על טהרת הסושי ומנות ספיישל מהמטבח האסייתי העשיר באווירה שלווה וחמימה של המזרח הרחוק, תוך שימוש בחומרי גלם איכותיים וטריים.
-                        </div>                        <br />
+                        </div>
+                        <br />
                         <div data-aos="flip-left"
                             data-aos-easing="ease-out-cubic"
                             data-aos-duration="1000">
                             בנוסף לחוויה המיוחדת במסעדות הרשת, טריאקי מגיעה עד בית הלקוח עם מנות אסייתיות ומגוון מגשי אירוח מפנקים .
-                        </div><br />
+                        </div>
+                        <br />
                         <button className="button">
                             <Link to="/About" className="button-link">
                                 קראו עוד
@@ -113,7 +115,7 @@ const Home = () => {
 
 
                 <section className="big-deal first-pic">
-                    
+
                 </section>
 
 
@@ -130,14 +132,17 @@ const Home = () => {
                             data-aos-easing="ease-out-cubic"
                             data-aos-duration="1000">
                             אנו מאמינים בשילוב אוכל טרי מחומרי גלם איכותיים ובחוויה קולינרית בלתי נשכחת. בתפריט שלנו תמצאו מגוון מנות מהמטבח האסיאתי וסושי טרי ומשובח.
-                        </div><br /><div data-aos="flip-right"
+                        </div>
+                        <br />
+                        <div data-aos="flip-right"
                             data-aos-easing="ease-out-cubic"
                             data-aos-duration="1000">
                             בואו לגלות את הטעמים בסניפים או הזמינו משלוח ישירות עד הבית או העבודה.
-                        </div><br />
+                        </div>
+                        <br />
                         <button className="button">
-                            <Link to="/Products" className="button-link">
-                                תפריטים               
+                            <Link to="/Menu" className="button-link">
+                                תפריטים
                             </Link>
                         </button>
                         <br /><br />
@@ -145,10 +150,10 @@ const Home = () => {
 
 
                 </section>
-                
-                
+
+
                 <section className="big-deal sec-pic">
-                    
+
                 </section>
 
 
@@ -164,7 +169,8 @@ const Home = () => {
                             data-aos-easing="ease-out-cubic"
                             data-aos-duration="1000">
                             בסניפי טריאקי תפגשו חוויה קולינרית בשילוב אווירה שלווה וחמימה של המזרח הרחוק. בכל אחד מסניפינו תהנו מתפריט אסיאתי וחומרי גלם איכותיים וטריים.
-                        </div><br />
+                        </div>
+                        <br />
                         <div data-aos="flip-left"
                             data-aos-easing="ease-out-cubic"
                             data-aos-duration="1000">
@@ -187,7 +193,7 @@ const Home = () => {
 
 
                 <section className="my-container-img">
-                    <img src={sushi1} alt="" className="s1"/>
+                    <img src={sushi1} alt="" className="s1" />
                     <img src={sushi2} alt="" className="s2" />
                     <img src={sushi3} alt="" className="s3" />
                 </section>

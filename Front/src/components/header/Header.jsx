@@ -97,7 +97,7 @@ const Header = () => {
 
   useEffect(() => {
     if (userCookies) {
-      debugger;
+      // debugger;
       const parsedCookies = JSON.parse(userCookies); // Ensure this parsing is correct
       setIsLogin(true);
 
@@ -128,7 +128,7 @@ const Header = () => {
             <Link to={"/"} className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>בית</Link>
           </Typography>
           <Typography variant="h6" component="div" className="nav" sx={{ flexGrow: 0, marginRight: 3 }}>
-            <Link to={"/Products"} className={`nav-link ${location.pathname === '/Products' ? 'active' : ''}`}>תפריט</Link>
+            <Link to={"/Menu"} className={`nav-link ${location.pathname === '/Menu' ? 'active' : ''}`}>תפריט</Link>
           </Typography>
           <Typography variant="h6" component="div" className="nav" sx={{ flexGrow: 0, marginRight: 3 }}>
             <Link to={"/Cart"} className={`nav-link ${location.pathname === '/Cart' ? 'active' : ''}`}>

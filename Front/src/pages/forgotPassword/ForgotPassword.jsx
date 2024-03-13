@@ -44,7 +44,7 @@ const ForgotPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        debugger;
+        // debugger;
         if (Validate()) {
 
             const dataObj = new Date(date);
