@@ -7,9 +7,7 @@ router.post("/add", async (req, res) => {
     const newProudct = new ProductSchema(req.body);
     await newProudct.save();
 
-    res
-      .status(200)
-      .send({ message: "Product added successfully", product: newProudct });
+    res.status(200).send({ message: "Product added successfully", product: newProudct });
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: "Something went wrong" });
@@ -49,9 +47,7 @@ router.put("/update/:id", async (req, res) => {
     if (!product) {
       return res.status(400).send({ error: "Product does not exist" });
     }
-    res
-      .status(200)
-      .send({ message: "Product updated successfully", product: product });
+    res.status(200).send({ message: "Product updated successfully", product: product });
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: "Something went wrong" });
@@ -65,9 +61,7 @@ router.delete("/delete/:id", async (req, res) => {
     if (!product) {
       return res.status(400).send({ error: "Product does not exist" });
     }
-    res
-      .status(200)
-      .send({ message: "Product deleted successfully", product: product });
+    res.status(200).send({ message: "Product deleted successfully", product: product });
   } catch (err) {
     console.error(err);
     res.status(500).send({ error: "Something went wrong" });

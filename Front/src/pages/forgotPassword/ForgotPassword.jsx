@@ -16,7 +16,9 @@ import "./ForgotPassword.css";
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [date, setDate] = useState("");
+    // const [date, setDate] = useState("");
+    const [phone, setPhone] = useState("");
+
     const navigation = useNavigate();
 
     const [error, setError] = useState("");
@@ -35,8 +37,11 @@ const ForgotPassword = () => {
         } else if (password.length < 6) {
             error.password = "הסיסמא חייבת להיות באורך של 6 תווים לפחות";
         }
-        if (!date) {
-            error.date = "שדה חובה";
+        // if (!date) {
+        //     error.date = "שדה חובה";
+        // }
+        if (!phone) {
+            error.phone = "שדה חובה";
         }
         setVaildationError(error);
         return Object.keys(error).length === 0;
@@ -47,18 +52,19 @@ const ForgotPassword = () => {
         // debugger;
         if (Validate()) {
 
-            const dataObj = new Date(date);
+            // const dataObj = new Date(date);
             // const year = dataObj.getFullYear();
             // const month = dataObj.getMonth() + 1;
             // const day = dataObj.getDate();
             // const newDate = `${year}-${month}-${day}`;
-            const dateFormat = 'dd/MM/yyyy';
-            const formattedDate = format(dataObj, dateFormat);
+            // const dateFormat = 'dd/MM/yyyy';
+            // const formattedDate = format(dataObj, dateFormat);
             const userData = {
                 email: email,
                 newPassword: password,
                 // date: newDate,
-                date: formattedDate,
+                // date: formattedDate,
+                phone:phone
             };
             try {
                 const response = await axios.post(
@@ -120,7 +126,7 @@ const ForgotPassword = () => {
                             color="error"
                         />
                     </div>
-                    <div className="spacer">
+                    {/* <div className="spacer">
                         <TextField
                             label="תאריך לידה"
                             type="date"
@@ -133,6 +139,23 @@ const ForgotPassword = () => {
                             required
                             error={vaildationError.date}
                             helperText={vaildationError.date}
+                            margin="normal"
+                            color="error"
+                        />
+                    </div> */}
+                    <div className="spacer">
+                        <TextField
+                            label="פלאפון"
+                            // type="number"
+                            variant="outlined"
+                            fullWidth
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            data-aos="fade-left"
+                            data-aos-duration="1000"
+                            required
+                            error={vaildationError.phone}
+                            helperText={vaildationError.phone}
                             margin="normal"
                             color="error"
                         />
@@ -170,17 +193,17 @@ const ForgotPassword = () => {
                 </div>
             </div>
             {success && (
-            <Alert severity="success" style={{ margin: "0 auto", width: 500, justifyContent: "center" ,marginBottom:15,marginTop:-63}}
-            >
-                {success}
-            </Alert>
+                <Alert severity="success" style={{ margin: "0 auto", width: 500, justifyContent: "center", marginBottom: 15, marginTop: -63 }}
+                >
+                    {success}
+                </Alert>
             )}
             {error && (
-                <Alert severity="error" style={{ margin: "0 auto", width: 500, justifyContent: "center"  ,marginBottom:15,marginTop:-65 }}
+                <Alert severity="error" style={{ margin: "0 auto", width: 500, justifyContent: "center", marginBottom: 15, marginTop: -65 }}
                 >
                     {error}
                 </Alert>
-                 )}
+            )}
         </Container>
     );
 };

@@ -85,7 +85,7 @@ const Pay = () => {
     const error = {};
     if (!fullName) {
       error.fullName = "שדה חובה";
-    } else if (!/^[א-ת]+( [א-ת]+)*$/.test(fullName)) {
+    } else if (!/^[א-תa-zA-Z]+( [א-תa-zA-Z]+)*$/.test(fullName)) {
       error.fullName = "אנא הכנס שם מלא תקני, ללא רווחים ריקים בתחילה או בסוף";
     }
     if (!(typeCollect === "משלוח" || typeCollect === "איסוף עצמי")) {
@@ -98,8 +98,8 @@ const Pay = () => {
     }
     if (typeCollect === "משלוח" && !street) {
       error.street = "שדה חובה";
-    } else if (typeCollect === "משלוח" && !/^[א-ת]+( [א-ת]+)*$/.test(street)) {
-      error.street = "אנא הכנס שם עיר תקני, ללא רווחים ריקים בתחילה או בסוף";
+    } else if (typeCollect === "משלוח" && !/^[א-ת0-9]+( [א-ת0-9]+)*$/.test(street)) {
+      error.street = "אנא הכנס כתובת תקינה, ללא רווחים ריקים בתחילה או בסוף";
     }
     if (typePay === "אשראי" && !cardNumber) {
       error.cardNumber = "שדה חובה";

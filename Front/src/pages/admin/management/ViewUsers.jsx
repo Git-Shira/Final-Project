@@ -41,7 +41,8 @@ const ViewUsers = () => {
                     <TableHead>
                         <TableRow style={{ borderColor: "#C1121F" }}>
                             <TableCell style={{ textAlign: "center" }}> שם משתמש</TableCell>
-                            <TableCell style={{ textAlign: "center" }}> תאריך לידה</TableCell>
+                            {/* <TableCell style={{ textAlign: "center" }}> תאריך לידה</TableCell> */}
+                            <TableCell style={{ textAlign: "center" }}> פלאפון</TableCell>
                             <TableCell style={{ textAlign: "center" }}>כתובת דוא''ל</TableCell>
                         </TableRow>
                     </TableHead>
@@ -50,7 +51,8 @@ const ViewUsers = () => {
                             allUsers.map((user) => (
                                 <TableRow style={{ borderColor: "#C1121F", textAlign: "center" }}>
                                     <TableCell style={{ textAlign: "center" }}>{user.fullName}</TableCell> {/* Display userId */}
-                                    <TableCell style={{ textAlign: "center" }}>{user.date}</TableCell> {/* Display User email */}
+                                    {/* <TableCell style={{ textAlign: "center" }}>{user.date}</TableCell> Display User date */}
+                                    <TableCell style={{ textAlign: "center" }}>0{user.phone}</TableCell> {/* Display User phone */}
                                     <TableCell style={{ textAlign: "center" }}>{user.email}</TableCell> {/* Display User email */}
                                 </TableRow>
                             )))

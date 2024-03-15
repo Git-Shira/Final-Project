@@ -22,7 +22,9 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
-  const [date, setDate] = useState("");
+  // const [date, setDate] = useState("");
+  const [phone, setPhone] = useState("");
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [vaildationError, setVaildationError] = useState({});
@@ -42,7 +44,7 @@ const SignUp = () => {
     const error = {};
     if (!fullName) {
       error.fullName = "שדה חובה";
-    } else if (!/^[א-ת]+( [א-ת]+)*$/.test(fullName)) {
+    } else if (!/^[א-תa-zA-Z]+( [א-תa-zA-Z]+)*$/.test(fullName)) {
       error.fullName = "אנא הכנס שם מלא תקני, ללא רווחים ריקים בתחילה או בסוף";
     }
     if (!email) {
@@ -55,8 +57,11 @@ const SignUp = () => {
     } else if (password.length < 6) {
       error.password = "הסיסמא חייבת להיות באורך של 6 תווים לפחות";
     }
-    if (!date) {
-      error.date = "שדה חובה";
+    // if (!date) {
+    //   error.date = "שדה חובה";
+    // }
+    if (!phone) {
+      error.phone = "שדה חובה";
     }
     setVaildationError(error);
     return Object.keys(error).length === 0;
@@ -65,19 +70,20 @@ const SignUp = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (Validate()) {
-      const dataObj = new Date(date);
+      // const dataObj = new Date(date);
       // const year = dataObj.getFullYear();
       // const month = dataObj.getMonth() + 1;
       // const day = dataObj.getDate();
       // const newDate = `${year}-${month}-${day}`;
-      const dateFormat = 'dd/MM/yyyy';
-      const formattedDate = format(dataObj, dateFormat);
+      // const dateFormat = 'dd/MM/yyyy';
+      // const formattedDate = format(dataObj, dateFormat);
       const userData = {
         fullName: fullName,
         email: email,
         password: password,
         // date: newDate,
-        date: formattedDate
+        // date: formattedDate
+        phone:phone
       };
 
       try {
@@ -143,7 +149,7 @@ const SignUp = () => {
 
         <br />
 
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           type="date"
           label="תאריך לידה"
@@ -159,9 +165,24 @@ const SignUp = () => {
           //   title: "Please use the yyyy-mm-dd format",
           // }}
           color="error"
-
+        /> */}
+ <TextField
+          id="outlined-basic"
+          type="number"
+          label="פלאפון"
+          variant="outlined"
+          data-aos="fade-left"
+          data-aos-duration="1000"
+          required
+          onChange={(e) => setPhone(e.target.value)}
+          helperText={vaildationError.phone}
+          error={vaildationError.phone}
+          // inputProps={{
+          //   pattern: "\\d{4}-\\d{2}-\\d{2}",
+          //   title: "Please use the yyyy-mm-dd format",
+          // }}
+          color="error"
         />
-
         <br />
 
         <TextField

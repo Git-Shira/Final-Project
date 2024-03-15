@@ -14,7 +14,8 @@ const Edit = ({ product, handleEditSuccess }) => {
     image: product.image || "",
     category: product.category || "",
     amount: product.amount || "",
-    filter: product.filter || ""
+    filter: product.filter || "",
+    show:product.show || ""
   });
 
   const handleSubmit = async (e) => {
@@ -38,7 +39,8 @@ const Edit = ({ product, handleEditSuccess }) => {
         image: "",
         category: "",
         amount: "",
-        filter: ""
+        filter: "",
+        show:""
       });
     } catch (error) {
       console.log(error);
@@ -99,9 +101,28 @@ const Edit = ({ product, handleEditSuccess }) => {
           onChange={(e) =>
             setEditProduct({ ...editproduct, price: e.target.value })
           }
-          sx={{ width: 100 }}
+          sx={{ width: 80 }}
           color="error"
           />
+          <FormControl  >
+          <InputLabel id="show-label">מלאי</InputLabel>
+          <Select
+            labelId="show-label"
+            id="show"
+            label="מלאי"
+            fullWidth
+            required
+            value={editproduct.show}
+            defaultValue={"0"}
+            onChange={(e) =>
+              setEditProduct({ ...editproduct, show: e.target.value })
+            }
+            sx={{ marginRight: 1.2, width: 130 }}
+            >
+            <MenuItem value={"0"}>אזל במלאי</MenuItem>
+            <MenuItem value={"1"}>קיים במלאי</MenuItem>
+          </Select>
+        </FormControl>
         <FormControl  >
           <InputLabel id="filter-label">פילטר</InputLabel>
           <Select
@@ -115,7 +136,7 @@ const Edit = ({ product, handleEditSuccess }) => {
             onChange={(e) =>
               setEditProduct({ ...editproduct, filter: e.target.value })
             }
-            sx={{ marginRight: 5, width: 220 }}
+            sx={{ marginRight: 1.2, width: 200 }}
           >
             <MenuItem value={"0"}>ללא פילטר</MenuItem>
             <MenuItem value={"1"}>פופולארית</MenuItem>
@@ -140,7 +161,7 @@ const Edit = ({ product, handleEditSuccess }) => {
             onChange={(e) =>
               setEditProduct({ ...editproduct, category: e.target.value })
             }
-            sx={{ width: 150, marginRight: 5, marginBottom: 2 }}>
+            sx={{ width: 110, marginRight: 1.2, marginBottom: 2 }}>
             <MenuItem value={"ראשונות"}>ראשונות</MenuItem>
             <MenuItem value={"מרקים"}>מרקים</MenuItem>
             <MenuItem value={"סושי ספיישל"}>סושי ספיישל</MenuItem>

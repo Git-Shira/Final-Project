@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { Table, TableHead, TableBody, TableRow, TableCell, Button}  from "@mui/material";
+import { Table, TableHead, TableBody, TableRow, TableCell, Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { DialogContentText } from "@mui/material";
+// import { DialogContentText } from "@mui/material";
+import { DialogContentText, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 import AOS from 'aos';
 
@@ -41,6 +42,14 @@ const TableAdmin = () => {
     AOS.init();
   }, []);
 
+  const [selectedBranch, setSelectedBranch] = useState("");
+  const handleChange = (event) => {
+    setSelectedBranch(event.target.value);
+  };
+
+  const resetFilter = () => {
+   setSelectedBranch("");
+  };
   console.log(userData);
 
   return (
@@ -50,6 +59,55 @@ const TableAdmin = () => {
         <h1 data-aos="flip-down" data-aos-duration="1000">ארכיון הזמנות</h1>
         <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
       </div>
+
+      <div style={{ marginRight: 280,marginTop: "10px",display:"flex",alignItems:"center",marginBottom: "10px"}}>
+      <strong
+            style={{
+              marginLeft: 5,
+              color: "#C1121F",
+              fontSize: "larger"
+            }}
+            >סינון לפי סניף:&nbsp;</strong>
+       
+        <FormControl sx={{marginRight:2}}>
+            <InputLabel id="filter-label">בחירת סניף</InputLabel>
+            <Select
+              labelId="branch-label"
+              id="branch"
+              label="בחירת סניף"
+              fullWidth
+              required
+              value={selectedBranch}
+              // defaultValue={"0"}
+              onChange={handleChange}
+              color="error"
+              sx={{ width: 180, }}
+            >
+              <MenuItem value={"אשדוד"}>אשדוד</MenuItem>
+              <MenuItem value={"באר שבע"}>באר שבע</MenuItem>
+              <MenuItem value={"רמת גן"}>רמת גן</MenuItem>
+              <MenuItem value={"תל אביב"}>תל אביב</MenuItem>
+              <MenuItem value={"לוד"}>לוד</MenuItem>
+              <MenuItem value={"ראש העין"}>ראש העין</MenuItem>
+              <MenuItem value={"כפר סבא"}>כפר סבא</MenuItem>
+              <MenuItem value={"נתניה"}>נתניה</MenuItem>
+              <MenuItem value={"עפולה"}>עפולה</MenuItem>
+              <MenuItem value={"קרית אתא"}>קרית אתא</MenuItem>
+            </Select>
+          </FormControl>
+        
+
+        <div className="reset">
+            {(selectedBranch &&
+              <button className="btn"
+                onClick={() => {
+                  resetFilter();
+                }}
+                style={{ marginRight: 85 }}>איפוס סינון</button>
+            )}
+          </div>
+      </div>
+
 
       {loading ? (
         <p
@@ -77,7 +135,12 @@ const TableAdmin = () => {
 
           </TableHead>
           <TableBody>
-            {userData?.map((user) => (
+            {userData?.filter(
+              (user) =>
+              (selectedBranch === ""
+                ? true
+                : user.branch === selectedBranch)
+            ).map((user) => (
               <TableRow style={{ borderColor: "#C1121F", borderRadius: 2 }} key={user._id}>
                 <TableCell align="center" >
                   {user.date}</TableCell>
@@ -108,10 +171,10 @@ const TableAdmin = () => {
       <Dialog open={openModal} onClose={handleCloseModal} aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         sx={{
-          width: '100%', 
+          width: '100%',
           height: '100%',
           display: 'flex',
-          justifyContent: 'center', 
+          justifyContent: 'center',
           alignItems: 'center'
         }}>
         <DialogContent>

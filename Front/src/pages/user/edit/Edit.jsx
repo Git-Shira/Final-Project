@@ -54,7 +54,7 @@ const Edit = ({ id }) => {
     const error = {};
     if (!editUser.fullName) {
       error.editUser.fullName = "שדה חובה";
-    } else if (!/^[א-ת]+( [א-ת]+)*$/.test(editUser.fullName)) {
+    } else if (!/^[א-תa-zA-Z]+( [א-תa-zA-Z]+)*$/.test(editUser.fullName)) {
       error.editUser.fullName = "אנא הכנס שם מלא תקני, ללא רווחים ריקים בתחילה או בסוף";
     }
     if (!editUser.email) {

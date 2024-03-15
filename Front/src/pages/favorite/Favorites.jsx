@@ -12,12 +12,14 @@ import { Visibility } from "@mui/icons-material";
 
 import { useSelector, useDispatch } from "react-redux";
 import { addItem } from "../../redux/cartSlice";
-import { addToFavorites,  removeFromFavorites,} from "../../redux/favoritesSlice";
+import { addToFavorites, removeFromFavorites, } from "../../redux/favoritesSlice";
 
 import AOS from 'aos';
 
 import t1 from "../../IMAGES/t1.png";
 import t2 from "../../IMAGES/t2.png";
+
+import "./Favorites.css";
 
 const Favorites = () => {
   const [products, setProducts] = React.useState([]);
@@ -41,7 +43,8 @@ const Favorites = () => {
         price: products.price,
         image: products.image,
         quantity: 1,
-        filter: products.filter
+        filter: products.filter,
+        show: 1
       })
     );
   };
@@ -56,6 +59,7 @@ const Favorites = () => {
           image: selectedProduct.image,
           filter: selectedProduct.filter,
           quantity: 1,
+          show: 1
         })
       );
     }
@@ -127,14 +131,18 @@ const Favorites = () => {
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 
-        <div className="dishes" style={{marginTop:"10px"}}>
+        <div className="dishes" style={{ marginTop: "10px" }}>
           <div className="box-container">
             {/* {products?.map((product, index) => { */}
             {getAllFavorites?.map((product, index) => {
               console.log(product._id);
               return (
                 <div data-aos="zoom-in">
-                  <div className="box" >
+                  <div className="box"
+                    style={{
+                      background: (product.show === 1) ? "white" : "gray",
+                      borderColor: (product.show === 1) ? "#C1121F" : "black"
+                    }}>
                     <IconButton className="eye"
                       onClick={() => {
                         setSelectedProduct(product);
@@ -142,6 +150,7 @@ const Favorites = () => {
                       }}>
                       <Visibility />
                     </IconButton>
+
 
                     <IconButton
                       className="heart"
@@ -154,17 +163,23 @@ const Favorites = () => {
                         color={isFavorite(product._id) ? "black" : "disabled"}
                       />
                     </IconButton>
+
                     <img src={product.image} alt={product.name} />
                     <div style={{ height: 20, alignItems: "center", margin: 0 }}>
                       <h5> {product.name}</h5>
                     </div>
                     <br />
-                                        <span className="product-price"> {product.price} ₪</span>
-                    <button className="btn"
-                      onClick={() => {
-                        addShoppingCart(product);
-                      }}>
-                      הוספה לסל</button>
+                    {product.show === 1 && (
+                      <div>
+                        <span className="product-price"> {product.price} ₪</span>
+                        <button className="btn"
+                          onClick={() => {
+                            addShoppingCart(product);
+                          }}>
+                          הוספה לסל</button>
+                      </div>
+                    )}
+                    {product.show === 0 && (<h3 className="no-available" >-אזל מהמלאי-</h3>)}
                   </div>
                 </div>
               );
@@ -181,9 +196,9 @@ const Favorites = () => {
             aria-describedby="alert-dialog-description"
             sx={{
               width: '100%',
-              height: '100%', 
+              height: '100%',
               display: 'flex',
-              justifyContent: 'center', 
+              justifyContent: 'center',
               alignItems: 'center'
             }}>
             <DialogContent>

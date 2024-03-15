@@ -214,7 +214,7 @@ const Header = () => {
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleMenuClose}
-                  sx={{ marginTop: 5.5, marginLeft: 3.5 }}
+                  sx={{ marginTop: 3, marginLeft: 3.5 }}
                 >
                   <List>
                     <ListItem button component={Link} to="/Admin/Management" sx={{ textAlign: "right" }}>
@@ -236,7 +236,7 @@ const Header = () => {
                   open={Boolean(anchorEl)}
                   anchorEl={anchorEl}
                   onClose={handleMenuClose}
-                  sx={{ marginTop: 5.5, marginLeft: 3.5 }}
+                  sx={{ marginTop: 3, marginLeft: 3.5 }}
                 >
                   <List>
                     <ListItem button component={Link} to="/user/profile" sx={{ textAlign: "right" }}>

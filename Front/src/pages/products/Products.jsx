@@ -68,7 +68,8 @@ const Products = () => {
         price: products.price,
         image: products.image,
         quantity: 1,
-        filter: products.filter
+        filter: products.filter,
+        show: 1
       })
     );
   };
@@ -83,6 +84,7 @@ const Products = () => {
           image: selectedProduct.image,
           filter: selectedProduct.filter,
           quantity: 1,
+          show: 1
         })
       );
     }
@@ -189,12 +191,14 @@ const Products = () => {
       (selectCategory.length === 0)
         ? product.price >= priceRange[0] &&
         product.price <= priceRange[1] &&
-        product.name.toLowerCase().startsWith(search.toLowerCase())
+        product.name.toLowerCase().startsWith(search.toLowerCase()) &&
+        product.show === 1
         :
         selectCategory.includes(product.category) &&
         product.price >= priceRange[0] &&
         product.price <= priceRange[1] &&
-        product.name.toLowerCase().startsWith(search.toLowerCase())
+        product.name.toLowerCase().startsWith(search.toLowerCase()) &&
+        product.show === 1
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -380,10 +384,10 @@ const Products = () => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             sx={{
-              width: '100%', 
-              height: '100%', 
+              width: '100%',
+              height: '100%',
               display: 'flex',
-              justifyContent: 'center', 
+              justifyContent: 'center',
               alignItems: 'center'
             }}>
             <DialogContent>
@@ -415,10 +419,10 @@ const Products = () => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           sx={{
-            width: '100%', 
-            height: '100%', 
+            width: '100%',
+            height: '100%',
             display: 'flex',
-            justifyContent: 'center', 
+            justifyContent: 'center',
             alignItems: 'center'
           }}>
           <DialogContent

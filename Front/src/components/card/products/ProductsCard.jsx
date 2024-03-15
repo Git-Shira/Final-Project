@@ -64,7 +64,11 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
   return (
     <div>
       <div >
-        <div className="box-admin" data-aos="zoom-in">
+        <div className="box-admin" data-aos="zoom-in" 
+        style={{
+            background:(product.show === 1) ? "white" : "gray",
+            borderColor:(product.show === 1) ? "#C1121F" : "black"
+        }}>
           {/* <IconButton className="eye"
                       onClick={() => {
                         setSelectedProduct(product);
@@ -167,7 +171,7 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
           <Edit product={product} handleEditSuccess={handleEditSuccess} />
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   );
 };
 

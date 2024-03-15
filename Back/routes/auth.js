@@ -6,7 +6,8 @@ const User = require("../model/User");
 const bcrypt = require("bcrypt");
 
 router.post("/register", async (req, res) => {
-  const { fullName, date, email, password } = req.body;
+  // const { fullName, date, email, password } = req.body;
+  const { fullName, phone, email, password } = req.body;
 
   try {
     let user = await User.findOne({ email });
@@ -17,7 +18,8 @@ router.post("/register", async (req, res) => {
     user = new User({
       fullName,
       email,
-      date,
+      // date,
+      phone,
       password,
       permission: "user",
     });
@@ -52,6 +54,7 @@ router.post("/login", async (req, res) => {
     res.status(500).send({ error: "Something went wrong" });
   }
 });
+
 router.get("/user/:id", async (req, res) => {
   const id = req.params.id;
   console.log("get user", id);
@@ -69,11 +72,13 @@ router.get("/user/:id", async (req, res) => {
     res.status(500).send({ error: "Something went wrong" });
   }
 });
+
 const saltRounds = 10;
 
 async function hashPassword(password) {
   return await bcrypt.hash(password, saltRounds);
 }
+
 router.put("/update/:id", async (req, res) => {
   console.log("update user");
   try {
@@ -119,15 +124,22 @@ router.get("/user/id/:email", async (req, res) => {
 });
 
 router.post("/forgot_password", async (req, res) => {
-  const { email, date, newPassword } = req.body;
-  console.log("forgot password", email, date, newPassword);
+  // const { email, date, newPassword } = req.body;
+  const { email, phone, newPassword } = req.body;
+
+  // console.log("forgot password", email, date, newPassword);
+  console.log("forgot password", email, phone, newPassword);
+
   try {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).send({ error: "User does not exist" });
     }
-    if (user.date !== date) {
-      return res.status(405).send({ error: "Invalid date" });
+    // if (user.date !== date) {
+    //   return res.status(405).send({ error: "Invalid date" });
+    // }
+    if (user.phone !== phone) {
+      return res.status(405).send({ error: "Invalid phone" });
     }
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
