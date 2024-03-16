@@ -140,13 +140,16 @@ const Favorites = () => {
                 <div data-aos="zoom-in">
                   <div className="box"
                     style={{
-                      background: (product.show === 1) ? "white" : "gray",
+                      background: (product.show === 1) ? "white" : "#bfc0c0",
                       borderColor: (product.show === 1) ? "#C1121F" : "black"
                     }}>
                     <IconButton className="eye"
                       onClick={() => {
                         setSelectedProduct(product);
                         setOpen(true);
+                      }}
+                      style={{
+                        borderColor: (product.show === 1) ? "#C1121F" : "white"
                       }}>
                       <Visibility />
                     </IconButton>
@@ -156,7 +159,9 @@ const Favorites = () => {
                       className="heart"
                       onClick={() => {
                         handleFavoriteToggle(product);
-
+                      }}
+                      style={{
+                        borderColor: (product.show === 1) ? "#C1121F" : "white"
                       }}
                     >
                       <FavoriteIcon
@@ -211,9 +216,15 @@ const Favorites = () => {
                 <h2> {selectedProduct.name}</h2>
                 <p className="description"> {selectedProduct.description}</p>
                 <img src={selectedProduct.image} alt="" />
-                <button className="btn" onClick={addToCart} autoFocus sx={{ display: 'flex', }}>
-                  הוספה לסל
-                </button>
+
+                {selectedProduct.show === 1 && (
+                  <button className="btn" onClick={addToCart} autoFocus sx={{ display: 'flex', }}>
+                    הוספה לסל
+                  </button>
+                )}
+
+                {selectedProduct.show === 0 && (<h3 className="no-available" style={{marginTop:"-45px",marginRight:"360px"}}>-אזל מהמלאי-</h3>)}
+
                 <h2 className="price"> {selectedProduct.price} ₪</h2>
                 {(selectedProduct.filter === "1" || selectedProduct.filter === "12" || selectedProduct.filter === "123" || selectedProduct.filter === "13") && <i className="fas fa-crown">&nbsp; מנה פופולארית </i>}
                 {(selectedProduct.filter === "2" || selectedProduct.filter === "12" || selectedProduct.filter === "123" || selectedProduct.filter === "23") && <i className="fas fa-pepper-hot">&nbsp; מנה חריפה </i>}

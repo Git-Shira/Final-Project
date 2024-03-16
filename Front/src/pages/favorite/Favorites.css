@@ -1,3 +1,4 @@
-.box .no-available {
+.box .no-available,
+.product-dialog .no-available {
     font-weight: bold;
 }

@@ -119,7 +119,7 @@ const Edit = ({ product, handleEditSuccess }) => {
             }
             sx={{ marginRight: 1.2, width: 130 }}
             >
-            <MenuItem value={"0"}>אזל במלאי</MenuItem>
+            <MenuItem value={"0"}>אזל מהמלאי</MenuItem>
             <MenuItem value={"1"}>קיים במלאי</MenuItem>
           </Select>
         </FormControl>

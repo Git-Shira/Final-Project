@@ -66,7 +66,7 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
       <div >
         <div className="box-admin" data-aos="zoom-in" 
         style={{
-            background:(product.show === 1) ? "white" : "gray",
+            background:(product.show === 1) ? "white" : "#bfc0c0",
             borderColor:(product.show === 1) ? "#C1121F" : "black"
         }}>
           {/* <IconButton className="eye"
