@@ -14,7 +14,8 @@ const AddSingleProduct = ({ setOpen }) => {
     image: "",
     category: "",
     amount: "",
-    filter: ""
+    filter: "",
+    show: "1"
   });
   const [age, setAge] = React.useState("");
 

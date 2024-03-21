@@ -85,7 +85,7 @@ const ForgotPassword = () => {
                     setError("המשתמש לא קיים במערכת");
                 }
                 if (err.response.status === 405) {
-                    setError("האימות נכשל, התאריך לא תואם לתאריך השמור במערכת")
+                    setError("האימות נכשל, מספר הפלאפון לא תואם למספר השמור במערכת")
                 }
                 if (err.response.status === 500) {
                     setError("משהו השתבש, נסו שוב")

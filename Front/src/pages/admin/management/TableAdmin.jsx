@@ -4,7 +4,6 @@ import axios from "axios";
 import { Table, TableHead, TableBody, TableRow, TableCell, Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-// import { DialogContentText } from "@mui/material";
 import { DialogContentText, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 import AOS from 'aos';
@@ -112,7 +111,7 @@ const TableAdmin = () => {
       {loading ? (
         <p
           style={{ marginTop: "10px" }}
-        >Loading...</p>
+        >טוען...</p>
       ) : error ? (
         <p
           style={{ marginTop: "10px" }}

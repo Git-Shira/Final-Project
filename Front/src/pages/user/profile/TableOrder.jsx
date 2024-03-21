@@ -54,7 +54,7 @@ const TableOrder = ({ id }) => {
     <div className="profile-user">
 
       {loading ? (
-        <p style={{ color: "white" }}>Loading...</p>
+        <p style={{ color: "white" }}>טוען...</p>
       ) : error ? (
         <p style={{ color: "white" }}>Error: {error.message}</p>
       ) : (

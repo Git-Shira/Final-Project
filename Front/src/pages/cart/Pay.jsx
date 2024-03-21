@@ -101,6 +101,9 @@ const Pay = () => {
     } else if (typeCollect === "משלוח" && !/^[א-ת0-9]+( [א-ת0-9]+)*$/.test(street)) {
       error.street = "אנא הכנס כתובת תקינה, ללא רווחים ריקים בתחילה או בסוף";
     }
+    if (!(typePay === "מזומן" || typePay === "אשראי")) {
+      error.typeCollect = "שדה חובה";
+    }
     if (typePay === "אשראי" && !cardNumber) {
       error.cardNumber = "שדה חובה";
     }
