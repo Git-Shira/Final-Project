@@ -18,23 +18,25 @@ import footer from "./home-footer.png";
 import "./Home.css";
 
 const Home = () => {
-    const [imageIndex, setImageIndex] = useState(0);
+    // const [imageIndex, setImageIndex] = useState(0);
+
+    // useEffect(() => {
+    //     setInterval(() => {
+    //         setImageIndex((imageIndex + 1) % images.length);
+    //     }, 8000);
+    // }, [imageIndex]);
+
+    // const images = [
+    //     pic1,
+    //     pic2,
+    //     pic3,
+    //     pic4
+    // ];
 
     useEffect(() => {
         AOS.init();
-
-        setInterval(() => {
-            setImageIndex((imageIndex + 1) % images.length);
-        }, 8000);
-    }, [imageIndex]);
-
-    const images = [
-        pic1,
-        pic2,
-        pic3,
-        pic4
-    ];
-
+      }, []);
+      
     return (
         <div className="main">
 
