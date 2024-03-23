@@ -15,6 +15,7 @@ router.post("/add", async (req, res) => {
     res.status(500).send({ error: "Something went wrong" });
   }
 });
+
 router.post("/user/:id/new_order", async (req, res) => {
   const id = req.params.id;
 
@@ -35,6 +36,8 @@ router.post("/user/:id/new_order", async (req, res) => {
         branch: orderData.branch,
 
         typeCollect: orderData.typeCollect,
+        city:orderData.city,
+        street:orderData.street,
 
         typePay: orderData.typePay,
 

@@ -141,6 +141,7 @@ const SignUp = () => {
           data-aos="fade-right"
           data-aos-duration="1000"
           required
+          autoComplete="off"
           error={vaildationError.fullName}
           helperText={vaildationError.fullName}
           onChange={(e) => setFullName(e.target.value)}
@@ -174,6 +175,7 @@ const SignUp = () => {
           data-aos="fade-left"
           data-aos-duration="1000"
           required
+          autoComplete="off"
           onChange={(e) => setPhone(e.target.value)}
           helperText={vaildationError.phone}
           error={vaildationError.phone}
@@ -193,6 +195,7 @@ const SignUp = () => {
           data-aos="fade-right"
           data-aos-duration="1000"
           required
+          autoComplete="off"
           variant="outlined"
           onChange={(e) => setEmail(e.target.value)}
           error={vaildationError.email}
@@ -211,6 +214,7 @@ const SignUp = () => {
           data-aos="fade-left"
           data-aos-duration="1000"
           required
+          autoComplete="off"
           error={vaildationError.password}
           helperText={vaildationError.password}
           margin="normal"

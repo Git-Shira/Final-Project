@@ -111,8 +111,8 @@ const SignIn = () => {
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 
-        <div style={{marginTop:"10px"}} >
-        {/* <form onSubmit={handleSubmit} style={{marginTop:"10px"}} > */}
+        <div style={{ marginTop: "10px" }} >
+          {/* <form onSubmit={handleSubmit} style={{marginTop:"10px"}} > */}
           <div className="spacer">
             <TextField
               className="rGap"
@@ -122,8 +122,9 @@ const SignIn = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               data-aos="fade-right"
-          data-aos-duration="1000"
+              data-aos-duration="1000"
               required
+              autoComplete="off"
               error={vaildationError.email}
               helperText={vaildationError.email}
               margin="normal"
@@ -141,8 +142,9 @@ const SignIn = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               data-aos="fade-left"
-          data-aos-duration="1000"
-          required
+              data-aos-duration="1000"
+              required
+              autoComplete="off"
               error={vaildationError.password}
               helperText={vaildationError.password}
               color="error"
@@ -150,7 +152,7 @@ const SignIn = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={togglePasswordVisibility} edge="end" sx={{left:55}}>
+                    <IconButton onClick={togglePasswordVisibility} edge="end" sx={{ left: 55 }}>
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
@@ -167,19 +169,19 @@ const SignIn = () => {
             fullWidth
             size="large"
             style={{
-              marginBottom: 25, marginTop: 15,width:150,fontSize:"x-large"
+              marginBottom: 25, marginTop: 15, width: 150, fontSize: "x-large"
             }}
           >
             כניסה
           </button>
-        {/* </form> */}
+          {/* </form> */}
         </div>
 
         <Typography
           className="typo"
           variant="body1"
           align="center" color="white"
-          >
+        >
           עדיין לא רשומים?
           <Link to={"/SignUp"} style={{ marginRight: 20 }}>הרשמה </Link>
         </Typography>
@@ -189,13 +191,13 @@ const SignIn = () => {
         </Typography>
 
         {success && (
-        <Alert severity="success" style={{margin:"0 auto",width:500,justifyContent:"center",marginTop:15}}
-        >
-          {success}
-        </Alert>
-         )}
+          <Alert severity="success" style={{ margin: "0 auto", width: 500, justifyContent: "center", marginTop: 15 }}
+          >
+            {success}
+          </Alert>
+        )}
         {error && (
-          <Alert severity="error" style={{margin:"0 auto",width:500,justifyContent:"center" ,marginTop:15}}
+          <Alert severity="error" style={{ margin: "0 auto", width: 500, justifyContent: "center", marginTop: 15 }}
           >
             {error}
           </Alert>

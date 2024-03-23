@@ -28,6 +28,7 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
     setEditProductId(null); // Clear the product ID when the dialog is closed
     setIsEditDialogOpen(false);
   };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -161,6 +162,7 @@ const ProductsCard = ({ product, key, fetchProducts }) => {
           </DialogActions>
         </div>
       </Dialog>
+      
       <Dialog
         open={isEditDialogOpen}
         onClose={handleEditDialogClose}
