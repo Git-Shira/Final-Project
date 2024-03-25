@@ -28,23 +28,13 @@ import "./App.css";
 
 function App() {
     const dispatch = useDispatch();
-    const [userDetails, setUserDetails] = useState({});
-    const token = Cookies.get("user");
-
+  
     useEffect(() => {
         dispatch(loadFavoritesFromCookies());
     }, [dispatch]);
     useEffect(() => {
         dispatch(cartPersistenceMiddleware());
     }, [dispatch]);
-
-    useEffect(() => {
-        if (token) {
-
-            const details = JSON.parse(token);
-            setUserDetails(details?.permission);
-        }
-    }, [token]);
 
     return (
         <Router>
@@ -55,10 +45,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/SignUp" element={<SignUp />} />
                 <Route path="/SignIn" element={<SignIn />} />
-                <Route
-                    path="/Admin/*"
-                    element={userDetails ? <AdminRoute /> : <Navigate to="/login" />}
-                />
+                <Route path="/Admin/*" element={<AdminRoute />} />
                 <Route path="/User/*" element={<UserRoute />} />
                 <Route path="/Menu" element={<Products />} />
                 <Route path="/Cart" element={<Cart />} />

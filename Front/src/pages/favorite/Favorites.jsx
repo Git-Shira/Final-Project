@@ -131,64 +131,68 @@ const Favorites = () => {
           <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
         </div>
 
-        <div className="dishes" style={{ marginTop: "10px" }}>
+        <div className="dishes" style={{ marginTop: "50px" }}>
           <div className="box-container">
             {/* {products?.map((product, index) => { */}
-            {getAllFavorites?.map((product, index) => {
-              console.log(product._id);
-              return (
-                <div data-aos="zoom-in">
-                  <div className="box"
-                    style={{
-                      background: (product.show === 1) ? "white" : "#bfc0c0",
-                      borderColor: (product.show === 1) ? "#C1121F" : "black"
-                    }}>
-                    <IconButton className="eye"
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setOpen(true);
-                      }}
+            {getAllFavorites.length != 0 ?
+              getAllFavorites?.map((product, index) => {
+                console.log(product._id);
+                return (
+                  <div data-aos="zoom-in">
+                    <div className="box"
                       style={{
-                        borderColor: (product.show === 1) ? "#C1121F" : "white"
+                        background: (product.show === 1) ? "white" : "#bfc0c0",
+                        borderColor: (product.show === 1) ? "#C1121F" : "black"
                       }}>
-                      <Visibility />
-                    </IconButton>
+                      <IconButton className="eye"
+                        onClick={() => {
+                          setSelectedProduct(product);
+                          setOpen(true);
+                        }}
+                        style={{
+                          borderColor: (product.show === 1) ? "#C1121F" : "white"
+                        }}>
+                        <Visibility />
+                      </IconButton>
 
 
-                    <IconButton
-                      className="heart"
-                      onClick={() => {
-                        handleFavoriteToggle(product);
-                      }}
-                      style={{
-                        borderColor: (product.show === 1) ? "#C1121F" : "white"
-                      }}
-                    >
-                      <FavoriteIcon
-                        color={isFavorite(product._id) ? "black" : "disabled"}
-                      />
-                    </IconButton>
+                      <IconButton
+                        className="heart"
+                        onClick={() => {
+                          handleFavoriteToggle(product);
+                        }}
+                        style={{
+                          borderColor: (product.show === 1) ? "#C1121F" : "white"
+                        }}
+                      >
+                        <FavoriteIcon
+                          color={isFavorite(product._id) ? "black" : "disabled"}
+                        />
+                      </IconButton>
 
-                    <img src={product.image} alt={product.name} />
-                    <div style={{ height: 20, alignItems: "center", margin: 0 }}>
-                      <h5> {product.name}</h5>
-                    </div>
-                    <br />
-                    {product.show === 1 && (
-                      <div>
-                        <span className="product-price"> {product.price} ₪</span>
-                        <button className="btn"
-                          onClick={() => {
-                            addShoppingCart(product);
-                          }}>
-                          הוספה לסל</button>
+                      <img src={product.image} alt={product.name} />
+                      <div style={{ height: 20, alignItems: "center", margin: 0 }}>
+                        <h5> {product.name}</h5>
                       </div>
-                    )}
-                    {product.show === 0 && (<h3 className="no-available" >-אזל מהמלאי-</h3>)}
+                      <br />
+                      {product.show === 1 && (
+                        <div>
+                          <span className="product-price"> {product.price} ₪</span>
+                          <button className="btn"
+                            onClick={() => {
+                              addShoppingCart(product);
+                            }}>
+                            הוספה לסל</button>
+                        </div>
+                      )}
+                      {product.show === 0 && (<h3 className="no-available" >-אזל מהמלאי-</h3>)}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+              :
+              <div style={{textAlign:"center",justifyContent:"center",width:"1140px",marginTop:100,fontSize:"x-large"}}>סמנו את המוצרים האהובים עליכם וצפו בהם כאן :)</div>
+              }
           </div>
         </div>
         <div style={{ height: 30 }}></div>
@@ -223,7 +227,7 @@ const Favorites = () => {
                   </button>
                 )}
 
-                {selectedProduct.show === 0 && (<h3 className="no-available" style={{marginTop:"-45px",marginRight:"360px"}}>-אזל מהמלאי-</h3>)}
+                {selectedProduct.show === 0 && (<h3 className="no-available" style={{ marginTop: "-45px", marginRight: "360px" }}>-אזל מהמלאי-</h3>)}
 
                 <h2 className="price"> {selectedProduct.price} ₪</h2>
                 {(selectedProduct.filter === "1" || selectedProduct.filter === "12" || selectedProduct.filter === "123" || selectedProduct.filter === "13") && <i className="fas fa-crown">&nbsp; מנה פופולארית </i>}
