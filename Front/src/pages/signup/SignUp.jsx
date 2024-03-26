@@ -62,6 +62,8 @@ const SignUp = () => {
     // }
     if (!phone) {
       error.phone = "שדה חובה";
+    } else if (phone.length < 10) {
+      error.phone = "מספר הפלאפון אינו תקין";
     }
     setVaildationError(error);
     return Object.keys(error).length === 0;
@@ -83,7 +85,7 @@ const SignUp = () => {
         password: password,
         // date: newDate,
         // date: formattedDate
-        phone:phone
+        phone: phone
       };
 
       try {
@@ -167,7 +169,7 @@ const SignUp = () => {
           // }}
           color="error"
         /> */}
- <TextField
+        <TextField
           id="outlined-basic"
           type="number"
           label="פלאפון"

@@ -134,7 +134,7 @@ const Favorites = () => {
         <div className="dishes" style={{ marginTop: "50px" }}>
           <div className="box-container">
             {/* {products?.map((product, index) => { */}
-            {getAllFavorites.length != 0 ?
+            {getAllFavorites ?
               getAllFavorites?.map((product, index) => {
                 console.log(product._id);
                 return (

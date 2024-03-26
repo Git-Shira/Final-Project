@@ -42,7 +42,7 @@ header .nav-link2:hover::after {
     width: 100%;
 }
 
-.MuiPaper-root,
-.MuiAppBar-root{
+.header .MuiPaper-root,
+.header .MuiAppBar-root{
     top:5px !important;
 }

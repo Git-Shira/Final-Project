@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { format } from 'date-fns';
 
-import { TextField,  Box, FormControl, InputLabel, MenuItem, Select,  FormControlLabel, FormLabel, RadioGroup, Radio } from "@mui/material";
+import { TextField, Box, FormControl, InputLabel, MenuItem, Select, FormControlLabel, FormLabel, RadioGroup, Radio } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -199,7 +199,7 @@ const Pay = () => {
   };
 
   return (
-    <div style={{ minHeight: 850}}>
+    <div style={{ minHeight: 850 }}>
 
       <div className="title-design">
         <img src={t1} alt="" className="t1" data-aos="fade-left" data-aos-duration="1000" />
@@ -207,7 +207,7 @@ const Pay = () => {
         <img src={t2} alt="" className="t2" data-aos="fade-right" data-aos-duration="1000" />
       </div>
 
-      <div className="pay" style={{marginTop:"10px"}}>
+      <div className="pay" style={{ marginTop: "10px" }}>
 
         <Box
           component="form"
@@ -328,7 +328,7 @@ const Pay = () => {
                   variant="outlined"
                   onChange={(e) => setCardHolder(e.target.value)}
                   color="error"
-
+                  type="text"
                   error={vaildationError.cardHolder}
                   helperText={vaildationError.cardHolder}
 
@@ -339,7 +339,7 @@ const Pay = () => {
                   variant="outlined"
                   onChange={(e) => setCardType(e.target.value)}
                   color="error"
-
+                  type="text"
                   error={vaildationError.cardType}
                   helperText={vaildationError.cardType}
                   sx={{ marginRight: 3 }}
@@ -353,7 +353,7 @@ const Pay = () => {
                   variant="outlined"
                   onChange={(e) => setCardCvv(e.target.value)}
                   color="error"
-
+                  type="number"
                   error={vaildationError.cardCvv}
                   helperText={vaildationError.cardCvv}
                 />
@@ -363,7 +363,7 @@ const Pay = () => {
                   variant="outlined"
                   onChange={(e) => setCardNumber(e.target.value)}
                   color="error"
-
+                  type="number"
                   error={vaildationError.cardNumber}
                   helperText={vaildationError.cardNumber}
                   sx={{ marginRight: 3 }}
@@ -377,7 +377,7 @@ const Pay = () => {
                   variant="outlined"
                   onChange={(e) => setCardMonth(e.target.value)}
                   color="error"
-
+                  type="number"
                   error={vaildationError.cardMonth}
                   helperText={vaildationError.cardMonth}
 
@@ -388,11 +388,10 @@ const Pay = () => {
                   variant="outlined"
                   onChange={(e) => setCardYear(e.target.value)}
                   color="error"
-
+                  type="number"
                   error={vaildationError.cardYear}
                   helperText={vaildationError.cardYear}
                   sx={{ marginRight: 3 }}
-
                 />
               </div>
 
